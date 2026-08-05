@@ -1,19 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { JoinLanding } from "@/components/landing/JoinLanding";
 
-const TITLE = "Her Empire Era — Build Your Business With Confidence";
+const TITLE = "Build Your Business With Confidence — Her Empire Era";
 const DESCRIPTION =
   "Meet Victoria, your private AI business concierge. 24/7 support with business planning, pricing, branding, marketing, content, websites, résumés and grants. Start free.";
 
-export const Route = createFileRoute("/")({
-  component: Index,
+export const Route = createFileRoute("/join")({
+  component: JoinPage,
   head: () => ({
     meta: [
       { title: TITLE },
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
-      { property: "og:url", content: "https://yourempireconcierge.com/" },
+      { property: "og:url", content: "https://yourempireconcierge.com/join" },
     ],
     links: [{ rel: "canonical", href: "https://yourempireconcierge.com/join" }],
     scripts: [
@@ -31,6 +31,6 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-function Index() {
+function JoinPage() {
   return <JoinLanding />;
 }
