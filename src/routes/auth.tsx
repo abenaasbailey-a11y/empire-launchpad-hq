@@ -1,0 +1,246 @@
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
+import { Button } from "@/components/ui/button";
+import { GoldRule } from "@/components/landing/Section";
+
+const TITLE = "Create Your Free Her Empire Era Membership";
+const DESCRIPTION =
+  "Create your free Her Empire Era account and meet Victoria, your private AI business concierge. No card required.";
+
+const searchSchema = z.object({
+  email: z.string().optional(),
+  mode: z.enum(["signup", "signin"]).optional(),
+});
+
+export const Route = createFileRoute("/auth")({
+  validateSearch: (search) => searchSchema.parse(search),
+  component: AuthPage,
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+});
+
+const credentials = z.object({
+  email: z.string().trim().email("Enter a valid email address").max(255),
+  password: z.string().min(8, "Password must be at least 8 characters").max(72),
+  fullName: z.string().trim().max(120).optional(),
+});
+
+function AuthPage() {
+  const search = Route.useSearch();
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<"signup" | "signin">(search.mode ?? "signup");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState(search.email ?? "");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  // Already signed in? Go straight to the member dashboard.
+  useEffect(() => {
+    let active = true;
+    void supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) void navigate({ to: "/dashboard", replace: true });
+    });
+    return () => {
+      active = false;
+    };
+  }, [navigate]);
+
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    setError(null);
+    setNotice(null);
+
+    const parsed = credentials.safeParse({ email, password, fullName });
+    if (!parsed.success) {
+      setError(parsed.error.issues[0]?.message ?? "Please check your details");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      if (mode === "signup") {
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email: parsed.data.email,
+          password: parsed.data.password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+            data: { full_name: parsed.data.fullName || null },
+          },
+        });
+        if (signUpError) {
+          setError(signUpError.message);
+          return;
+        }
+        if (data.session) {
+          void navigate({ to: "/dashboard", replace: true });
+          return;
+        }
+        setNotice(
+          `Almost there — check ${parsed.data.email} and confirm your email to open your dashboard.`,
+        );
+      } else {
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: parsed.data.email,
+          password: parsed.data.password,
+        });
+        if (signInError) {
+          setError(signInError.message);
+          return;
+        }
+        void navigate({ to: "/dashboard", replace: true });
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleGoogle() {
+    setError(null);
+    setBusy(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      setError("Google sign-in could not be completed. Please try again.");
+      setBusy(false);
+      return;
+    }
+    if (result.redirected) return;
+    void navigate({ to: "/dashboard", replace: true });
+  }
+
+  return (
+    <main className="flex min-h-[100svh] items-center justify-center px-5 py-16 md:px-10">
+      <div className="w-full max-w-md">
+        <Link
+          to="/"
+          className="font-display text-muted-foreground hover:text-primary text-sm tracking-[0.22em] uppercase transition-colors"
+        >
+          Her Empire Era
+        </Link>
+        <h1 className="font-display heading-glow mt-6 text-4xl leading-[1.1] font-light md:text-5xl">
+          {mode === "signup" ? "Create your free membership" : "Welcome back"}
+        </h1>
+        <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+          {mode === "signup"
+            ? "Meet Victoria, your private AI business concierge. No card required."
+            : "Sign in to your membership and pick up where you left off."}
+        </p>
+        <GoldRule className="mt-6" />
+
+        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+          {mode === "signup" ? (
+            <div>
+              <label htmlFor="fullName" className="text-muted-foreground text-xs tracking-[0.18em] uppercase">
+                Your name
+              </label>
+              <input
+                id="fullName"
+                name="name"
+                type="text"
+                autoComplete="name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="border-input bg-card/60 text-foreground focus:ring-ring mt-2 h-13 w-full rounded-xl border px-4 text-base outline-none focus:ring-1"
+              />
+            </div>
+          ) : null}
+
+          <div>
+            <label htmlFor="email" className="text-muted-foreground text-xs tracking-[0.18em] uppercase">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              inputMode="email"
+              autoCapitalize="none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border-input bg-card/60 text-foreground focus:ring-ring mt-2 h-13 w-full rounded-xl border px-4 text-base outline-none focus:ring-1"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="text-muted-foreground text-xs tracking-[0.18em] uppercase">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              autoComplete={mode === "signup" ? "new-password" : "current-password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border-input bg-card/60 text-foreground focus:ring-ring mt-2 h-13 w-full rounded-xl border px-4 text-base outline-none focus:ring-1"
+            />
+          </div>
+
+          {error ? <p className="text-destructive text-sm">{error}</p> : null}
+          {notice ? <p className="text-primary text-sm">{notice}</p> : null}
+
+          <Button type="submit" variant="gold" size="xl" className="w-full" disabled={busy}>
+            {mode === "signup" ? "Start Free" : "Sign In"}
+          </Button>
+        </form>
+
+        <div className="text-muted-foreground my-6 flex items-center gap-4 text-[0.65rem] tracking-[0.24em] uppercase">
+          <span className="bg-border h-px flex-1" />
+          or
+          <span className="bg-border h-px flex-1" />
+        </div>
+
+        <Button
+          type="button"
+          variant="lux"
+          size="xl"
+          className="w-full"
+          onClick={handleGoogle}
+          disabled={busy}
+        >
+          Continue with Google
+        </Button>
+
+        <p className="text-muted-foreground mt-8 text-center text-sm">
+          {mode === "signup" ? "Already a member?" : "New here?"}{" "}
+          <button
+            type="button"
+            className="text-primary underline-offset-4 hover:underline"
+            onClick={() => {
+              setMode(mode === "signup" ? "signin" : "signup");
+              setError(null);
+              setNotice(null);
+            }}
+          >
+            {mode === "signup" ? "Sign in" : "Create a free account"}
+          </button>
+        </p>
+      </div>
+    </main>
+  );
+}
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/auth')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  return <div>Hello "/auth"!</div>
+}
