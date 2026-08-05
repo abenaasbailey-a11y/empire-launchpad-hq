@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import heroImage from "@/assets/hero.jpg";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
@@ -85,7 +86,9 @@ export function JoinLanding() {
             Her Empire <span className="text-gold">Era</span>
           </a>
           <Button variant="lux" size="sm" asChild>
-            <a href="#start">Start Free</a>
+            <Link to="/auth" search={{ mode: "signup" }}>
+              Start Free
+            </Link>
           </Button>
         </div>
       </header>
@@ -121,7 +124,9 @@ export function JoinLanding() {
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
-              <a href="#start">Start Free</a>
+              <Link to="/auth" search={{ mode: "signup" }}>
+                Start Free
+              </Link>
             </Button>
             <a
               href="#demonstration"
