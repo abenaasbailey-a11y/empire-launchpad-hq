@@ -7,15 +7,15 @@ import { StartFreeForm } from "@/components/landing/StartFreeForm";
 const pillars = [
   {
     title: "The Membership",
-    body: "A private room for women building real revenue — no noise, no hustle theater, just the strategy and standards of a founder.",
+    body: "A supportive digital space for women building, launching, and growing their businesses with professional tools, clear guidance, and AI-powered support.",
   },
   {
     title: "The Concierge",
-    body: "Victoria handles the work that stalls you: copy, offers, pricing, follow-up, and the daily decisions that eat your time.",
+    body: "Victoria helps with the work that slows you down, including business planning, marketing, content creation, pricing, branding, emails, résumés, grants, websites, and daily business decisions.",
   },
   {
     title: "The Standard",
-    body: "Everything you touch looks and sounds expensive, because your brand deserves an operation that matches its ambition.",
+    body: "Create professional work that reflects the quality, confidence, and ambition of your brand.",
   },
 ];
 
@@ -116,8 +116,8 @@ export function JoinLanding() {
           </h1>
           <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
             Meet Victoria, your private AI business concierge. Get 24/7 support with business
-            planning, pricing, branding, marketing, content creation, websites, résumés, grants, and
-            more. Start free today.
+            planning, pricing, branding, marketing, content creation, websites, résumés, grants,
+            government-contract guidance, and more. Membership starts free.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
@@ -159,8 +159,8 @@ export function JoinLanding() {
       <Section id="victoria" className="bg-blush-wash">
         <SectionHeading
           eyebrow="Meet Victoria"
-          title={<>The concierge behind every polished empire.</>}
-          lead="Victoria is trained on your brand, your offers and your voice — so the work sounds like you on your sharpest day."
+          title={<>Meet Victoria, Your 24/7 AI Business Concierge</>}
+          lead="Victoria learns about your goals, business, audience, and voice so she can provide personalized support that sounds and feels like you."
           glow
         />
         <div className="mt-12 grid gap-x-12 gap-y-8 md:mt-16 md:grid-cols-2 md:gap-y-10">
