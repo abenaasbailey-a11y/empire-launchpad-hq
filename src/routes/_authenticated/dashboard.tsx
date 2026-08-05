@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section } from "@/components/landing/Section";
+import { useIsAdmin } from "@/hooks/use-admin";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -36,6 +37,7 @@ const startHere = [
 function Dashboard() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { isAdmin } = useIsAdmin();
 
   const { data: profile } = useQuery({
     queryKey: ["profile"],
@@ -59,6 +61,14 @@ function Dashboard() {
     queryClient.clear();
     await supabase.auth.signOut();
     void navigate({ to: "/auth", replace: true });
+  }
+
+  function handleTestSignupFlow() {
+    window.open("/join#start-free", "_blank", "noopener,noreferrer");
+  }
+
+  function handleTestMobileView() {
+    window.open("/join", "hee-mobile-preview", "noopener,noreferrer,width=390,height=844");
   }
 
   return (
@@ -96,6 +106,24 @@ function Dashboard() {
             </article>
           ))}
         </div>
+
+        {isAdmin && (
+          <div className="border-border bg-card/50 mt-12 rounded-2xl border p-6 backdrop-blur-sm md:mt-16 md:p-8">
+            <p className="eyebrow eyebrow-blush">Admin only</p>
+            <h2 className="font-display mt-4 text-2xl font-light">Quick actions</h2>
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+              Visible only to administrators.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button variant="lux" size="sm" onClick={handleTestSignupFlow}>
+                Test Signup Flow
+              </Button>
+              <Button variant="lux" size="sm" onClick={handleTestMobileView}>
+                Test Mobile View
+              </Button>
+            </div>
+          </div>
+        )}
       </Section>
     </main>
   );
