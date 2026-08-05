@@ -74,6 +74,33 @@ const experiences = [
   },
 ];
 
+export const membershipFaqs = [
+  {
+    q: "Is the membership really free?",
+    a: "Yes. You can create your account, meet Victoria and start working without a card. Paid options exist for members who want more, but nothing is required to begin.",
+  },
+  {
+    q: "What exactly is Victoria?",
+    a: "Victoria is your private AI business concierge. She helps with business planning, pricing, branding, marketing, content, websites, résumés, grants and the daily decisions in between.",
+  },
+  {
+    q: "Do I need a business already?",
+    a: "No. Members join at every stage — from a first idea to an established brand. Victoria meets you where you are and maps the next step.",
+  },
+  {
+    q: "How do I sign up?",
+    a: "Enter your email, choose a password, then confirm your email address from the message we send you. Your dashboard opens the moment you confirm.",
+  },
+  {
+    q: "Will the work sound like me?",
+    a: "Yes. Victoria learns your goals, audience and voice, so drafts read like you wrote them — and you always approve before anything goes out.",
+  },
+  {
+    q: "Can I cancel or leave anytime?",
+    a: "Always. Your free membership has no commitment, and you can stop using it or remove your account whenever you like.",
+  },
+];
+
 export function JoinLanding() {
   return (
     <main>
@@ -220,6 +247,36 @@ export function JoinLanding() {
       </Section>
 
       {/* Start free */}
+      <Section id="faq">
+        <SectionHeading
+          eyebrow="Membership FAQ"
+          title={<>Answers before you join.</>}
+          lead="The questions new members ask most often."
+          glow
+        />
+        <div className="mx-auto mt-10 max-w-3xl md:mt-14">
+          {membershipFaqs.map((item) => (
+            <details
+              key={item.q}
+              className="border-border group border-b py-5 [&_summary::-webkit-details-marker]:hidden"
+            >
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+                <h3 className="font-display min-w-0 text-lg leading-snug font-light md:text-xl">
+                  {item.q}
+                </h3>
+                <span
+                  className="text-blush mt-1 shrink-0 text-lg leading-none transition-transform group-open:rotate-45"
+                  aria-hidden="true"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="text-muted-foreground mt-3 pr-8 text-sm leading-relaxed">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </Section>
+
       <Section id="start" className="bg-blush-wash text-center">
         <p className="eyebrow eyebrow-blush">Free membership</p>
         <h2 className="font-display heading-glow mx-auto mt-5 max-w-3xl text-[2.15rem] leading-[1.1] font-light md:text-6xl md:leading-[1.08]">
