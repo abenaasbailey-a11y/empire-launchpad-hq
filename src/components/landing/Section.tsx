@@ -22,18 +22,29 @@ export function SectionHeading({
   title,
   lead,
   align = "center",
+  glow = false,
 }: {
   eyebrow: string;
   title: ReactNode;
   lead?: string;
   align?: "center" | "left";
+  glow?: boolean;
 }) {
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
-      <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-5 font-display text-4xl leading-[1.1] font-light md:text-5xl">{title}</h2>
+      <p className="eyebrow eyebrow-blush">{eyebrow}</p>
+      <h2
+        className={cn(
+          "font-display mt-5 text-[2rem] leading-[1.12] font-light md:text-5xl md:leading-[1.1]",
+          glow && "heading-glow",
+        )}
+      >
+        {title}
+      </h2>
       {lead ? (
-        <p className="mt-5 text-base leading-relaxed text-muted-foreground">{lead}</p>
+        <p className="text-muted-foreground mt-5 text-[0.95rem] leading-relaxed md:text-base">
+          {lead}
+        </p>
       ) : null}
     </div>
   );
@@ -41,4 +52,8 @@ export function SectionHeading({
 
 export function GoldRule({ className }: { className?: string }) {
   return <div className={cn("bg-gold h-px w-16 opacity-80", className)} />;
+}
+
+export function BlushRule({ className }: { className?: string }) {
+  return <div className={cn("bg-blush-line h-px w-16", className)} />;
 }
