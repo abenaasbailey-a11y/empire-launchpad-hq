@@ -191,3 +191,20 @@
   text-transform: uppercase;
   color: var(--color-primary);
 }
+
+@utility eyebrow-blush {
+  color: var(--blush);
+}
+
+@utility bg-blush-line {
+  background-image: var(--gradient-blush);
+}
+
+@utility bg-blush-wash {
+  background-color: oklch(0.8 0.045 15 / 5%);
+}
+
+@utility heading-glow {
+  position: relative;
+  text-shadow: 0 0 42px oklch(0.8 0.045 15 / 22%);
+}
