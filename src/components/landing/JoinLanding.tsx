@@ -100,7 +100,7 @@ export function JoinLanding() {
           alt="Founder of Her Empire Era working at a marble desk in golden light"
           width={1408}
           height={1600}
-          className="absolute inset-0 h-full w-full object-cover object-[68%_18%]"
+          className="absolute inset-0 h-full w-full object-cover object-[60%_25%]"
         />
         <div
           className="absolute inset-0"
@@ -112,15 +112,14 @@ export function JoinLanding() {
           style={{ backgroundImage: "var(--gradient-blush-veil)" }}
           aria-hidden="true"
         />
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-end px-5 pt-[62svh] pb-16 md:px-10 md:pt-32 md:pb-28">
+        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-5 pt-28 pb-16 md:px-10 md:pt-32 md:pb-28">
           <p className="eyebrow eyebrow-blush">Private membership · Est. for the ambitious</p>
-          <h1 className="font-display mt-4 max-w-3xl text-[2.5rem] leading-[1.05] font-light md:mt-6 md:text-7xl md:leading-[1.02]">
-            Build Your Business With Confidence
+          <h1 className="font-display mt-4 max-w-3xl text-[2.75rem] leading-[1.05] font-light md:mt-6 md:text-7xl md:leading-[1.02]">
+            Build the empire your audience already believes you have.
           </h1>
           <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
-            Meet Victoria, your private AI business concierge. Get 24/7 support with business
-            planning, pricing, branding, marketing, content creation, websites, résumés, grants,
-            government-contract guidance, and more. Membership starts free.
+            Her Empire Era gives you Victoria — a private AI concierge who writes, prices and plans
+            your business while you stay in your genius. Membership starts free.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
@@ -132,7 +131,7 @@ export function JoinLanding() {
               href="#demonstration"
               className="text-muted-foreground hover:text-blush text-[0.7rem] tracking-[0.22em] uppercase transition-colors"
             >
-              Watch Victoria in action
+              See Victoria work
             </a>
           </div>
         </div>
