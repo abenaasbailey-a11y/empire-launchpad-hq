@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { JoinLanding } from "@/components/landing/JoinLanding";
+import { JoinLanding, membershipFaqs } from "@/components/landing/JoinLanding";
 
 const TITLE = "Build Your Business With Confidence — Her Empire Era";
 const DESCRIPTION =
@@ -25,6 +25,18 @@ export const Route = createFileRoute("/join")({
           name: "Her Empire Era",
           url: "https://yourempireconcierge.com",
           description: DESCRIPTION,
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: membershipFaqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
         }),
       },
     ],
