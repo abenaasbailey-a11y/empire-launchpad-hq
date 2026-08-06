@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Input } from "@/components/ui/input";
+import { IdeaDetailDrawer } from "@/components/dashboard/IdeaDetailDrawer";
 import type { SavedPickNote } from "@/lib/victoria-picks.functions";
 
 const STATUS_LABELS: Record<string, string> = {
@@ -63,6 +64,7 @@ export function SavedPickNotes({
   const [category, setCategory] = useState(ALL);
   const [status, setStatus] = useState(ALL);
   const [week, setWeek] = useState(ALL);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const levels = useMemo(
     () => [ALL, ...new Set(notes.map((n) => n.hustle?.level).filter(Boolean) as string[])],
@@ -96,6 +98,8 @@ export function SavedPickNotes({
 
   const filtersActive =
     query.trim() !== "" || level !== ALL || category !== ALL || status !== ALL || week !== ALL;
+
+  const active = useMemo(() => notes.find((n) => n.id === activeId) ?? null, [notes, activeId]);
 
   function resetFilters() {
     setQuery("");
@@ -172,8 +176,14 @@ export function SavedPickNotes({
                   key={entry.id}
                   className="border-border/60 border-t pt-5 first:border-t-0 first:pt-0"
                 >
+                  <button
+                    type="button"
+                    onClick={() => setActiveId(entry.id)}
+                    className="group block w-full text-left"
+                    aria-label={`Open details for ${entry.hustle?.title ?? "saved idea"}`}
+                  >
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="font-display text-lg font-light">
+                    <h3 className="font-display group-hover:text-gold text-lg font-light transition-colors">
                       {entry.hustle?.title ?? "Saved idea"}
                     </h3>
                     <span className="text-muted-foreground text-[0.7rem] tracking-[0.18em] uppercase">
@@ -186,12 +196,17 @@ export function SavedPickNotes({
                   <p className="text-muted-foreground mt-2 text-sm leading-relaxed italic">
                     “{entry.note}”
                   </p>
+                  <span className="text-gold mt-2 inline-block text-[0.62rem] tracking-[0.2em] uppercase opacity-0 transition-opacity group-hover:opacity-100">
+                    View &amp; edit
+                  </span>
+                  </button>
                 </li>
               ))}
             </ul>
           )}
         </>
       )}
+      <IdeaDetailDrawer entry={active} onOpenChange={(open) => !open && setActiveId(null)} />
     </div>
   );
 }
