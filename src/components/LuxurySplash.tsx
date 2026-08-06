@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import crownMark from "@/assets/crown-mark-transparent.png";
+import brandMark from "@/assets/hee-logo.png";
 
 const HOLD_MS = 1600;
 const FADE_MS = 600;
@@ -62,32 +62,23 @@ export function LuxurySplash() {
         }}
       >
         <img
-          src={crownMark}
+          src={brandMark}
           alt=""
-          width={640}
-          height={479}
-          className="h-24 w-32 object-contain sm:h-28 sm:w-40"
+          width={1024}
+          height={1024}
+          className="h-44 w-44 object-contain sm:h-56 sm:w-56"
           style={{ animation: "splash-shine 1600ms 400ms ease-in-out" }}
         />
       </div>
 
       <div
-        className="mt-7 h-px w-16 bg-gold"
+        className="mt-6 h-px w-16 bg-gold/70"
         style={{ animation: "splash-rule-in 700ms 600ms ease-out both" }}
       />
 
       <p
-        className="text-gold mt-6 text-center font-serif text-xl font-light uppercase sm:text-2xl"
-        style={{
-          letterSpacing: "0.34em",
-          animation: "splash-word-in 1000ms 550ms cubic-bezier(0.22,1,0.36,1) both",
-        }}
-      >
-        Her Empire Era
-      </p>
-      <p
         className="eyebrow mt-4"
-        style={{ animation: "splash-word-in 900ms 950ms ease-out both" }}
+        style={{ animation: "splash-word-in 900ms 800ms ease-out both" }}
       >
         Your Empire Concierge
       </p>
