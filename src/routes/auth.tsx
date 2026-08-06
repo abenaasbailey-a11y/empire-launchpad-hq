@@ -13,6 +13,7 @@ const DESCRIPTION =
 const searchSchema = z.object({
   email: z.string().optional(),
   mode: z.enum(["signup", "signin"]).optional(),
+  next: z.string().optional(),
 });
 
 export const Route = createFileRoute("/auth")({
@@ -35,9 +36,17 @@ const credentials = z.object({
   fullName: z.string().trim().max(120).optional(),
 });
 
+// Only same-origin relative paths may be used as a post-login destination.
+function safeNext(next: string | undefined): string | null {
+  if (!next) return null;
+  if (!next.startsWith("/") || next.startsWith("//")) return null;
+  return next;
+}
+
 function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
+  const next = safeNext(search.next);
   const [mode, setMode] = useState<"signup" | "signin">(search.mode ?? "signup");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState(search.email ?? "");
@@ -46,16 +55,28 @@ function AuthPage() {
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  // Already signed in? Go straight to the member dashboard.
   useEffect(() => {
     let active = true;
     void supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) void navigate({ to: "/dashboard", replace: true });
+      if (!active || !data.session) return;
+      if (next) {
+        window.location.replace(next);
+        return;
+      }
+      void navigate({ to: "/dashboard", replace: true });
     });
     return () => {
       active = false;
     };
-  }, [navigate]);
+  }, [navigate, next]);
+
+  function goAfterAuth() {
+    if (next) {
+      window.location.replace(next);
+      return;
+    }
+    void navigate({ to: "/dashboard", replace: true });
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -75,7 +96,7 @@ function AuthPage() {
           email: parsed.data.email,
           password: parsed.data.password,
           options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}${next ?? "/dashboard"}`,
             data: { full_name: parsed.data.fullName || null },
           },
         });
@@ -84,7 +105,7 @@ function AuthPage() {
           return;
         }
         if (data.session) {
-          void navigate({ to: "/dashboard", replace: true });
+          goAfterAuth();
           return;
         }
         setNotice(
@@ -99,7 +120,7 @@ function AuthPage() {
           setError(signInError.message);
           return;
         }
-        void navigate({ to: "/dashboard", replace: true });
+        goAfterAuth();
       }
     } finally {
       setBusy(false);
@@ -110,7 +131,9 @@ function AuthPage() {
     setError(null);
     setBusy(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: next
+        ? `${window.location.origin}/auth?next=${encodeURIComponent(next)}`
+        : window.location.origin,
     });
     if (result.error) {
       setError("Google sign-in could not be completed. Please try again.");
@@ -118,7 +141,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    void navigate({ to: "/dashboard", replace: true });
+    goAfterAuth();
   }
 
   return (
