@@ -65,7 +65,7 @@ const scenarios = [
 ] as const;
 
 export function VictoriaDemo() {
-  const [activeId, setActiveId] = useState(scenarios[0].id);
+  const [activeId, setActiveId] = useState<string>(scenarios[0].id);
   const activeScenario = scenarios.find((s) => s.id === activeId)!;
   const script = activeScenario.script;
 
