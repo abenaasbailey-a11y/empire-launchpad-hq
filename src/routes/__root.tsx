@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 import { LuxurySplash } from "@/components/LuxurySplash";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -149,6 +150,7 @@ function RootComponent() {
       <div style={{ animation: "app-fade-in 700ms ease-out both" }}>
         <Outlet />
       </div>
+      <Toaster />
     </QueryClientProvider>
   );
 }
