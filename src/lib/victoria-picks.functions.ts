@@ -9,6 +9,8 @@ export interface SavedPickNote {
   /** Member's tracking state for this idea: not_started | saved | in_progress | completed */
   status: string;
   isFavorite: boolean;
+  /** Indexes of first_steps the member has ticked off */
+  completedSteps: number[];
   hustle: {
     id: string;
     slug: string;
@@ -173,7 +175,7 @@ export const getSavedPickNotes = createServerFn({ method: "GET" })
       supabase
         .from("victoria_pick_notes")
         .select(
-          "id, note, week_key, created_at, side_hustles (id, slug, title, category, level, summary, earning_potential, startup_cost, tools, first_steps)",
+          "id, note, week_key, created_at, completed_steps, side_hustles (id, slug, title, category, level, summary, earning_potential, startup_cost, tools, first_steps)",
         )
         .order("created_at", { ascending: false })
         .limit(120),
@@ -191,6 +193,7 @@ export const getSavedPickNotes = createServerFn({ method: "GET" })
       savedAt: row.created_at,
       status: signalById.get(row.side_hustles?.id ?? "")?.status ?? "not_started",
       isFavorite: signalById.get(row.side_hustles?.id ?? "")?.is_favorite ?? false,
+      completedSteps: row.completed_steps ?? [],
       hustle: row.side_hustles ?? null,
     }));
   });
@@ -220,4 +223,32 @@ export const updatePickNote = createServerFn({ method: "POST" })
       .single();
     if (error) throw new Error(error.message);
     return { id: row.id, note: row.note };
+  });
+
+/**
+ * Persist which first steps a member has ticked off for a saved idea.
+ * RLS scopes the update to the caller's own notes.
+ */
+export const updatePickSteps = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { id: string; completedSteps: number[] }) => {
+    const id = String(data?.id ?? "").trim();
+    if (!id) throw new Error("A note id is required.");
+    const raw = Array.isArray(data?.completedSteps) ? data.completedSteps : [];
+    const completedSteps = Array.from(
+      new Set(raw.map((n) => Number(n)).filter((n) => Number.isInteger(n) && n >= 0 && n < 50)),
+    ).sort((a, b) => a - b);
+    return { id, completedSteps };
+  })
+  .handler(async ({ context, data }): Promise<{ id: string; completedSteps: number[] }> => {
+    const { supabase, userId } = context;
+    const { data: row, error } = await supabase
+      .from("victoria_pick_notes")
+      .update({ completed_steps: data.completedSteps, updated_at: new Date().toISOString() })
+      .eq("id", data.id)
+      .eq("user_id", userId)
+      .select("id, completed_steps")
+      .single();
+    if (error) throw new Error(error.message);
+    return { id: row.id, completedSteps: row.completed_steps ?? [] };
   });
