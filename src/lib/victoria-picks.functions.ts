@@ -41,7 +41,7 @@ export interface WeeklyPicksResult {
 export const getWeeklyPicks = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<WeeklyPicksResult> => {
-    const { shortlist, addVictoriaNotes, weekKey, weekWindow } = await import("./victoria-picks.server");
+    const { shortlist, addVictoriaNotes, weekKey, weekWindow, persistNotes } = await import("./victoria-picks.server");
     const { supabase, userId } = context;
 
     const [libraryRes, signalsRes, profileRes] = await Promise.all([
@@ -81,12 +81,15 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
     const picks = shortlist(library, signals, week);
     const firstName = profile?.full_name?.split(" ")[0] ?? null;
 
+    const noted = await addVictoriaNotes(picks, signals, library, firstName);
+    await persistNotes(supabase, userId, week, noted);
+
     return {
       week,
       startsAt: window.startsAt,
       endsAt: window.endsAt,
       refreshAt: window.refreshAt,
-      picks: await addVictoriaNotes(picks, signals, library, firstName),
+      picks: noted,
     };
   });
 
@@ -97,7 +100,7 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
 export const refreshWeeklyPicks = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<WeeklyPicksResult> => {
-    const { shortlist, addVictoriaNotes, weekKey, weekWindow } = await import("./victoria-picks.server");
+    const { shortlist, addVictoriaNotes, weekKey, weekWindow, persistNotes } = await import("./victoria-picks.server");
     const { supabase, userId } = context;
 
     const [libraryRes, signalsRes, profileRes] = await Promise.all([
@@ -139,11 +142,37 @@ export const refreshWeeklyPicks = createServerFn({ method: "POST" })
     const picks = shortlist(library, signals, week);
     const firstName = profile?.full_name?.split(" ")[0] ?? null;
 
+    const noted = await addVictoriaNotes(picks, signals, library, firstName);
+    await persistNotes(supabase, userId, week, noted);
+
     return {
       week,
       startsAt: window.startsAt,
       endsAt: window.endsAt,
       refreshAt: window.refreshAt,
-      picks: await addVictoriaNotes(picks, signals, library, firstName),
+      picks: noted,
     };
+  });
+
+/**
+ * Victoria's saved "why this fits you" notes, newest first, for the dashboard.
+ */
+export const getSavedPickNotes = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<SavedPickNote[]> => {
+    const { supabase } = context;
+    const { data, error } = await supabase
+      .from("victoria_pick_notes")
+      .select("id, note, week_key, created_at, side_hustles (id, slug, title, category, level)")
+      .order("created_at", { ascending: false })
+      .limit(30);
+    if (error) throw new Error(error.message);
+
+    return (data ?? []).map((row) => ({
+      id: row.id,
+      note: row.note,
+      weekKey: row.week_key,
+      savedAt: row.created_at,
+      hustle: row.side_hustles ?? null,
+    }));
   });
