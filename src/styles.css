@@ -259,3 +259,28 @@
   45% { filter: brightness(1.35) saturate(1.15); }
   100% { filter: brightness(1) saturate(1); }
 }
+
+/* Dark UI scrollbars — prevents a bright white scrollbar strip on the right edge */
+html {
+  color-scheme: dark;
+  scrollbar-color: oklch(0.45 0.05 85 / 55%) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: oklch(0.45 0.05 85 / 45%);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(0.55 0.07 85 / 60%);
+}
