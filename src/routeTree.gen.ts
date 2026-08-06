@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MeetVictoriaRouteImport } from './routes/meet-victoria'
+import { Route as OpportunityCenterRouteImport } from './routes/opportunity-center'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -52,6 +53,11 @@ const McpRoute = McpRouteImport.update({
 const MeetVictoriaRoute = MeetVictoriaRouteImport.update({
   id: '/meet-victoria',
   path: '/meet-victoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpportunityCenterRoute = OpportunityCenterRouteImport.update({
+  id: '/opportunity-center',
+  path: '/opportunity-center',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
+  '/opportunity-center': typeof OpportunityCenterRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
+  '/opportunity-center': typeof OpportunityCenterRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
+  '/opportunity-center': typeof OpportunityCenterRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/mcp'
     | '/meet-victoria'
+    | '/opportunity-center'
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/mcp'
     | '/meet-victoria'
+    | '/opportunity-center'
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/mcp'
     | '/meet-victoria'
+    | '/opportunity-center'
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   JoinRoute: typeof JoinRoute
   McpRoute: typeof McpRoute
   MeetVictoriaRoute: typeof MeetVictoriaRoute
+  OpportunityCenterRoute: typeof OpportunityCenterRoute
   PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       path: '/meet-victoria'
       fullPath: '/meet-victoria'
       preLoaderRoute: typeof MeetVictoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opportunity-center': {
+      id: '/opportunity-center'
+      path: '/opportunity-center'
+      fullPath: '/opportunity-center'
+      preLoaderRoute: typeof OpportunityCenterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   JoinRoute: JoinRoute,
   McpRoute: McpRoute,
   MeetVictoriaRoute: MeetVictoriaRoute,
+  OpportunityCenterRoute: OpportunityCenterRoute,
   PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
