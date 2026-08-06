@@ -294,6 +294,7 @@ function OpportunityCenter() {
                 key={h.id}
                 hustle={h}
                 locked={!isMember && !h.is_free_preview}
+                interactive={isMember}
                 row={rowFor(h.id)}
                 onFavorite={() =>
                   upsert.mutate({ id: h.id, is_favorite: !rowFor(h.id)?.is_favorite })
@@ -349,12 +350,14 @@ function OpportunityCenter() {
 function OpportunityCard({
   hustle,
   locked,
+  interactive,
   row,
   onFavorite,
   onStatus,
 }: {
   hustle: SideHustle;
   locked: boolean;
+  interactive: boolean;
   row?: MemberRow;
   onFavorite: () => void;
   onStatus: (status: string) => void;
@@ -366,7 +369,7 @@ function OpportunityCard({
           <p className="text-blush text-[0.65rem] tracking-[0.2em] uppercase">{hustle.category}</p>
           <h2 className="font-display mt-3 text-2xl leading-snug font-light">{hustle.title}</h2>
         </div>
-        {!locked && (
+        {interactive && (
           <button
             type="button"
             onClick={onFavorite}
@@ -450,7 +453,7 @@ function OpportunityCard({
             </ol>
           </details>
 
-          {row !== undefined || true ? (
+          {interactive ? (
             <div className="mt-auto pt-6">
               <BlushRule className="w-10" />
               <div className="mt-4 flex flex-wrap gap-2">
