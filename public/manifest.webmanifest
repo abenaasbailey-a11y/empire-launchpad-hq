@@ -1,0 +1,25 @@
+{
+  "name": "Her Empire Era",
+  "short_name": "Her Empire",
+  "description": "Meet Victoria, your private AI business concierge. 24/7 support with business planning, pricing, branding, marketing, content, websites, résumés and grants. Start free.",
+  "start_url": "/join",
+  "display": "standalone",
+  "background_color": "#0c0a09",
+  "theme_color": "#0c0a09",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
