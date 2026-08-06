@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, stripSearchParams, useNavigate } from "@tanstack/react-router";
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
@@ -29,6 +29,9 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/opportunity-center")({
   validateSearch: zodValidator(searchSchema),
+  search: {
+    middlewares: [stripSearchParams({ q: "", category: "All", level: "All", view: "all" })],
+  },
   loader: ({ context }) => context.queryClient.ensureQueryData(hustlesQuery),
   component: OpportunityCenter,
   errorComponent: ({ error }) => (
