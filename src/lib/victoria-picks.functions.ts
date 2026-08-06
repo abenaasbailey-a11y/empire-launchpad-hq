@@ -6,6 +6,9 @@ export interface SavedPickNote {
   note: string;
   weekKey: string;
   savedAt: string;
+  /** Member's tracking state for this idea: not_started | saved | in_progress | completed */
+  status: string;
+  isFavorite: boolean;
   hustle: {
     id: string;
     slug: string;
