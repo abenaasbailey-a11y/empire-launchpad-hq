@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      member_side_hustles: {
+        Row: {
+          created_at: string
+          id: string
+          is_favorite: boolean
+          side_hustle_id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_favorite?: boolean
+          side_hustle_id: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_favorite?: boolean
+          side_hustle_id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_side_hustles_side_hustle_id_fkey"
+            columns: ["side_hustle_id"]
+            isOneToOne: false
+            referencedRelation: "side_hustles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -32,6 +70,51 @@ export type Database = {
           full_name?: string | null
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      side_hustles: {
+        Row: {
+          category: string
+          created_at: string
+          earning_potential: string
+          first_steps: string[]
+          id: string
+          is_free_preview: boolean
+          level: string
+          slug: string
+          startup_cost: string
+          summary: string
+          title: string
+          tools: string[]
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          earning_potential: string
+          first_steps?: string[]
+          id?: string
+          is_free_preview?: boolean
+          level: string
+          slug: string
+          startup_cost: string
+          summary: string
+          title: string
+          tools?: string[]
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          earning_potential?: string
+          first_steps?: string[]
+          id?: string
+          is_free_preview?: boolean
+          level?: string
+          slug?: string
+          startup_cost?: string
+          summary?: string
+          title?: string
+          tools?: string[]
         }
         Relationships: []
       }
