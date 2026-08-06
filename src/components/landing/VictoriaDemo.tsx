@@ -66,7 +66,7 @@ const scenarios = [
 
 export function VictoriaDemo() {
   const [activeId, setActiveId] = useState(scenarios[0].id);
-  const activeScenario = scenarios.find((s) => s.id === activeId) ?? scenarios[0];
+  const activeScenario = scenarios.find((s) => s.id === activeId)!;
   const script = activeScenario.script;
 
   const [visibleCount, setVisibleCount] = useState(1);
