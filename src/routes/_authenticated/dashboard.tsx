@@ -94,6 +94,12 @@ function Dashboard() {
           ready whenever you are.
         </p>
 
+        <div className="mt-10 flex flex-wrap gap-3 md:mt-12">
+          <Button variant="gold" size="lg" asChild>
+            <Link to="/opportunity-center">Open the Opportunity Center</Link>
+          </Button>
+        </div>
+
         <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-3 md:gap-8">
           {startHere.map((item) => (
             <article
