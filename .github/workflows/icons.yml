@@ -1,0 +1,34 @@
+name: Icons
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: icons-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-icons:
+    name: Validate PWA icons
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The validator is dependency-free (node:zlib only), so no install step is
+      # needed. A failure here fails the check run and blocks the PR.
+      - name: Validate maskable, Apple touch and favicon icons
+        run: node scripts/validate-icons.mjs
+
+      - name: Explain failure
+        if: failure()
+        run: |
+          echo "::error title=Icon regression::An app icon is the wrong size, missing, non-opaque, or its gold frame would be clipped by an Android launcher mask. See scripts/README-icons.md to regenerate the icon set, then run 'npm run validate:icons' locally."
+          exit 1
