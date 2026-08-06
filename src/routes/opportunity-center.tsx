@@ -358,7 +358,7 @@ function OpportunityCard({
   hustle: SideHustle;
   locked: boolean;
   interactive: boolean;
-  row?: MemberRow;
+  row: MemberRow | undefined;
   onFavorite: () => void;
   onStatus: (status: string) => void;
 }) {
