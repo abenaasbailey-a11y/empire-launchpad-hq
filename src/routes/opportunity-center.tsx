@@ -213,9 +213,9 @@ function OpportunityCenter() {
         )}
       </Section>
 
+      {isMember && <VictoriaPicks />}
+
       <Section className="border-border/60 border-y py-8 md:py-10">
-        <div className="hidden" aria-hidden="true" />
-      </Section>
         <div className="flex flex-col gap-5">
           <div className="relative">
             <Search
