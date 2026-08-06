@@ -489,3 +489,81 @@ function OpportunityCard({
     </article>
   );
 }
+
+function VictoriaPicks() {
+  const fetchPicks = useServerFn(getWeeklyPicks);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["victoria-weekly-picks"],
+    queryFn: () => fetchPicks(),
+    staleTime: 60 * 60_000,
+  });
+
+  if (isError) return null;
+
+  return (
+    <Section className="bg-blush-wash">
+      <p className="eyebrow eyebrow-blush">Victoria&rsquo;s picks · this week</p>
+      <h2 className="font-display heading-glow mt-5 max-w-3xl text-[2rem] leading-[1.1] font-light md:text-4xl">
+        Chosen for you from what you have saved and started.
+      </h2>
+      <p className="text-muted-foreground mt-4 max-w-xl text-sm leading-relaxed">
+        Victoria reads your favourites and your progress, then hand-picks three fresh
+        opportunities every week. New selections arrive each Monday.
+      </p>
+
+      {isPending ? (
+        <div className="mt-9 grid gap-6 md:grid-cols-3">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="border-border bg-card/50 h-52 animate-pulse rounded-2xl border"
+              aria-hidden="true"
+            />
+          ))}
+        </div>
+      ) : data && data.picks.length > 0 ? (
+        <div className="mt-9 grid gap-6 md:grid-cols-3 md:gap-8">
+          {data.picks.map((pick) => (
+            <article
+              key={pick.id}
+              className="border-border bg-card/60 flex h-full flex-col rounded-2xl border p-6 backdrop-blur-sm md:p-7"
+            >
+              <p className="text-blush text-[0.65rem] tracking-[0.2em] uppercase">{pick.category}</p>
+              <h3 className="font-display mt-3 text-xl leading-snug font-light">{pick.title}</h3>
+              <BlushRule className="mt-4 w-10" />
+              <p className="text-muted-foreground mt-4 flex-1 text-sm leading-relaxed italic">
+                &ldquo;{pick.note}&rdquo;
+              </p>
+              <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs">
+                <div>
+                  <dt className="text-muted-foreground text-[0.6rem] tracking-[0.18em] uppercase">
+                    Level
+                  </dt>
+                  <dd className="mt-1">{pick.level}</dd>
+                </div>
+                <div>
+                  <dt className="text-muted-foreground text-[0.6rem] tracking-[0.18em] uppercase">
+                    Potential
+                  </dt>
+                  <dd className="text-gold mt-1">{pick.earning_potential}</dd>
+                </div>
+              </dl>
+              <Link
+                to="/opportunity-center"
+                search={{ q: pick.title, category: "All", level: "All", view: "all" }}
+                className="text-gold mt-6 inline-flex items-center gap-2 text-[0.7rem] tracking-[0.18em] uppercase"
+              >
+                See the full plan <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p className="text-muted-foreground mt-9 text-sm">
+          Save a few favourites below and Victoria will start tailoring next week&rsquo;s picks to
+          you.
+        </p>
+      )}
+    </Section>
+  );
+}
