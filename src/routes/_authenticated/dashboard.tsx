@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { GoldRule, Section } from "@/components/landing/Section";
 import { useIsAdmin } from "@/hooks/use-admin";
 import { getSavedPickNotes } from "@/lib/victoria-picks.functions";
+import { SavedPickNotes } from "@/components/dashboard/SavedPickNotes";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -121,46 +122,7 @@ function Dashboard() {
           ))}
         </div>
 
-        <div className="border-border bg-card/50 mt-12 rounded-2xl border p-6 backdrop-blur-sm md:mt-16 md:p-8">
-          <p className="eyebrow eyebrow-blush">Saved by Victoria</p>
-          <h2 className="font-display mt-4 text-2xl font-light md:text-3xl">
-            Why these ideas fit you
-          </h2>
-          <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-            Every note Victoria has written alongside your weekly picks, kept here for reference.
-          </p>
-
-          {notesLoading ? (
-            <p className="text-muted-foreground mt-6 text-sm">Gathering your notes…</p>
-          ) : savedNotes.length === 0 ? (
-            <p className="text-muted-foreground mt-6 text-sm leading-relaxed">
-              No notes yet.{" "}
-              <Link to="/opportunity-center" className="text-gold underline-offset-4 hover:underline">
-                Open the Opportunity Center
-              </Link>{" "}
-              to see this week's picks from Victoria.
-            </p>
-          ) : (
-            <ul className="mt-7 space-y-5">
-              {savedNotes.map((entry) => (
-                <li key={entry.id} className="border-border/60 border-t pt-5 first:border-t-0 first:pt-0">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="font-display text-lg font-light">
-                      {entry.hustle?.title ?? "Saved idea"}
-                    </h3>
-                    <span className="text-muted-foreground text-[0.7rem] tracking-[0.18em] uppercase">
-                      {entry.weekKey}
-                      {entry.hustle?.category ? ` · ${entry.hustle.category}` : ""}
-                    </span>
-                  </div>
-                  <p className="text-muted-foreground mt-2 text-sm leading-relaxed italic">
-                    “{entry.note}”
-                  </p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <SavedPickNotes notes={savedNotes} isLoading={notesLoading} />
 
         {isAdmin && (
           <div className="border-border bg-card/50 mt-12 rounded-2xl border p-6 backdrop-blur-sm md:mt-16 md:p-8">

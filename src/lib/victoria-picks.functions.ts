@@ -6,6 +6,9 @@ export interface SavedPickNote {
   note: string;
   weekKey: string;
   savedAt: string;
+  /** Member's tracking state for this idea: not_started | saved | in_progress | completed */
+  status: string;
+  isFavorite: boolean;
   hustle: {
     id: string;
     slug: string;
@@ -161,18 +164,26 @@ export const getSavedPickNotes = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<SavedPickNote[]> => {
     const { supabase } = context;
-    const { data, error } = await supabase
-      .from("victoria_pick_notes")
-      .select("id, note, week_key, created_at, side_hustles (id, slug, title, category, level)")
-      .order("created_at", { ascending: false })
-      .limit(30);
-    if (error) throw new Error(error.message);
+    const [notesRes, signalsRes] = await Promise.all([
+      supabase
+        .from("victoria_pick_notes")
+        .select("id, note, week_key, created_at, side_hustles (id, slug, title, category, level)")
+        .order("created_at", { ascending: false })
+        .limit(120),
+      supabase.from("member_side_hustles").select("side_hustle_id, is_favorite, status"),
+    ]);
+    if (notesRes.error) throw new Error(notesRes.error.message);
+    if (signalsRes.error) throw new Error(signalsRes.error.message);
 
-    return (data ?? []).map((row) => ({
+    const signalById = new Map((signalsRes.data ?? []).map((s) => [s.side_hustle_id, s]));
+
+    return (notesRes.data ?? []).map((row) => ({
       id: row.id,
       note: row.note,
       weekKey: row.week_key,
       savedAt: row.created_at,
+      status: signalById.get(row.side_hustles?.id ?? "")?.status ?? "not_started",
+      isFavorite: signalById.get(row.side_hustles?.id ?? "")?.is_favorite ?? false,
       hustle: row.side_hustles ?? null,
     }));
   });
