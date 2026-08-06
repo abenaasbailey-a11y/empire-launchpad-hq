@@ -85,6 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       { name: "apple-mobile-web-app-title", content: "Her Empire" },
       { name: "mobile-web-app-capable", content: "yes" },
+      { name: "google-site-verification", content: "RPeOWf1vMb0FKdDb3DPwi_MfhTOiOncOw8cbVA8tT18" },
       { property: "og:site_name", content: "Her Empire Era" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
