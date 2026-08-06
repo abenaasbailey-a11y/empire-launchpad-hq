@@ -1,4 +1,5 @@
 import { createFileRoute, Link, stripSearchParams, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
@@ -15,6 +16,16 @@ const TITLE = "Empire Opportunity Center — 200+ AI Side Hustles";
 const DESCRIPTION =
   "Browse a searchable library of AI-powered business ideas for women entrepreneurs: filter by level and category, save favourites and track your progress.";
 const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+
+const PICK_DATE_FORMAT = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+});
+
+function formatPickDate(iso: string): string {
+  return PICK_DATE_FORMAT.format(new Date(iso));
+}
 
 const hustlesQuery = queryOptions({
   queryKey: ["side-hustles"],
@@ -492,17 +503,34 @@ function OpportunityCard({
 
 function VictoriaPicks() {
   const fetchPicks = useServerFn(getWeeklyPicks);
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["victoria-weekly-picks"],
     queryFn: () => fetchPicks(),
     staleTime: 60 * 60_000,
   });
+
+  // Rotate automatically the moment the 7-day window closes, without a reload.
+  useEffect(() => {
+    if (!data?.refreshAt) return;
+    const delay = new Date(data.refreshAt).getTime() - Date.now();
+    const timer = window.setTimeout(() => void refetch(), Math.max(delay, 1_000));
+    return () => window.clearTimeout(timer);
+  }, [data?.refreshAt, refetch]);
+
+  const dateLabel = data
+    ? `${formatPickDate(data.startsAt)} – ${formatPickDate(data.endsAt)}`
+    : null;
 
   if (isError) return null;
 
   return (
     <Section className="bg-blush-wash">
       <p className="eyebrow eyebrow-blush">Victoria&rsquo;s picks · this week</p>
+      {dateLabel ? (
+        <p className="text-muted-foreground mt-3 text-[0.7rem] tracking-[0.18em] uppercase">
+          <span className="text-gold">This week</span> · {dateLabel}
+        </p>
+      ) : null}
       <h2 className="font-display heading-glow mt-5 max-w-3xl text-[2rem] leading-[1.1] font-light md:text-4xl">
         Chosen for you from what you have saved and started.
       </h2>

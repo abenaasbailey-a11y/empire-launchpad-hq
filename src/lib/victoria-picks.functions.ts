@@ -3,6 +3,9 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export interface WeeklyPicksResult {
   week: string;
+  startsAt: string;
+  endsAt: string;
+  refreshAt: string;
   picks: Array<{
     id: string;
     slug: string;
@@ -23,7 +26,7 @@ export interface WeeklyPicksResult {
 export const getWeeklyPicks = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<WeeklyPicksResult> => {
-    const { shortlist, addVictoriaNotes, weekKey } = await import("./victoria-picks.server");
+    const { shortlist, addVictoriaNotes, weekWindow } = await import("./victoria-picks.server");
     const { supabase, userId } = context;
 
     const [libraryRes, signalsRes, profileRes] = await Promise.all([
@@ -39,9 +42,16 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
 
     const library = libraryRes.data ?? [];
     const signals = signalsRes.data ?? [];
-    const week = weekKey();
+    const window = weekWindow();
+    const week = window.week;
     const picks = shortlist(library, signals, week);
     const firstName = profileRes.data?.full_name?.split(" ")[0] ?? null;
 
-    return { week, picks: await addVictoriaNotes(picks, signals, library, firstName) };
+    return {
+      week,
+      startsAt: window.startsAt,
+      endsAt: window.endsAt,
+      refreshAt: window.refreshAt,
+      picks: await addVictoriaNotes(picks, signals, library, firstName),
+    };
   });
