@@ -4,12 +4,12 @@ import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery }
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, Heart, Lock, Search, Sparkles } from "lucide-react";
+import { ArrowRight, Heart, Lock, RefreshCw, Search, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { listSideHustles, type SideHustle } from "@/lib/opportunities.functions";
-import { getWeeklyPicks } from "@/lib/victoria-picks.functions";
+import { getWeeklyPicks, refreshWeeklyPicks } from "@/lib/victoria-picks.functions";
 import { cn } from "@/lib/utils";
 
 const TITLE = "Empire Opportunity Center — 200+ AI Side Hustles";
