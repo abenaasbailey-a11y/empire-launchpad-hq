@@ -2,11 +2,13 @@ import { createFileRoute, Link, stripSearchParams, useNavigate } from "@tanstack
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
-import { Heart, Lock, Search, Sparkles } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { ArrowRight, Heart, Lock, Search, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { listSideHustles, type SideHustle } from "@/lib/opportunities.functions";
+import { getWeeklyPicks } from "@/lib/victoria-picks.functions";
 import { cn } from "@/lib/utils";
 
 const TITLE = "Empire Opportunity Center — 200+ AI Side Hustles";
@@ -212,6 +214,8 @@ function OpportunityCenter() {
       </Section>
 
       <Section className="border-border/60 border-y py-8 md:py-10">
+        <div className="hidden" aria-hidden="true" />
+      </Section>
         <div className="flex flex-col gap-5">
           <div className="relative">
             <Search
