@@ -1,6 +1,20 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+export interface SavedPickNote {
+  id: string;
+  note: string;
+  weekKey: string;
+  savedAt: string;
+  hustle: {
+    id: string;
+    slug: string;
+    title: string;
+    category: string;
+    level: string;
+  } | null;
+}
+
 export interface WeeklyPicksResult {
   week: string;
   startsAt: string;
