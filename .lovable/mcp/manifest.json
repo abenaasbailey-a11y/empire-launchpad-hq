@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://rgkadpinqhsdptjgtneu.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "empire-builder-access",
+      "version": "0.1.0",
+      "title": "Empire Builder Access"
+    },
+    "tools": [
+      {
+        "name": "get_my_membership",
+        "title": "Get my membership",
+        "description": "Read the signed-in member's Her Empire Era membership profile: name, email and join date.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_my_membership",
+        "title": "Update my membership name",
+        "description": "Update the display name on the signed-in member's Her Empire Era profile.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "description": "The member's display name."
+            }
+          },
+          "required": [
+            "full_name"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
