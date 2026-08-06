@@ -33,6 +33,29 @@ export function weekKey(date = new Date()): string {
   return `${d.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
 }
 
+/**
+ * Monday-to-Sunday UTC window for the given date, plus the exact instant the
+ * next rotation happens (used client-side to auto-refresh after 7 days).
+ */
+export function weekWindow(date = new Date()): {
+  week: string;
+  startsAt: string;
+  endsAt: string;
+  refreshAt: string;
+} {
+  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const day = d.getUTCDay() || 7;
+  const start = new Date(d.getTime() - (day - 1) * 86_400_000);
+  const end = new Date(start.getTime() + 6 * 86_400_000);
+  const refresh = new Date(start.getTime() + 7 * 86_400_000);
+  return {
+    week: weekKey(date),
+    startsAt: start.toISOString(),
+    endsAt: end.toISOString(),
+    refreshAt: refresh.toISOString(),
+  };
+}
+
 function hash(input: string): number {
   let h = 2166136261;
   for (let i = 0; i < input.length; i += 1) {
