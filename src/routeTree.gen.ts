@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as MeetVictoriaRouteImport } from './routes/meet-victoria'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -44,6 +45,11 @@ const JoinRoute = JoinRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeetVictoriaRoute = MeetVictoriaRouteImport.update({
+  id: '/meet-victoria',
+  path: '/meet-victoria',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
+  '/meet-victoria': typeof MeetVictoriaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
+  '/meet-victoria': typeof MeetVictoriaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
+  '/meet-victoria': typeof MeetVictoriaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/toolkit': typeof ToolkitRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/join'
     | '/mcp'
+    | '/meet-victoria'
     | '/sitemap.xml'
     | '/toolkit'
     | '/.mcp/list-tools'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/join'
     | '/mcp'
+    | '/meet-victoria'
     | '/sitemap.xml'
     | '/toolkit'
     | '/.mcp/list-tools'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/join'
     | '/mcp'
+    | '/meet-victoria'
     | '/sitemap.xml'
     | '/toolkit'
     | '/.mcp/list-tools'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   JoinRoute: typeof JoinRoute
   McpRoute: typeof McpRoute
+  MeetVictoriaRoute: typeof MeetVictoriaRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolkitRoute: typeof ToolkitRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meet-victoria': {
+      id: '/meet-victoria'
+      path: '/meet-victoria'
+      fullPath: '/meet-victoria'
+      preLoaderRoute: typeof MeetVictoriaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -289,6 +309,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   JoinRoute: JoinRoute,
   McpRoute: McpRoute,
+  MeetVictoriaRoute: MeetVictoriaRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolkitRoute: ToolkitRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
