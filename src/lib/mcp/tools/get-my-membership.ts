@@ -1,4 +1,5 @@
 import { defineTool } from "@lovable.dev/mcp-js";
+import { z } from "zod";
 import { supabaseForUser } from "../supabase";
 
 export default defineTool({
@@ -7,6 +8,13 @@ export default defineTool({
   description:
     "Read the signed-in member's Her Empire Era membership profile: name, email and join date.",
   inputSchema: {},
+  outputSchema: {
+    profile: z.object({
+      full_name: z.string().nullable(),
+      email: z.string().nullable(),
+      member_since: z.string().nullable(),
+    }),
+  },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async (_input, ctx) => {
     if (!ctx.isAuthenticated()) {

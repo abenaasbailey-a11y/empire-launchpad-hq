@@ -9,6 +9,9 @@ export default defineTool({
   inputSchema: {
     full_name: z.string().trim().min(1).max(120).describe("The member's display name."),
   },
+  outputSchema: {
+    profile: z.object({ full_name: z.string().nullable() }),
+  },
   annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ full_name }, ctx) => {
     if (!ctx.isAuthenticated()) {
