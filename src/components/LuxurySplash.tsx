@@ -31,8 +31,9 @@ export function LuxurySplash() {
     }
     window.sessionStorage.setItem(SESSION_KEY, "1");
     setPhase("visible");
-    const leave = window.setTimeout(() => setPhase("leaving"), HOLD_MS);
-    const done = window.setTimeout(() => setPhase("hidden"), HOLD_MS + FADE_MS);
+    const hold = forced ? 12000 : HOLD_MS;
+    const leave = window.setTimeout(() => setPhase("leaving"), hold);
+    const done = window.setTimeout(() => setPhase("hidden"), hold + FADE_MS);
     return () => {
       window.clearTimeout(leave);
       window.clearTimeout(done);
