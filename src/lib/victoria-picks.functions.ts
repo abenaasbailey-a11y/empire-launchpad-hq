@@ -22,11 +22,12 @@ export interface WeeklyPicksResult {
 /**
  * Victoria's weekly personalised picks for the signed-in member, built from
  * their favourites and progress. Stable for a whole ISO week, then rotates.
+ * Members can also manually advance the week offset to see next week's picks early.
  */
 export const getWeeklyPicks = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<WeeklyPicksResult> => {
-    const { shortlist, addVictoriaNotes, weekWindow } = await import("./victoria-picks.server");
+    const { shortlist, addVictoriaNotes, weekKey, weekWindow } = await import("./victoria-picks.server");
     const { supabase, userId } = context;
 
     const [libraryRes, signalsRes, profileRes] = await Promise.all([
@@ -34,7 +35,11 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
         .from("side_hustles")
         .select("id, slug, title, summary, category, level, earning_potential, startup_cost"),
       supabase.from("member_side_hustles").select("side_hustle_id, is_favorite, status"),
-      supabase.from("profiles").select("full_name").eq("id", userId).maybeSingle(),
+      supabase
+        .from("profiles")
+        .select("full_name, victoria_picks_week_offset, victoria_picks_last_week_key")
+        .eq("id", userId)
+        .maybeSingle(),
     ]);
 
     if (libraryRes.error) throw new Error(libraryRes.error.message);
@@ -42,10 +47,83 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
 
     const library = libraryRes.data ?? [];
     const signals = signalsRes.data ?? [];
-    const window = weekWindow();
+    const currentWeek = weekKey();
+    const profile = profileRes.data;
+
+    // Reset the manual offset when a new natural ISO week begins.
+    let weekOffset = profile?.victoria_picks_week_offset ?? 0;
+    if ((profile?.victoria_picks_last_week_key ?? null) !== currentWeek) {
+      weekOffset = 0;
+      if (profile) {
+        await supabase
+          .from("profiles")
+          .update({ victoria_picks_week_offset: 0, victoria_picks_last_week_key: currentWeek })
+          .eq("id", userId);
+      }
+    }
+
+    const window = weekWindow(new Date(), weekOffset);
     const week = window.week;
     const picks = shortlist(library, signals, week);
-    const firstName = profileRes.data?.full_name?.split(" ")[0] ?? null;
+    const firstName = profile?.full_name?.split(" ")[0] ?? null;
+
+    return {
+      week,
+      startsAt: window.startsAt,
+      endsAt: window.endsAt,
+      refreshAt: window.refreshAt,
+      picks: await addVictoriaNotes(picks, signals, library, firstName),
+    };
+  });
+
+/**
+ * Manually advance Victoria's picks by one week and return the fresh set.
+ * Resets the offset first if the stored week key belongs to a previous ISO week.
+ */
+export const refreshWeeklyPicks = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<WeeklyPicksResult> => {
+    const { shortlist, addVictoriaNotes, weekKey, weekWindow } = await import("./victoria-picks.server");
+    const { supabase, userId } = context;
+
+    const [libraryRes, signalsRes, profileRes] = await Promise.all([
+      supabase
+        .from("side_hustles")
+        .select("id, slug, title, summary, category, level, earning_potential, startup_cost"),
+      supabase.from("member_side_hustles").select("side_hustle_id, is_favorite, status"),
+      supabase
+        .from("profiles")
+        .select("full_name, victoria_picks_week_offset, victoria_picks_last_week_key")
+        .eq("id", userId)
+        .maybeSingle(),
+    ]);
+
+    if (libraryRes.error) throw new Error(libraryRes.error.message);
+    if (signalsRes.error) throw new Error(signalsRes.error.message);
+
+    const library = libraryRes.data ?? [];
+    const signals = signalsRes.data ?? [];
+    const currentWeek = weekKey();
+    const profile = profileRes.data;
+
+    let weekOffset = profile?.victoria_picks_week_offset ?? 0;
+    if ((profile?.victoria_picks_last_week_key ?? null) !== currentWeek) {
+      weekOffset = 0;
+    }
+    weekOffset += 1;
+
+    const updateRes = await supabase
+      .from("profiles")
+      .update({ victoria_picks_week_offset: weekOffset, victoria_picks_last_week_key: currentWeek })
+      .eq("id", userId)
+      .select("victoria_picks_week_offset, victoria_picks_last_week_key")
+      .single();
+    if (updateRes.error) throw new Error(updateRes.error.message);
+
+    const window = weekWindow(new Date(), weekOffset);
+    const week = window.week;
+    const picks = shortlist(library, signals, week);
+    const firstName = profile?.full_name?.split(" ")[0] ?? null;
 
     return {
       week,
