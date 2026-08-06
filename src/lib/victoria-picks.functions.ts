@@ -172,7 +172,9 @@ export const getSavedPickNotes = createServerFn({ method: "GET" })
     const [notesRes, signalsRes] = await Promise.all([
       supabase
         .from("victoria_pick_notes")
-        .select("id, note, week_key, created_at, side_hustles (id, slug, title, category, level)")
+        .select(
+          "id, note, week_key, created_at, side_hustles (id, slug, title, category, level, summary, earning_potential, startup_cost, tools, first_steps)",
+        )
         .order("created_at", { ascending: false })
         .limit(120),
       supabase.from("member_side_hustles").select("side_hustle_id, is_favorite, status"),
@@ -191,4 +193,31 @@ export const getSavedPickNotes = createServerFn({ method: "GET" })
       isFavorite: signalById.get(row.side_hustles?.id ?? "")?.is_favorite ?? false,
       hustle: row.side_hustles ?? null,
     }));
+  });
+
+/**
+ * Let a member rewrite Victoria's "why this fits you" note in their own words.
+ * RLS scopes the update to the caller's own notes.
+ */
+export const updatePickNote = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { id: string; note: string }) => {
+    const id = String(data?.id ?? "").trim();
+    const note = String(data?.note ?? "").trim();
+    if (!id) throw new Error("A note id is required.");
+    if (note.length < 3) throw new Error("Please write at least a few words.");
+    if (note.length > 500) throw new Error("Notes are limited to 500 characters.");
+    return { id, note };
+  })
+  .handler(async ({ context, data }): Promise<{ id: string; note: string }> => {
+    const { supabase, userId } = context;
+    const { data: row, error } = await supabase
+      .from("victoria_pick_notes")
+      .update({ note: data.note, updated_at: new Date().toISOString() })
+      .eq("id", data.id)
+      .eq("user_id", userId)
+      .select("id, note")
+      .single();
+    if (error) throw new Error(error.message);
+    return { id: row.id, note: row.note };
   });
