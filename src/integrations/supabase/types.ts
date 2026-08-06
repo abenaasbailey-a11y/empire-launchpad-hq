@@ -145,6 +145,44 @@ export type Database = {
         }
         Relationships: []
       }
+      victoria_pick_notes: {
+        Row: {
+          created_at: string
+          id: string
+          note: string
+          side_hustle_id: string
+          updated_at: string
+          user_id: string
+          week_key: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note: string
+          side_hustle_id: string
+          updated_at?: string
+          user_id: string
+          week_key: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note?: string
+          side_hustle_id?: string
+          updated_at?: string
+          user_id?: string
+          week_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "victoria_pick_notes_side_hustle_id_fkey"
+            columns: ["side_hustle_id"]
+            isOneToOne: false
+            referencedRelation: "side_hustles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
