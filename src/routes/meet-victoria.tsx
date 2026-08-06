@@ -3,59 +3,59 @@ import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { StartFreeForm } from "@/components/landing/StartFreeForm";
 
-const TITLE = "Free Business Toolkit — Her Empire Era";
+const TITLE = "Meet Victoria — AI Business Assistant for Women Founders";
 const DESCRIPTION =
-  "Professional tools for women founders: planning, pricing, branding, content, websites, résumés and grants. Powered by Victoria. Start free.";
+  "Victoria is your private AI business assistant for pricing, planning, branding, content and daily decisions. Built for women founders. Start free.";
 const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
-const CANONICAL = "https://yourempireconcierge.com/toolkit";
+const CANONICAL = "https://yourempireconcierge.com/meet-victoria";
 
-const tools = [
+const capabilities = [
   {
-    title: "Business plan builder",
-    body: "Turn your idea into a one-page plan with revenue goals, audience definition and next steps — written for your business, not a classroom.",
+    title: "Business planning",
+    body: "Turn scattered ideas into a clear plan. Victoria maps your offer, audience, revenue goals and next steps so you always know what to do next.",
   },
   {
-    title: "Pricing & offer calculator",
-    body: "Price with confidence. Map your costs, value and market position so your next offer reflects what you actually deliver.",
+    title: "Pricing & offers",
+    body: "Stop guessing what to charge. She helps you price by value, cost and position so your rates reflect the empire you're building.",
   },
   {
-    title: "Brand voice guide",
-    body: "Capture the tone, phrases and story that make your brand sound like you — then use it across every caption, email and sales page.",
+    title: "Marketing & content",
+    body: "Generate captions, emails, sales pages and content calendars in your voice — ready to post, send or publish.",
   },
   {
-    title: "Content calendar",
-    body: "Plan a month of posts, reels and emails in minutes. Each idea is drafted in your voice and ready to schedule.",
+    title: "Branding & positioning",
+    body: "Define the tone, story and visuals that make your brand unmistakably yours, then keep every message consistent.",
   },
   {
-    title: "Website copy framework",
-    body: "Home, about and sales page copy built around your offer and your visitor's transformation — not generic templates.",
+    title: "Websites & résumés",
+    body: "From home page copy to professional bios and grant-ready résumés, Victoria builds work that looks as polished as you are.",
   },
   {
-    title: "Résumé & grant writer",
-    body: "Professional bios, résumés and grant narratives that position your experience and mission with clarity.",
+    title: "Daily decisions",
+    body: "Ask anything. Grants, government-contract guidance, client emails, launch timing — Victoria is the calm second opinion in your pocket.",
   },
 ];
 
 const howItWorks = [
   {
     step: "01",
-    title: "Join free",
-    body: "Create your account in under a minute. No card required to start.",
+    title: "Tell her your goals",
+    body: "Share your business, audience and voice. Victoria learns what matters to you.",
   },
   {
     step: "02",
-    title: "Tell Victoria about your business",
-    body: "Share your goals, audience and voice so every tool outputs work that sounds like you.",
+    title: "Ask or choose a focus",
+    body: "Need a price, plan, post or page? She builds personalized output in seconds.",
   },
   {
     step: "03",
-    title: "Generate, edit, publish",
-    body: "Run any tool, refine the output, and put your next offer, post or proposal in motion.",
+    title: "Launch with confidence",
+    body: "Refine, publish and move on to the next move — with 24/7 support behind you.",
   },
 ];
 
-export const Route = createFileRoute("/toolkit")({
-  component: ToolkitPage,
+export const Route = createFileRoute("/meet-victoria")({
+  component: MeetVictoriaPage,
   head: () => ({
     meta: [
       { title: TITLE },
@@ -81,13 +81,23 @@ export const Route = createFileRoute("/toolkit")({
             name: "Her Empire Era",
             url: "https://yourempireconcierge.com",
           },
+          about: {
+            "@type": "SoftwareApplication",
+            name: "Victoria AI Business Assistant",
+            applicationCategory: "BusinessApplication",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+            },
+          },
         }),
       },
     ],
   }),
 });
 
-function ToolkitPage() {
+function MeetVictoriaPage() {
   return (
     <main>
       <header className="border-border/60 bg-background/85 fixed top-0 z-50 w-full border-b backdrop-blur-md">
@@ -114,14 +124,14 @@ function ToolkitPage() {
           aria-hidden="true"
         />
         <div className="relative mx-auto flex min-h-[70svh] w-full max-w-6xl flex-col justify-center px-5 pt-28 pb-16 md:min-h-[60vh] md:px-10 md:pt-32 md:pb-28">
-          <p className="eyebrow eyebrow-blush">Professional tools · Free to start</p>
+          <p className="eyebrow eyebrow-blush">Your private AI business assistant</p>
           <h1 className="font-display mt-4 max-w-3xl text-[2.5rem] leading-[1.08] font-light md:mt-6 md:text-6xl md:leading-[1.05]">
-            The toolkit that turns ambition into action.
+            Meet Victoria, the AI concierge behind every polished empire.
           </h1>
           <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
-            Every tool inside Her Empire Era is designed for women building businesses: planning,
-            pricing, branding, content, websites, résumés and grants. Victoria, your AI concierge,
-            personalizes each one to your voice and goals.
+            Victoria is a 24/7 AI business assistant built for women founders. She helps with
+            pricing, planning, branding, marketing, content, websites, résumés, grants and the daily
+            decisions that slow you down.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
@@ -130,32 +140,32 @@ function ToolkitPage() {
               </Link>
             </Button>
             <a
-              href="#tools"
+              href="#capabilities"
               className="text-muted-foreground hover:text-blush text-[0.7rem] tracking-[0.22em] uppercase transition-colors"
             >
-              Explore the tools
+              See what Victoria does
             </a>
           </div>
         </div>
       </section>
 
-      {/* Tools grid */}
-      <Section id="tools">
+      {/* Capabilities */}
+      <Section id="capabilities">
         <SectionHeading
-          eyebrow="What's inside"
+          eyebrow="What Victoria handles"
           title={<>Built for the work that builds empires.</>}
-          lead="These are the same tools members use to plan, price, write and launch — all in one place."
+          lead="From big-picture strategy to last-minute copy, Victoria is the calm, capable partner every founder deserves."
           glow
         />
         <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-          {tools.map((t) => (
+          {capabilities.map((c) => (
             <article
-              key={t.title}
+              key={c.title}
               className="border-border bg-card/50 rounded-2xl border p-6 backdrop-blur-sm md:p-8"
             >
               <GoldRule />
-              <h3 className="font-display mt-6 text-xl font-light md:text-2xl">{t.title}</h3>
-              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{t.body}</p>
+              <h3 className="font-display mt-6 text-xl font-light md:text-2xl">{c.title}</h3>
+              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{c.body}</p>
             </article>
           ))}
         </div>
@@ -165,8 +175,8 @@ function ToolkitPage() {
       <Section id="how-it-works" className="bg-blush-wash">
         <SectionHeading
           eyebrow="How it works"
-          title={<>From idea to output in three steps.</>}
-          lead="No templates to hunt down. No prompts to memorize. Just your business, your voice, and Victoria."
+          title={<>Three steps to having a concierge in your corner.</>}
+          lead="No prompts to memorize. No generic templates. Just your business, your voice, and Victoria."
         />
         <div className="mt-12 grid gap-8 md:mt-16 md:grid-cols-3 md:gap-10">
           {howItWorks.map((s) => (
@@ -182,13 +192,13 @@ function ToolkitPage() {
 
       {/* Membership CTA */}
       <Section id="start" className="text-center">
-        <p className="eyebrow eyebrow-blush">Free membership</p>
+        <p className="eyebrow eyebrow-blush">Free to start</p>
         <h2 className="font-display heading-glow mx-auto mt-5 max-w-3xl text-[2.15rem] leading-[1.1] font-light md:text-6xl md:leading-[1.08]">
-          Open the toolkit tonight.
+          Put Victoria to work today.
         </h2>
         <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-[0.95rem] leading-relaxed md:text-base">
-          Create your free Her Empire Era account and start using every tool immediately. No card
-          required.
+          Create your free Her Empire Era account and start asking Victoria for pricing, plans,
+          content and more. No card required.
         </p>
         <div className="mt-10">
           <StartFreeForm />
