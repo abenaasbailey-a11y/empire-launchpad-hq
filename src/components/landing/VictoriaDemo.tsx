@@ -62,7 +62,7 @@ const scenarios = [
       },
     ],
   },
-];
+] as const;
 
 export function VictoriaDemo() {
   const [activeId, setActiveId] = useState(scenarios[0].id);
