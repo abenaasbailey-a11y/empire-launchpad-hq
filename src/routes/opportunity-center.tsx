@@ -492,17 +492,34 @@ function OpportunityCard({
 
 function VictoriaPicks() {
   const fetchPicks = useServerFn(getWeeklyPicks);
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["victoria-weekly-picks"],
     queryFn: () => fetchPicks(),
     staleTime: 60 * 60_000,
   });
+
+  // Rotate automatically the moment the 7-day window closes, without a reload.
+  useEffect(() => {
+    if (!data?.refreshAt) return;
+    const delay = new Date(data.refreshAt).getTime() - Date.now();
+    const timer = window.setTimeout(() => void refetch(), Math.max(delay, 1_000));
+    return () => window.clearTimeout(timer);
+  }, [data?.refreshAt, refetch]);
+
+  const dateLabel = data
+    ? `${formatPickDate(data.startsAt)} – ${formatPickDate(data.endsAt)}`
+    : null;
 
   if (isError) return null;
 
   return (
     <Section className="bg-blush-wash">
       <p className="eyebrow eyebrow-blush">Victoria&rsquo;s picks · this week</p>
+      {dateLabel ? (
+        <p className="text-muted-foreground mt-3 text-[0.7rem] tracking-[0.18em] uppercase">
+          <span className="text-gold">This week</span> · {dateLabel}
+        </p>
+      ) : null}
       <h2 className="font-display heading-glow mt-5 max-w-3xl text-[2rem] leading-[1.1] font-light md:text-4xl">
         Chosen for you from what you have saved and started.
       </h2>
