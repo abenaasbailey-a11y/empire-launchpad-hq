@@ -58,18 +58,24 @@ export type Database = {
           full_name: string | null
           id: string
           updated_at: string
+          victoria_picks_last_week_key: string | null
+          victoria_picks_week_offset: number
         }
         Insert: {
           created_at?: string
           full_name?: string | null
           id: string
           updated_at?: string
+          victoria_picks_last_week_key?: string | null
+          victoria_picks_week_offset?: number
         }
         Update: {
           created_at?: string
           full_name?: string | null
           id?: string
           updated_at?: string
+          victoria_picks_last_week_key?: string | null
+          victoria_picks_week_offset?: number
         }
         Relationships: []
       }
