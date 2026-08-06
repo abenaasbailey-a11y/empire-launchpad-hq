@@ -115,7 +115,7 @@ export const membershipFaqs = [
   },
   {
     q: "How do I sign up?",
-    a: "Enter your email, choose a password, then confirm your email address from the message we send you. Your dashboard opens the moment you confirm.",
+    a: "Enter your email, choose a password, and your free account is ready instantly. Your dashboard opens the moment you sign up — no waiting, no card required.",
   },
   {
     q: "Will the work sound like me?",
