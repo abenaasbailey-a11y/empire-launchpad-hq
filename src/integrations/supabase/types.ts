@@ -147,6 +147,7 @@ export type Database = {
       }
       victoria_pick_notes: {
         Row: {
+          completed_steps: number[]
           created_at: string
           id: string
           note: string
@@ -156,6 +157,7 @@ export type Database = {
           week_key: string
         }
         Insert: {
+          completed_steps?: number[]
           created_at?: string
           id?: string
           note: string
@@ -165,6 +167,7 @@ export type Database = {
           week_key: string
         }
         Update: {
+          completed_steps?: number[]
           created_at?: string
           id?: string
           note?: string
