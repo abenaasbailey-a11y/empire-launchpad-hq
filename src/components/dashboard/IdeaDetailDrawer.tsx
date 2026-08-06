@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -13,7 +13,12 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { updatePickNote, type SavedPickNote } from "@/lib/victoria-picks.functions";
+import { Progress } from "@/components/ui/progress";
+import {
+  updatePickNote,
+  updatePickSteps,
+  type SavedPickNote,
+} from "@/lib/victoria-picks.functions";
 
 const STATUS_LABELS: Record<string, string> = {
   not_started: "Not started",
@@ -44,11 +49,17 @@ export function IdeaDetailDrawer({
 }) {
   const queryClient = useQueryClient();
   const saveNote = useServerFn(updatePickNote);
+  const saveSteps = useServerFn(updatePickSteps);
   const [draft, setDraft] = useState("");
+  const [checked, setChecked] = useState<number[]>([]);
 
   useEffect(() => {
     setDraft(entry?.note ?? "");
   }, [entry?.id, entry?.note]);
+
+  useEffect(() => {
+    setChecked(entry?.completedSteps ?? []);
+  }, [entry?.id, entry?.completedSteps]);
 
   const mutation = useMutation({
     mutationFn: (note: string) => saveNote({ data: { id: entry!.id, note } }),
@@ -59,8 +70,30 @@ export function IdeaDetailDrawer({
     onError: (error: Error) => toast.error(error.message || "Could not save that note."),
   });
 
+  const stepsMutation = useMutation({
+    mutationFn: (completedSteps: number[]) =>
+      saveSteps({ data: { id: entry!.id, completedSteps } }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["victoria-saved-notes"] });
+    },
+    onError: (error: Error) => {
+      setChecked(entry?.completedSteps ?? []);
+      toast.error(error.message || "Could not save your progress.");
+    },
+  });
+
+  function toggleStep(index: number) {
+    const next = checked.includes(index)
+      ? checked.filter((i) => i !== index)
+      : [...checked, index].sort((a, b) => a - b);
+    setChecked(next);
+    stepsMutation.mutate(next);
+  }
+
   const hustle = entry?.hustle ?? null;
   const dirty = entry ? draft.trim() !== entry.note.trim() : false;
+  const steps = hustle?.first_steps ?? [];
+  const doneCount = checked.filter((i) => i < steps.length).length;
 
   return (
     <Sheet open={entry !== null} onOpenChange={onOpenChange}>
@@ -114,21 +147,53 @@ export function IdeaDetailDrawer({
                 </div>
               ) : null}
 
-              {hustle?.first_steps?.length ? (
+              {steps.length ? (
                 <div>
-                  <p className="text-muted-foreground text-[0.62rem] tracking-[0.22em] uppercase">
-                    First steps
-                  </p>
-                  <ol className="mt-2 space-y-2 text-sm leading-relaxed">
-                    {hustle.first_steps.map((step, index) => (
-                      <li key={step} className="flex gap-3">
-                        <span className="text-gold text-xs tracking-[0.1em]">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="text-muted-foreground">{step}</span>
-                      </li>
-                    ))}
-                  </ol>
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-muted-foreground text-[0.62rem] tracking-[0.22em] uppercase">
+                      First steps
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      {doneCount}/{steps.length} done
+                      {stepsMutation.isPending && " · saving…"}
+                    </p>
+                  </div>
+                  <Progress
+                    value={steps.length ? (doneCount / steps.length) * 100 : 0}
+                    className="mt-3 h-1"
+                  />
+                  <ul className="mt-4 space-y-2 text-sm leading-relaxed">
+                    {steps.map((step, index) => {
+                      const done = checked.includes(index);
+                      return (
+                        <li key={step}>
+                          <button
+                            type="button"
+                            onClick={() => toggleStep(index)}
+                            aria-pressed={done}
+                            className="border-border/60 hover:border-gold/50 flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-colors"
+                          >
+                            <span
+                              className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] border transition-colors ${
+                                done ? "border-gold bg-gold/20 text-gold" : "border-border"
+                              }`}
+                            >
+                              {done && <Check className="h-3 w-3" />}
+                            </span>
+                            <span
+                              className={
+                                done
+                                  ? "text-muted-foreground/60 line-through"
+                                  : "text-muted-foreground"
+                              }
+                            >
+                              {step}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               ) : null}
 
