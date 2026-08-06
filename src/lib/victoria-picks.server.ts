@@ -1,4 +1,6 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { generateText, Output } from "ai";
+import type { Database } from "@/integrations/supabase/types";
 import { z } from "zod";
 import { createLovableAiGatewayProvider } from "./ai-gateway.server";
 
@@ -177,4 +179,27 @@ export async function addVictoriaNotes(
     console.error("[victoria-picks] AI note generation failed", error);
     return picks.map((h) => ({ ...h, note: fallbackNote(h, hasSignals) }));
   }
+}
+/**
+ * Saves Victoria's one-line notes so the member can reference them later in
+ * their dashboard. Upserted per member / idea / week so re-fetching the same
+ * week keeps a single row and refreshed weeks add new ones.
+ */
+export async function persistNotes(
+  supabase: SupabaseClient<Database>,
+  userId: string,
+  weekKeyValue: string,
+  picks: VictoriaPick[],
+): Promise<void> {
+  if (picks.length === 0) return;
+  const { error } = await supabase.from("victoria_pick_notes").upsert(
+    picks.map((h) => ({
+      user_id: userId,
+      side_hustle_id: h.id,
+      week_key: weekKeyValue,
+      note: h.note,
+    })),
+    { onConflict: "user_id,side_hustle_id,week_key" },
+  );
+  if (error) console.error("[victoria-picks] failed to save notes", error.message);
 }
