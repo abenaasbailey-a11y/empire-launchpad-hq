@@ -101,6 +101,12 @@ function AuthPage() {
           },
         });
         if (signUpError) {
+          const message = signUpError.message.toLowerCase();
+          if (message.includes("already registered") || message.includes("already been registered")) {
+            setMode("signin");
+            setError("You already have a membership with this email — sign in below.");
+            return;
+          }
           setError(signUpError.message);
           return;
         }
@@ -108,9 +114,18 @@ function AuthPage() {
           goAfterAuth();
           return;
         }
-        setNotice(
-          `Almost there — check ${parsed.data.email} and confirm your email to open your dashboard.`,
-        );
+        // Signups are auto-confirmed, so sign the new member straight in.
+        const { error: autoSignInError } = await supabase.auth.signInWithPassword({
+          email: parsed.data.email,
+          password: parsed.data.password,
+        });
+        if (autoSignInError) {
+          setNotice(
+            `Almost there — check ${parsed.data.email} and confirm your email to open your dashboard.`,
+          );
+          return;
+        }
+        goAfterAuth();
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email: parsed.data.email,
