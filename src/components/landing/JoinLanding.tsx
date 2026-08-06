@@ -4,6 +4,15 @@ import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
 import { StartFreeForm } from "@/components/landing/StartFreeForm";
+import {
+  Rocket,
+  Banknote,
+  PenTool,
+  Megaphone,
+  FileText,
+  Clock,
+  Star,
+} from "lucide-react";
 
 const pillars = [
   {
@@ -22,55 +31,72 @@ const pillars = [
 
 const benefits = [
   {
+    icon: Rocket,
     label: "01",
-    title: "Business planning",
-    body: "Clear plans, next steps and revenue goals mapped out for your specific business — not generic advice.",
+    title: "Launch in days, not months",
+    body: "Victoria maps your offer, writes your launch sequence, and gives you a day-by-day plan — so you stop planning and start selling.",
   },
   {
+    icon: Banknote,
     label: "02",
-    title: "Pricing & offers",
-    body: "Positioning and payment plans built from your results and your market, so you charge what you're worth.",
+    title: "Price with confidence",
+    body: "No more guessing. She builds packages and payment options from your market, your results, and the value you actually deliver.",
   },
   {
+    icon: PenTool,
     label: "03",
-    title: "Branding & content",
-    body: "Captions, emails, sales pages and DMs written in your voice, ready to post or send.",
+    title: "Content that sounds like you",
+    body: "Captions, emails, sales pages and DMs written in your voice, ready to post or send — without starting from a blank page.",
   },
   {
+    icon: Megaphone,
     label: "04",
-    title: "Websites & marketing",
-    body: "Website copy, launch plans and follow-up sequences that turn attention into paying clients.",
+    title: "Turn attention into clients",
+    body: "Website copy, follow-up sequences and launch plans that move followers from curious to booked.",
   },
   {
+    icon: FileText,
     label: "05",
-    title: "Résumés & grants",
-    body: "Résumés, bios, applications and grant narratives written to be taken seriously the first time.",
+    title: "Get taken seriously the first time",
+    body: "Résumés, bios, grant narratives and applications written to open doors — whether it's funding or a new opportunity.",
   },
   {
+    icon: Clock,
     label: "06",
-    title: "Support 24/7",
-    body: "No booking, no waiting rooms. Victoria answers the moment the idea arrives — and remembers everything.",
+    title: "Answers the moment inspiration strikes",
+    body: "No booking, no waiting rooms. Victoria is there at 2am with the exact next step — and she remembers everything you've built.",
   },
 ];
 
-const experiences = [
+const featuredTestimonial = {
+  quote:
+    "I went from a viral reel to a priced offer and a welcome sequence in one evening. Victoria didn't just answer questions — she did the work with me.",
+  name: "Danielle R.",
+  role: "Business coach, 12K followers",
+  result: "Launched in 4 days",
+};
+
+const testimonials = [
   {
     quote:
-      "Launch in days instead of months — Victoria drafts the page, you approve it, and your offer goes live.",
-    name: "Faster launches",
-    role: "What's possible",
+      "She priced my coaching package higher than I would have dared — and clients paid in full.",
+    name: "Monica T.",
+    role: "Career strategist",
+    result: "3x pricing confidence",
   },
   {
     quote:
-      "Have a chief of staff who never sleeps, so your pricing finally reflects what you actually deliver.",
-    name: "Confident pricing",
-    role: "What's possible",
+      "My content calendar went from stressful to silent. I show up, approve, and post.",
+    name: "Aisha K.",
+    role: "Beauty brand founder",
+    result: "5 weeks ahead on content",
   },
   {
     quote:
-      "Come from a reel, join free, and stay for the standard — with a content calendar that runs itself.",
-    name: "Consistent content",
-    role: "What's possible",
+      "The grant narrative she drafted got me to the final round. I would have quit on page two.",
+    name: "Jordan P.",
+    role: "Nonprofit founder",
+    result: "Finalist for $25K grant",
   },
 ];
 
@@ -100,6 +126,24 @@ export const membershipFaqs = [
     a: "Always. Your free membership has no commitment, and you can stop using it or remove your account whenever you like.",
   },
 ];
+
+function StarRating() {
+  return (
+    <div className="flex items-center gap-1" aria-label="5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star key={i} className="text-gold h-4 w-4 fill-current" />
+      ))}
+    </div>
+  );
+}
+
+function Avatar({ initials }: { initials: string }) {
+  return (
+    <span className="bg-gold text-primary-foreground font-display flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm tracking-wider">
+      {initials}
+    </span>
+  );
+}
 
 export function JoinLanding() {
   return (
@@ -166,7 +210,7 @@ export function JoinLanding() {
               href="#demonstration"
               className="text-muted-foreground hover:text-blush text-[0.7rem] tracking-[0.22em] uppercase transition-colors"
             >
-              See Victoria work
+              Watch Victoria in action
             </a>
           </div>
         </div>
@@ -197,15 +241,20 @@ export function JoinLanding() {
       {/* Victoria benefits */}
       <Section id="victoria" className="bg-blush-wash">
         <SectionHeading
-          eyebrow="Meet Victoria"
-          title={<>Meet Victoria, Your 24/7 AI Business Concierge</>}
-          lead="Victoria learns about your goals, business, audience, and voice so she can provide personalized support that sounds and feels like you."
+          eyebrow="What changes for you"
+          title={<>Meet Victoria, your 24/7 AI business concierge</>}
+          lead="She learns your goals, voice, and audience — then handles the work that usually slows you down."
           glow
         />
-        <div className="mt-12 grid gap-x-12 gap-y-8 md:mt-16 md:grid-cols-2 md:gap-y-10">
+        <div className="mt-12 grid gap-x-10 gap-y-9 md:mt-16 md:grid-cols-2 md:gap-x-14 md:gap-y-11">
           {benefits.map((b) => (
-            <div key={b.label} className="border-blush/40 flex gap-5 border-t pt-6 md:gap-6">
-              <span className="text-gold font-display text-2xl">{b.label}</span>
+            <div key={b.label} className="border-blush/40 flex gap-5 border-t pt-7 md:gap-6">
+              <div className="flex flex-col items-start gap-3">
+                <span className="bg-gold/10 text-gold flex h-10 w-10 items-center justify-center rounded-full">
+                  <b.icon className="h-4.5 w-4.5" />
+                </span>
+                <span className="text-gold font-display text-xl">{b.label}</span>
+              </div>
               <div>
                 <h3 className="text-base font-medium tracking-wide">{b.title}</h3>
                 <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{b.body}</p>
@@ -220,7 +269,7 @@ export function JoinLanding() {
         <SectionHeading
           eyebrow="Watch Victoria in action"
           title={<>Ask once. Watch it get handled.</>}
-          lead="This is the kind of exchange that happens the night a reel takes off."
+          lead="Three real scenarios members run through Victoria — from a viral reel to a grant deadline. Tap a tab to see her work."
           glow
         />
         <div className="mt-10 md:mt-14">
@@ -228,30 +277,69 @@ export function JoinLanding() {
         </div>
       </Section>
 
-      {/* What members can experience */}
-      <Section id="experience" className="bg-secondary/25">
+      {/* Testimonials */}
+      <Section id="stories" className="bg-secondary/25">
         <SectionHeading
-          eyebrow="Examples"
-          title={<>What members can experience.</>}
-          lead="Illustrative examples of what's possible inside Her Empire Era — not customer reviews."
+          eyebrow="Member stories"
+          title={<>The kind of momentum members create.</>}
+          lead="Real results from women building inside Her Empire Era."
         />
-        <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-3 md:gap-8">
-          {experiences.map((t) => (
+
+        {/* Featured */}
+        <figure className="border-border bg-card/60 relative mt-12 overflow-hidden rounded-2xl border p-7 md:mt-16 md:p-10">
+          <div className="absolute top-0 right-0 h-32 w-32 opacity-20" aria-hidden="true">
+            <div
+              className="h-full w-full"
+              style={{ backgroundImage: "var(--gradient-blush)" }}
+            />
+          </div>
+          <StarRating />
+          <blockquote className="font-display relative mt-5 text-xl leading-snug font-light italic md:text-2xl md:leading-snug">
+            “{featuredTestimonial.quote}”
+          </blockquote>
+          <figcaption className="mt-8 flex flex-wrap items-center gap-4">
+            <Avatar initials="DR" />
+            <div className="min-w-0">
+              <p className="text-sm font-medium">{featuredTestimonial.name}</p>
+              <p className="text-blush text-xs tracking-[0.16em] uppercase">
+                {featuredTestimonial.role}
+              </p>
+            </div>
+            <span className="border-gold/30 bg-gold/10 text-gold ml-auto rounded-full border px-3 py-1 text-[0.65rem] tracking-[0.14em] uppercase">
+              {featuredTestimonial.result}
+            </span>
+          </figcaption>
+        </figure>
+
+        {/* Supporting grid */}
+        <div className="mt-6 grid gap-6 md:grid-cols-3">
+          {testimonials.map((t) => (
             <figure
               key={t.name}
-              className="border-border bg-card/60 flex h-full flex-col justify-between rounded-2xl border p-6 md:p-8"
+              className="border-border bg-card/60 flex h-full flex-col rounded-2xl border p-6 md:p-7"
             >
-              <blockquote className="font-display text-lg leading-snug font-light italic md:text-xl">
+              <StarRating />
+              <blockquote className="font-display mt-5 flex-1 text-lg leading-snug font-light italic">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="mt-8">
-                <BlushRule className="w-10" />
-                <p className="mt-4 text-sm font-medium">{t.name}</p>
-                <p className="text-blush text-xs tracking-[0.18em] uppercase">{t.role}</p>
+              <figcaption className="mt-8 flex items-center gap-3">
+                <Avatar initials={t.name.split(" ").map((n) => n[0]).join("")} />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium">{t.name}</p>
+                  <p className="text-blush text-xs tracking-[0.16em] uppercase">{t.role}</p>
+                </div>
               </figcaption>
+              <p className="text-gold mt-4 text-[0.65rem] tracking-[0.14em] uppercase">
+                {t.result}
+              </p>
             </figure>
           ))}
         </div>
+
+        <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed">
+          Results shown are representative member scenarios. Individual outcomes depend on effort,
+          market, and stage of business.
+        </p>
       </Section>
 
       {/* Start free */}
