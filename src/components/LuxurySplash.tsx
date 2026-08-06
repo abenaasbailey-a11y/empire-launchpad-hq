@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import crownMark from "@/assets/crown-mark.png";
+import crownMark from "@/assets/crown-mark-transparent.png";
 
 const HOLD_MS = 1600;
 const FADE_MS = 600;
@@ -65,14 +65,22 @@ export function LuxurySplash() {
           src={crownMark}
           alt=""
           width={640}
-          height={640}
-          className="h-28 w-28 object-contain sm:h-36 sm:w-36"
+          height={479}
+          className="h-24 w-32 object-contain sm:h-28 sm:w-40"
         />
         <span
           className="pointer-events-none absolute inset-0 block"
           style={{
             background:
               "linear-gradient(100deg, transparent 35%, oklch(0.95 0.06 90 / 45%) 50%, transparent 65%)",
+            maskImage: `url(${crownMark})`,
+            WebkitMaskImage: `url(${crownMark})`,
+            maskSize: "contain",
+            WebkitMaskSize: "contain",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            maskPosition: "center",
+            WebkitMaskPosition: "center",
             mixBlendMode: "screen",
             animation: "splash-shimmer 1700ms 350ms ease-in-out",
           }}
