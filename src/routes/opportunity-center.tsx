@@ -140,7 +140,9 @@ function OpportunityCenter() {
   const favorites = memberRows?.filter((r) => r.is_favorite).length ?? 0;
 
   function setSearch(patch: Partial<{ q: string; category: string; level: string; view: string }>) {
-    void navigate({ search: (prev) => ({ ...prev, ...patch }) });
+    void navigate({
+      search: (prev: Record<string, unknown>) => ({ ...prev, ...patch }),
+    });
   }
 
   return (
