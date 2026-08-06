@@ -9,6 +9,17 @@ launcher mask. Run it on demand with:
 npm run validate:icons
 ```
 
+## CI
+
+`.github/workflows/icons.yml` runs the same validator on every pull request and
+on pushes to `main`. The check needs no dependency install (the validator uses
+only Node built-ins), so it finishes in seconds. To make it blocking, add the
+`Validate PWA icons` check to the branch protection rules for `main` in
+GitHub → Settings → Branches.
+
+Because `npm run build` and `npm run build:dev` call the validator first, an
+icon regression also fails the production build, not just CI.
+
 ## Regenerating the icons
 
 Source logo: the black-and-gold H&E crown mark, toned down ~28% in saturation.
