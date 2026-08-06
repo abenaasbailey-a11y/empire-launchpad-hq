@@ -1,4 +1,5 @@
 import { createFileRoute, Link, stripSearchParams, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { queryOptions, useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
@@ -15,6 +16,16 @@ const TITLE = "Empire Opportunity Center — 200+ AI Side Hustles";
 const DESCRIPTION =
   "Browse a searchable library of AI-powered business ideas for women entrepreneurs: filter by level and category, save favourites and track your progress.";
 const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+
+const PICK_DATE_FORMAT = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+});
+
+function formatPickDate(iso: string): string {
+  return PICK_DATE_FORMAT.format(new Date(iso));
+}
 
 const hustlesQuery = queryOptions({
   queryKey: ["side-hustles"],
