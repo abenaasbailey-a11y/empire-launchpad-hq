@@ -3,7 +3,8 @@ import { JoinLanding } from "@/components/landing/JoinLanding";
 
 const TITLE = "Her Empire Era — Build Your Business With Confidence";
 const DESCRIPTION =
-  "Meet Victoria, your private AI business concierge. 24/7 support with business planning, pricing, branding, marketing, content, websites, résumés and grants. Start free.";
+  "Her Empire Era pairs women founders with Victoria, a private AI business concierge for planning, branding and marketing. Start free.";
+const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -14,8 +15,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:url", content: "https://yourempireconcierge.com/" },
+      { property: "og:image", content: OG_IMAGE },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/join" }],
+    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/" }],
     scripts: [
       {
         type: "application/ld+json",
