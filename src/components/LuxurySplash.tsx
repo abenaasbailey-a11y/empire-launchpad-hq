@@ -23,9 +23,12 @@ export function LuxurySplash() {
   const [phase, setPhase] = useState<"hidden" | "visible" | "leaving">("hidden");
 
   useEffect(() => {
+    const forced = new URLSearchParams(window.location.search).get("splash") === "1";
     if (window.sessionStorage.getItem(SESSION_KEY)) return;
-    if (window.self !== window.top) return; // never in preview iframes
-    if (!isStandalone()) return; // installed-app experience only
+    if (!forced) {
+      if (window.self !== window.top) return; // never in preview iframes
+      if (!isStandalone()) return; // installed-app experience only
+    }
     window.sessionStorage.setItem(SESSION_KEY, "1");
     setPhase("visible");
     const leave = window.setTimeout(() => setPhase("leaving"), HOLD_MS);
