@@ -67,25 +67,7 @@ export function LuxurySplash() {
           width={640}
           height={479}
           className="h-24 w-32 object-contain sm:h-28 sm:w-40"
-        />
-        <span
-          className="pointer-events-none absolute inset-0 block"
-          style={{
-            background:
-              "linear-gradient(100deg, transparent 40%, oklch(0.98 0.05 92 / 75%) 50%, transparent 60%)",
-            maskImage: `url(${crownMark})`,
-            WebkitMaskImage: `url(${crownMark})`,
-            maskSize: "contain",
-            WebkitMaskSize: "contain",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            maskPosition: "center",
-            WebkitMaskPosition: "center",
-            mixBlendMode: "screen",
-            backgroundSize: "220% 100%",
-            backgroundRepeat: "no-repeat",
-            animation: "splash-shimmer-sweep 1500ms 400ms ease-in-out",
-          }}
+          style={{ animation: "splash-shine 1600ms 400ms ease-in-out" }}
         />
       </div>
 
