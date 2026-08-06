@@ -36,20 +36,21 @@ export function weekKey(date = new Date()): string {
 /**
  * Monday-to-Sunday UTC window for the given date, plus the exact instant the
  * next rotation happens (used client-side to auto-refresh after 7 days).
+ * The `weekOffset` advances the window by whole weeks for manual refreshes.
  */
-export function weekWindow(date = new Date()): {
+export function weekWindow(date = new Date(), weekOffset = 0): {
   week: string;
   startsAt: string;
   endsAt: string;
   refreshAt: string;
 } {
-  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-  const day = d.getUTCDay() || 7;
-  const start = new Date(d.getTime() - (day - 1) * 86_400_000);
+  const base = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const day = base.getUTCDay() || 7;
+  const start = new Date(base.getTime() - (day - 1) * 86_400_000 + weekOffset * 7 * 86_400_000);
   const end = new Date(start.getTime() + 6 * 86_400_000);
   const refresh = new Date(start.getTime() + 7 * 86_400_000);
   return {
-    week: weekKey(date),
+    week: weekKey(new Date(start)),
     startsAt: start.toISOString(),
     endsAt: end.toISOString(),
     refreshAt: refresh.toISOString(),
