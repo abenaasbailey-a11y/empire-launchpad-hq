@@ -15,6 +15,11 @@ export interface SavedPickNote {
     title: string;
     category: string;
     level: string;
+    summary: string;
+    earning_potential: string;
+    startup_cost: string;
+    tools: string[];
+    first_steps: string[];
   } | null;
 }
 
