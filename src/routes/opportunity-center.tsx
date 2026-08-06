@@ -503,10 +503,20 @@ function OpportunityCard({
 
 function VictoriaPicks() {
   const fetchPicks = useServerFn(getWeeklyPicks);
+  const refreshPicks = useServerFn(refreshWeeklyPicks);
+  const queryClient = useQueryClient();
+
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["victoria-weekly-picks"],
     queryFn: () => fetchPicks(),
     staleTime: 60 * 60_000,
+  });
+
+  const refreshMutation = useMutation({
+    mutationFn: () => refreshPicks(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["victoria-weekly-picks"] });
+    },
   });
 
   // Rotate automatically the moment the 7-day window closes, without a reload.
@@ -525,12 +535,31 @@ function VictoriaPicks() {
 
   return (
     <Section className="bg-blush-wash">
-      <p className="eyebrow eyebrow-blush">Victoria&rsquo;s picks · this week</p>
-      {dateLabel ? (
-        <p className="text-muted-foreground mt-3 text-[0.7rem] tracking-[0.18em] uppercase">
-          <span className="text-gold">This week</span> · {dateLabel}
-        </p>
-      ) : null}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="eyebrow eyebrow-blush">Victoria&rsquo;s picks · this week</p>
+          {dateLabel ? (
+            <p className="text-muted-foreground mt-3 text-[0.7rem] tracking-[0.18em] uppercase">
+              <span className="text-gold">This week</span> · {dateLabel}
+            </p>
+          ) : null}
+        </div>
+        {!isPending && (
+          <button
+            type="button"
+            onClick={() => refreshMutation.mutate()}
+            disabled={refreshMutation.isPending}
+            className="text-muted-foreground hover:text-blush inline-flex items-center gap-2 self-start text-[0.7rem] tracking-[0.16em] uppercase transition-colors disabled:opacity-50"
+          >
+            <RefreshCw
+              className={cn("size-3.5", refreshMutation.isPending && "animate-spin")}
+              aria-hidden="true"
+            />
+            {refreshMutation.isPending ? "Refreshing…" : "Refresh picks"}
+          </button>
+        )}
+      </div>
+
       <h2 className="font-display heading-glow mt-5 max-w-3xl text-[2rem] leading-[1.1] font-light md:text-4xl">
         Chosen for you from what you have saved and started.
       </h2>
@@ -539,7 +568,7 @@ function VictoriaPicks() {
         opportunities every week. New selections arrive each Monday.
       </p>
 
-      {isPending ? (
+      {isPending || refreshMutation.isPending ? (
         <div className="mt-9 grid gap-6 md:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <div
