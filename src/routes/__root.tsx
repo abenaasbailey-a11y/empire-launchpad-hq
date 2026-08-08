@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 import { LuxurySplash } from "@/components/LuxurySplash";
 import { Toaster } from "@/components/ui/sonner";
+import { initAnalytics, trackPageView } from "@/lib/analytics";
 
 function NotFoundComponent() {
   return (
@@ -133,6 +134,19 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+
+  // Load GA4 once, then report client-side route changes as page views.
+  useEffect(() => {
+    initAnalytics();
+    let lastPath = window.location.pathname;
+    const unsubscribe = router.subscribe("onResolved", () => {
+      const path = window.location.pathname;
+      if (path === lastPath) return;
+      lastPath = path;
+      trackPageView(path);
+    });
+    return unsubscribe;
+  }, [router]);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
