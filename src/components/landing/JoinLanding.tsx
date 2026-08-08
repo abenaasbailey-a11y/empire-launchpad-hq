@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
 import { StartFreeForm } from "@/components/landing/StartFreeForm";
+import { trackStartFreeClick } from "@/lib/analytics";
 import {
   Rocket,
   Banknote,
@@ -164,7 +165,11 @@ export function JoinLanding() {
               Opportunity Center
             </Link>
             <Button variant="lux" size="sm" asChild>
-              <Link to="/auth" search={{ mode: "signup" }}>
+              <Link
+                to="/auth"
+                search={{ mode: "signup" }}
+                onClick={() => trackStartFreeClick("header")}
+              >
                 Start Free
               </Link>
             </Button>
@@ -202,7 +207,11 @@ export function JoinLanding() {
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
-              <Link to="/auth" search={{ mode: "signup" }}>
+              <Link
+                to="/auth"
+                search={{ mode: "signup" }}
+                onClick={() => trackStartFreeClick("hero")}
+              >
                 Start Free
               </Link>
             </Button>

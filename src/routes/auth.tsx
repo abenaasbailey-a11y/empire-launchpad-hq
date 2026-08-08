@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { GoldRule } from "@/components/landing/Section";
+import { trackSignup } from "@/lib/analytics";
 
 const TITLE = "Create Your Free Her Empire Era Membership";
 const DESCRIPTION =
@@ -111,6 +112,7 @@ function AuthPage() {
           return;
         }
         if (data.session) {
+          trackSignup("email");
           goAfterAuth();
           return;
         }
@@ -125,6 +127,7 @@ function AuthPage() {
           );
           return;
         }
+        trackSignup("email");
         goAfterAuth();
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -145,6 +148,7 @@ function AuthPage() {
   async function handleGoogle() {
     setError(null);
     setBusy(true);
+    if (mode === "signup") trackSignup("google");
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: next
         ? `${window.location.origin}/auth?next=${encodeURIComponent(next)}`

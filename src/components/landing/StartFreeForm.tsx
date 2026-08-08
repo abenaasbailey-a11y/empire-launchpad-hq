@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { trackStartFreeClick } from "@/lib/analytics";
 
 export function StartFreeForm() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export function StartFreeForm() {
       onSubmit={(e) => {
         e.preventDefault();
         const trimmed = email.trim();
+        trackStartFreeClick("email_form");
         // Carry the email into the registration page so it is pre-filled there.
         void navigate({
           to: "/auth",
