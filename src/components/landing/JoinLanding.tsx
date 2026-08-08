@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
 import { StartFreeForm } from "@/components/landing/StartFreeForm";
+import { trackStartFreeClick } from "@/lib/analytics";
 import {
   Rocket,
   Banknote,
