@@ -185,7 +185,7 @@ export function JoinLanding() {
 
       {/* Hero */}
       <section id="top" className="relative overflow-hidden bg-background">
-        <div className="relative mx-auto w-full max-w-2xl">
+        <div className="relative mx-auto w-full max-w-lg">
           <img
             src={heroPromo.url}
             alt="Build Your Empire Using AI — Her Empire Era featuring founder Abenaa Bailey"
