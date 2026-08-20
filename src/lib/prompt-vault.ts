@@ -1,4 +1,7 @@
-/** Shared, browser-safe helpers for the Empire Prompt Vault. */
+/**
+ * Shared client-safe types and helpers for the Empire Prompt Vault.
+ * No server-only imports here — this module is safe to import anywhere.
+ */
 
 export interface VaultPrompt {
   id: string;
@@ -10,84 +13,60 @@ export interface VaultPrompt {
   is_featured: boolean;
   is_published: boolean;
   sort_order: number;
-  save_count: number;
   copy_count: number;
+  save_count: number;
 }
 
-export interface PromptCategory {
-  slug: string;
-  name: string;
-  tagline: string;
-}
+export const VAULT_CATEGORIES = [
+  "Marketing & Brand Strategy",
+  "Social Media & Content",
+  "Sales & Pitching",
+  "Operations & Systems",
+  "Finance & Pricing",
+  "Grants & Funding",
+  "Personal Development & Mindset",
+] as const;
 
-export const PROMPT_CATEGORIES: PromptCategory[] = [
-  {
-    slug: "marketing",
-    name: "Marketing",
-    tagline: "Strategy, audience, positioning and launches.",
-  },
-  {
-    slug: "social-media",
-    name: "Social Media",
-    tagline: "Calendars, captions, reels and calls to action.",
-  },
-  {
-    slug: "grants-funding",
-    name: "Grants & Funding",
-    tagline: "Applications, budgets, impact and readiness.",
-  },
-  {
-    slug: "business-planning",
-    name: "Business Planning",
-    tagline: "Plans, pricing, goals and competitor research.",
-  },
-  {
-    slug: "professional-emails",
-    name: "Professional Emails",
-    tagline: "Outreach, follow-ups, invoices and thank-yous.",
-  },
-  {
-    slug: "resumes-career",
-    name: "Résumés & Career",
-    tagline: "Résumés, bios, cover letters and interviews.",
-  },
-  {
-    slug: "productivity",
-    name: "Productivity & Organization",
-    tagline: "Schedules, routines, systems and action plans.",
-  },
-];
+export const GRANTS_CATEGORY = "Grants & Funding";
 
-export function categoryName(slug: string): string {
-  return PROMPT_CATEGORIES.find((c) => c.slug === slug)?.name ?? slug;
-}
+export const GRANTS_DISCLAIMER =
+  "Educational use only. These prompts are tools to help you research and prepare grant and funding applications — they do not guarantee funding, awards, or approval. Always verify requirements with the specific funder and review all submissions with a qualified professional before applying.";
 
-/** Extracts the unique [FIELD] placeholders from a prompt body, in order. */
+export const GRANTS_CARD_BADGE = "Educational only — prompts do not guarantee funding.";
+
+/**
+ * Extract {{placeholder}} fields from a prompt body.
+ * Returns unique field names in order of first appearance.
+ */
 export function extractFields(body: string): string[] {
-  const found = body.match(/\[[A-Z0-9 ][A-Z0-9 _/-]*\]/g) ?? [];
-  const seen: string[] = [];
-  for (const raw of found) {
-    const token = raw.slice(1, -1).trim();
-    if (token && !seen.includes(token)) seen.push(token);
+  const matches = body.matchAll(/\{\{\s*([a-zA-Z0-9_ -]+)\s*\}\}/g);
+  const seen = new Set<string>();
+  const fields: string[] = [];
+  for (const m of matches) {
+    const name = m[1]!.trim();
+    if (!seen.has(name)) {
+      seen.add(name);
+      fields.push(name);
+    }
   }
-  return seen;
+  return fields;
 }
 
-/** Replaces every [FIELD] placeholder with the member's value (blanks stay as-is). */
+/**
+ * Replace {{placeholder}} tokens in a prompt body with provided values.
+ * Unfilled placeholders are left as-is so the user can see what's missing.
+ */
 export function fillPrompt(body: string, values: Record<string, string>): string {
-  let filled = body;
-  for (const [field, value] of Object.entries(values)) {
-    const trimmed = value.trim();
-    if (!trimmed) continue;
-    filled = filled.split(`[${field}]`).join(trimmed);
-  }
-  return filled;
+  return body.replace(/\{\{\s*([a-zA-Z0-9_ -]+)\s*\}\}/g, (match, name: string) => {
+    const key = name.trim();
+    const val = values[key];
+    return val && val.trim() ? val.trim() : match;
+  });
 }
 
-export function fieldLabel(field: string): string {
-  return field
-    .toLowerCase()
-    .split(" ")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+/** Convert a field name like "business_name" into "Business name" for labels. */
+export function prettifyField(name: string): string {
+  return name
+    .replace(/_/g, " ")
+    .replace(/^\w/, (c) => c.toUpperCase());
 }
