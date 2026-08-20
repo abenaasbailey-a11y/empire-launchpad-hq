@@ -212,6 +212,14 @@ function PromptVaultPage() {
           ))}
         </div>
 
+        {category === GRANTS_CATEGORY && (
+          <div className="bg-blush/10 border-blush/30 mt-8 rounded-xl border px-5 py-4">
+            <p className="text-blush text-[0.8rem] font-medium leading-relaxed">
+              ⚠ {GRANTS_DISCLAIMER}
+            </p>
+          </div>
+        )}
+
         {isLoading ? (
           <p className="text-muted-foreground mt-12 text-sm">Opening the vault…</p>
         ) : visible.length === 0 ? (
