@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Section } from "@/components/landing/Section";
 import { PromptCard } from "@/components/prompt-vault/PromptCard";
 import { useIsAdmin } from "@/hooks/use-admin";
-import { PROMPT_CATEGORIES, type VaultPrompt } from "@/lib/prompt-vault";
+import { PROMPT_CATEGORIES, GRANTS_CATEGORY, GRANTS_DISCLAIMER, type VaultPrompt } from "@/lib/prompt-vault";
 
 export const Route = createFileRoute("/_authenticated/prompt-vault")({
   component: PromptVaultPage,
@@ -211,6 +211,14 @@ function PromptVaultPage() {
             </Button>
           ))}
         </div>
+
+        {category === GRANTS_CATEGORY && (
+          <div className="bg-blush/10 border-blush/30 mt-8 rounded-xl border px-5 py-4">
+            <p className="text-blush text-[0.8rem] font-medium leading-relaxed">
+              ⚠ {GRANTS_DISCLAIMER}
+            </p>
+          </div>
+        )}
 
         {isLoading ? (
           <p className="text-muted-foreground mt-12 text-sm">Opening the vault…</p>

@@ -20,6 +20,8 @@ import {
   extractFields,
   fieldLabel,
   fillPrompt,
+  GRANTS_CATEGORY,
+  GRANTS_CARD_BADGE,
   type VaultPrompt,
 } from "@/lib/prompt-vault";
 
@@ -90,6 +92,12 @@ export function PromptCard({
       <p className="text-muted-foreground mt-3 flex-1 text-sm leading-relaxed">
         {prompt.description}
       </p>
+
+      {prompt.category === GRANTS_CATEGORY && (
+        <p className="bg-blush/10 text-blush mt-4 rounded-lg px-3 py-2 text-[0.7rem] font-medium leading-relaxed">
+          ⚠ {GRANTS_CARD_BADGE}
+        </p>
+      )}
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
