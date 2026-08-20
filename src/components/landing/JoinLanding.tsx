@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import heroImage from "@/assets/hero.jpg";
+import heroPromo from "@/assets/her-empire-era-hero.jpeg.asset.json";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
