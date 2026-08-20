@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ChatgptPromptsRouteImport } from './routes/chatgpt-prompts'
 import { Route as FreePromptsRouteImport } from './routes/free-prompts'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as McpRouteImport } from './routes/mcp'
@@ -43,6 +44,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatgptPromptsRoute = ChatgptPromptsRouteImport.update({
+  id: '/chatgpt-prompts',
+  path: '/chatgpt-prompts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FreePromptsRoute = FreePromptsRouteImport.update({
@@ -144,6 +150,7 @@ const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/chatgpt-prompts'
     | '/free-prompts'
     | '/join'
     | '/mcp'
@@ -236,6 +246,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/chatgpt-prompts'
     | '/free-prompts'
     | '/join'
     | '/mcp'
@@ -259,6 +270,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/chatgpt-prompts'
     | '/free-prompts'
     | '/join'
     | '/mcp'
@@ -283,6 +295,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ChatgptPromptsRoute: typeof ChatgptPromptsRoute
   FreePromptsRoute: typeof FreePromptsRoute
   JoinRoute: typeof JoinRoute
   McpRoute: typeof McpRoute
@@ -321,6 +334,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chatgpt-prompts': {
+      id: '/chatgpt-prompts'
+      path: '/chatgpt-prompts'
+      fullPath: '/chatgpt-prompts'
+      preLoaderRoute: typeof ChatgptPromptsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/free-prompts': {
@@ -471,6 +491,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ChatgptPromptsRoute: ChatgptPromptsRoute,
   FreePromptsRoute: FreePromptsRoute,
   JoinRoute: JoinRoute,
   McpRoute: McpRoute,
