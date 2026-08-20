@@ -6,9 +6,11 @@ import {
   Container,
   Head,
   Heading,
+  Hr,
   Html,
   Link,
   Preview,
+  Section,
   Text,
 } from '@react-email/components'
 
@@ -27,27 +29,32 @@ export const SignupEmail = ({
 }: SignupEmailProps) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>Confirm your email for {siteName}</Preview>
+    <Preview>Confirm your email — Her Empire Era</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Confirm your email</Heading>
+        <Section style={header}>
+          <Text style={brandText}>HER EMPIRE ERA</Text>
+        </Section>
+        <Hr style={goldDivider} />
+        <Heading style={h1}>Welcome to the Empire</Heading>
         <Text style={text}>
-          Thanks for signing up for{' '}
-          <Link href={siteUrl} style={link}>
-            <strong>{siteName}</strong>
-          </Link>
-          !
+          You're almost in. Confirm your email address to activate your free
+          membership and unlock Victoria AI, the Prompt Vault, and every tool
+          inside {siteName}.
         </Text>
         <Text style={text}>
-          Please confirm your email address (
+          Just verify{' '}
           <Link href={`mailto:${recipient}`} style={link}>
             {recipient}
-          </Link>
-          ) by clicking the button below:
+          </Link>{' '}
+          by clicking below:
         </Text>
-        <Button style={button} href={confirmationUrl}>
-          Verify Email
-        </Button>
+        <Section style={{ textAlign: 'center' as const, margin: '30px 0' }}>
+          <Button style={button} href={confirmationUrl}>
+            Verify Email
+          </Button>
+        </Section>
+        <Hr style={blushDivider} />
         <Text style={footer}>
           If you didn't create an account, you can safely ignore this email.
         </Text>
@@ -58,27 +65,49 @@ export const SignupEmail = ({
 
 export default SignupEmail
 
-const main = { backgroundColor: '#ffffff', fontFamily: 'Arial, sans-serif' }
-const container = { padding: '20px 25px' }
-const h1 = {
-  fontSize: '22px',
+const main = { backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }
+const container = { padding: '0', maxWidth: '560px', margin: '0 auto' }
+const header = { backgroundColor: '#1a1612', padding: '28px 25px', textAlign: 'center' as const }
+const brandText = {
+  fontSize: '18px',
   fontWeight: 'bold' as const,
-  color: '#000000',
-  margin: '0 0 20px',
+  letterSpacing: '4px',
+  color: '#c9a35e',
+  margin: '0',
+  fontFamily: 'Georgia, "Times New Roman", serif',
+}
+const goldDivider = {
+  border: 'none',
+  borderTop: '3px solid #c9a35e',
+  margin: '0',
+}
+const blushDivider = {
+  border: 'none',
+  borderTop: '1px solid #e8d5d0',
+  margin: '30px 0 0',
+}
+const h1 = {
+  fontSize: '26px',
+  fontWeight: 'normal' as const,
+  color: '#1a1612',
+  margin: '30px 25px 20px',
+  fontFamily: 'Georgia, "Times New Roman", serif',
 }
 const text = {
-  fontSize: '14px',
-  color: '#55575d',
-  lineHeight: '1.5',
-  margin: '0 0 25px',
+  fontSize: '15px',
+  color: '#5a534b',
+  lineHeight: '1.6',
+  margin: '0 25px 20px',
 }
-const link = { color: 'inherit', textDecoration: 'underline' }
+const link = { color: '#c9a35e', textDecoration: 'underline' }
 const button = {
-  backgroundColor: '#000000',
-  color: '#ffffff',
-  fontSize: '14px',
-  borderRadius: '8px',
-  padding: '12px 20px',
+  backgroundColor: '#c9a35e',
+  color: '#1a1612',
+  fontSize: '15px',
+  fontWeight: 'bold' as const,
+  borderRadius: '6px',
+  padding: '14px 36px',
   textDecoration: 'none',
+  letterSpacing: '1px',
 }
-const footer = { fontSize: '12px', color: '#999999', margin: '30px 0 0' }
+const footer = { fontSize: '12px', color: '#999999', margin: '20px 25px 30px' }

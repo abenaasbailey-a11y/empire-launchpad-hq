@@ -9,7 +9,7 @@ import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
 
 // Configuration
-const SITE_NAME = "empire-launchpad-hq"
+const SITE_NAME = "Her Empire Era"
 const SENDER_DOMAIN = "notify.yourempireconcierge.com"
 const ROOT_DOMAIN = "yourempireconcierge.com"
 const FROM_DOMAIN = "notify.yourempireconcierge.com"
