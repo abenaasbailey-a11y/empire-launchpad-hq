@@ -159,6 +159,12 @@ export function JoinLanding() {
           </a>
           <div className="flex items-center gap-3 sm:gap-5">
             <Link
+              to="/free-prompts"
+              className="text-muted-foreground hover:text-blush hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors sm:block"
+            >
+              Free Prompts
+            </Link>
+            <Link
               to="/opportunity-center"
               className="text-muted-foreground hover:text-blush hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors sm:block"
             >
@@ -400,6 +406,9 @@ export function JoinLanding() {
         <div className="text-muted-foreground mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 text-[0.65rem] tracking-[0.18em] uppercase sm:flex-row sm:text-xs">
           <p className="font-display text-sm tracking-[0.22em]">Her Empire Era</p>
           <nav className="flex items-center gap-5">
+            <Link to="/free-prompts" className="hover:text-blush transition-colors">
+              Free Prompts
+            </Link>
             <Link to="/opportunity-center" className="hover:text-blush transition-colors">
               Opportunities
             </Link>
