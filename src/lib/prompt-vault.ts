@@ -28,13 +28,13 @@ export interface CategoryDef {
  * `prompts.category` column in the database; `name` is the display label.
  */
 export const PROMPT_CATEGORIES: CategoryDef[] = [
-  { slug: "Marketing & Brand Strategy", name: "Marketing & Brand", tagline: "Positioning, identity, and launch strategy" },
-  { slug: "Social Media & Content", name: "Social & Content", tagline: "Reels, captions, newsletters, and SEO" },
-  { slug: "Sales & Pitching", name: "Sales & Pitching", tagline: "Pitches, scripts, and objection handling" },
-  { slug: "Operations & Systems", name: "Operations", tagline: "SOPs, projects, and automation" },
-  { slug: "Finance & Pricing", name: "Finance & Pricing", tagline: "Pricing, margins, and cash flow" },
+  { slug: "Marketing", name: "Marketing", tagline: "Positioning, brand, launches, and campaigns" },
+  { slug: "Social Media", name: "Social Media", tagline: "Reels, captions, carousels, and hooks" },
   { slug: "Grants & Funding", name: "Grants & Funding", tagline: "Research and drafting tools (educational)" },
-  { slug: "Personal Development & Mindset", name: "Mindset", tagline: "Routines, goals, and confidence" },
+  { slug: "Business Planning", name: "Business Planning", tagline: "Plans, models, and growth roadmaps" },
+  { slug: "Emails", name: "Emails", tagline: "Outreach, proposals, follow-ups, and newsletters" },
+  { slug: "Résumés", name: "Résumés", tagline: "Résumés, cover letters, and interviews" },
+  { slug: "Productivity", name: "Productivity", tagline: "Priorities, systems, and focus" },
 ];
 
 export const GRANTS_CATEGORY = "Grants & Funding";
