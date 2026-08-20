@@ -4,19 +4,15 @@
  */
 import { generateText } from "ai";
 
-export interface VictoriaRunResult {
-  text: string;
-  model: string;
-}
-
 /**
- * Run a filled prompt through Victoria (Lovable AI Gateway) and return the text.
+ * Run a filled prompt through Empire Builder AI (Lovable AI Gateway)
+ * and return the generated text.
  */
-export async function runPromptWithVictoria(
-  filledPrompt: string,
-  apiKey: string,
-): Promise<VictoriaRunResult> {
+export async function runPromptWithEmpireBuilder(filledPrompt: string): Promise<string> {
   const { createLovableAiGatewayProvider } = await import("./ai-gateway.server");
+  const apiKey = process.env["LOVABLE_API_KEY"];
+  if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured.");
+
   const provider = createLovableAiGatewayProvider(apiKey);
   const model = provider("gemini-2.5-flash");
 
@@ -29,5 +25,5 @@ export async function runPromptWithVictoria(
     prompt: filledPrompt,
   });
 
-  return { text, model: "gemini-2.5-flash" };
+  return text;
 }
