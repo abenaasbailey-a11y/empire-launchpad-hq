@@ -185,33 +185,25 @@ export function JoinLanding() {
 
       {/* Hero */}
       <section id="top" className="relative overflow-hidden">
-        <img
-          src={heroImage}
-          alt="Founder of Her Empire Era working at a marble desk in golden light"
-          width={1408}
-          height={1600}
-          className="absolute inset-0 h-full w-full object-cover object-[60%_25%]"
-        />
-        <div
-          className="absolute inset-0"
-          style={{ backgroundImage: "var(--gradient-veil)" }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-x-0 bottom-0 h-1/2 opacity-60"
-          style={{ backgroundImage: "var(--gradient-blush-veil)" }}
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center px-5 pt-28 pb-16 md:px-10 md:pt-32 md:pb-28">
-          <p className="eyebrow eyebrow-blush">Private membership · Est. for the ambitious</p>
-          <h1 className="font-display mt-4 max-w-3xl text-[2.75rem] leading-[1.05] font-light md:mt-6 md:text-7xl md:leading-[1.02]">
-            Build the empire your audience already believes you have.
-          </h1>
-          <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
-            Her Empire Era gives you Victoria — a private AI concierge who writes, prices and plans
-            your business while you stay in your genius. Membership starts free.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
+        <div className="relative w-full">
+          <img
+            src={heroPromo.url}
+            alt="Build Your Empire Using AI — Her Empire Era featuring founder Abenaa Bailey"
+            width={1230}
+            height={1536}
+            className="h-[100svh] w-full object-cover object-top"
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-1/3"
+            style={{
+              background:
+                "linear-gradient(to top, var(--background) 5%, transparent 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </div>
+        <div className="relative mx-auto -mt-24 flex w-full max-w-6xl flex-col items-center px-5 pb-16 md:-mt-32 md:pb-28">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
               <Link
                 to="/auth"
