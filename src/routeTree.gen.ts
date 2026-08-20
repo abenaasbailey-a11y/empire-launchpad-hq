@@ -24,6 +24,7 @@ import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
+import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -104,6 +105,12 @@ const AuthenticatedPromptVaultRoute =
     path: '/prompt-vault',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPromptVaultAdminRoute =
+  AuthenticatedPromptVaultAdminRouteImport.update({
+    id: '/prompt-vault-admin',
+    path: '/prompt-vault-admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
+  '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -149,6 +157,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
+  '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -169,6 +178,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/prompt-vault': typeof AuthenticatedPromptVaultRoute
+  '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/dashboard'
     | '/prompt-vault'
+    | '/prompt-vault-admin'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/dashboard'
     | '/prompt-vault'
+    | '/prompt-vault-admin'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   id:
@@ -226,6 +238,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/dashboard'
     | '/_authenticated/prompt-vault'
+    | '/_authenticated/prompt-vault-admin'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
   fileRoutesById: FileRoutesById
@@ -355,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPromptVaultRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/prompt-vault-admin': {
+      id: '/_authenticated/prompt-vault-admin'
+      path: '/prompt-vault-admin'
+      fullPath: '/prompt-vault-admin'
+      preLoaderRoute: typeof AuthenticatedPromptVaultAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -375,11 +395,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPromptVaultRoute: typeof AuthenticatedPromptVaultRoute
+  AuthenticatedPromptVaultAdminRoute: typeof AuthenticatedPromptVaultAdminRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPromptVaultRoute: AuthenticatedPromptVaultRoute,
+  AuthenticatedPromptVaultAdminRoute: AuthenticatedPromptVaultAdminRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
