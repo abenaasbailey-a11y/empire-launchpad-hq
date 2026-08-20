@@ -9,10 +9,10 @@ export const captureLead = createServerFn({ method: "POST" })
   .inputValidator(
     (input: {
       email: string;
-      source?: string;
-      utm_source?: string;
-      utm_medium?: string;
-      utm_campaign?: string;
+      source?: string | undefined;
+      utm_source?: string | undefined;
+      utm_medium?: string | undefined;
+      utm_campaign?: string | undefined;
     }) => {
       const email = String(input?.email ?? "")
         .trim()
