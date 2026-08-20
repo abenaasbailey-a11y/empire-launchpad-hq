@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as FreePromptsRouteImport } from './routes/free-prompts'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MeetVictoriaRouteImport } from './routes/meet-victoria'
@@ -40,6 +41,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FreePromptsRoute = FreePromptsRouteImport.update({
+  id: '/free-prompts',
+  path: '/free-prompts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinRoute = JoinRouteImport.update({
@@ -126,6 +132,7 @@ const Char91DotmcpChar93InvokeToolToolRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/free-prompts'
     | '/join'
     | '/mcp'
     | '/meet-victoria'
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/free-prompts'
     | '/join'
     | '/mcp'
     | '/meet-victoria'
@@ -226,6 +237,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/free-prompts'
     | '/join'
     | '/mcp'
     | '/meet-victoria'
@@ -247,6 +259,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  FreePromptsRoute: typeof FreePromptsRoute
   JoinRoute: typeof JoinRoute
   McpRoute: typeof McpRoute
   MeetVictoriaRoute: typeof MeetVictoriaRoute
@@ -282,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/free-prompts': {
+      id: '/free-prompts'
+      path: '/free-prompts'
+      fullPath: '/free-prompts'
+      preLoaderRoute: typeof FreePromptsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join': {
@@ -411,6 +431,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  FreePromptsRoute: FreePromptsRoute,
   JoinRoute: JoinRoute,
   McpRoute: McpRoute,
   MeetVictoriaRoute: MeetVictoriaRoute,
