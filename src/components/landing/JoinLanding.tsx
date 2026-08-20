@@ -184,25 +184,17 @@ export function JoinLanding() {
       </header>
 
       {/* Hero */}
-      <section id="top" className="relative overflow-hidden">
+      <section id="top" className="relative overflow-hidden bg-background">
         <div className="relative w-full">
           <img
             src={heroPromo.url}
             alt="Build Your Empire Using AI — Her Empire Era featuring founder Abenaa Bailey"
             width={1230}
             height={1536}
-            className="h-[100svh] w-full object-cover object-top"
-          />
-          <div
-            className="absolute inset-x-0 bottom-0 h-1/3"
-            style={{
-              background:
-                "linear-gradient(to top, var(--background) 5%, transparent 100%)",
-            }}
-            aria-hidden="true"
+            className="block w-full h-auto"
           />
         </div>
-        <div className="relative mx-auto -mt-24 flex w-full max-w-6xl flex-col items-center px-5 pb-16 md:-mt-32 md:pb-28">
+        <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-5 pb-12 pt-6 md:pb-20">
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             <Button variant="gold" size="xl" className="w-full sm:w-auto" asChild>
               <Link
