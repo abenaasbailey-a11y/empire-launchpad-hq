@@ -107,6 +107,9 @@ function Dashboard() {
           <Button variant="gold" size="lg" asChild>
             <Link to="/opportunity-center">Open the Opportunity Center</Link>
           </Button>
+          <Button variant="lux" size="lg" asChild>
+            <Link to="/prompt-vault">Open the Prompt Vault</Link>
+          </Button>
         </div>
 
         <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-3 md:gap-8">
@@ -137,6 +140,9 @@ function Dashboard() {
               </Button>
               <Button variant="lux" size="sm" onClick={handleTestMobileView}>
                 Test Mobile View
+              </Button>
+              <Button variant="lux" size="sm" asChild>
+                <Link to="/prompt-vault-admin">Manage Prompt Vault</Link>
               </Button>
             </div>
           </div>
