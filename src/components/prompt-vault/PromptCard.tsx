@@ -20,6 +20,8 @@ import {
   extractFields,
   fieldLabel,
   fillPrompt,
+  GRANTS_CATEGORY,
+  GRANTS_CARD_BADGE,
   type VaultPrompt,
 } from "@/lib/prompt-vault";
 
