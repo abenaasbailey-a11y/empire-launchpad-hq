@@ -93,6 +93,12 @@ export function PromptCard({
         {prompt.description}
       </p>
 
+      {prompt.category === GRANTS_CATEGORY && (
+        <p className="bg-blush/10 text-blush mt-4 rounded-lg px-3 py-2 text-[0.7rem] font-medium leading-relaxed">
+          ⚠ {GRANTS_CARD_BADGE}
+        </p>
+      )}
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="lux" size="sm" className="mt-6 self-start">
