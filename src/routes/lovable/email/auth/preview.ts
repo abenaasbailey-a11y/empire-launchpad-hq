@@ -18,7 +18,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "empire-launchpad-hq"
+const SITE_NAME = "Her Empire Era"
 const ROOT_DOMAIN = "yourempireconcierge.com"
 
 // Sample data for preview mode ONLY (not used in actual email sending).
