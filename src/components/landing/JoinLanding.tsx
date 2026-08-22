@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import heroPromo from "@/assets/her-empire-era-hero.jpeg.asset.json";
+import heroPromo from "@/assets/her-empire-era-prompt-hero.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
@@ -188,8 +188,8 @@ export function JoinLanding() {
         <div className="relative mx-auto w-full max-w-lg">
           <img
             src={heroPromo.url}
-            alt="Build Your Empire Using AI — Her Empire Era featuring founder Abenaa Bailey"
-            width={1230}
+            alt="Your Empire Starts With A Prompt — Her Empire Era featuring founder Abenaa Bailey"
+            width={1024}
             height={1536}
             className="block w-full h-auto"
           />
