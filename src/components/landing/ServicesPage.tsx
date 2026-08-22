@@ -379,8 +379,8 @@ function OrderForm() {
 export function ServicesPage() {
   return (
     <main>
-      <PaymentTestModeBanner />
       <header className="border-border/60 bg-background/85 fixed top-0 z-50 w-full border-b backdrop-blur-md">
+        <PaymentTestModeBanner />
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-3.5 md:px-10 md:py-4">
           <Link
             to="/join"
