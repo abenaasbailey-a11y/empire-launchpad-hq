@@ -3,6 +3,7 @@ import heroPromo from "@/assets/her-empire-era-prompt-hero.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
+import { VideoDemoSection } from "@/components/landing/VideoDemoSection";
 import { StartFreeForm } from "@/components/landing/StartFreeForm";
 import { trackStartFreeClick } from "@/lib/analytics";
 import {
