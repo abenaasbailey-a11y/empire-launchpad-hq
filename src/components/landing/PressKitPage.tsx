@@ -7,6 +7,7 @@ import editorial from "@/assets/press/editorial.png.asset.json";
 import blush from "@/assets/press/blush.png.asset.json";
 import lifestyle from "@/assets/press/lifestyle.png.asset.json";
 import crownMark from "@/assets/crown-mark-transparent.png";
+import pressKitZip from "@/assets/press/her-empire-era-press-kit.zip.asset.json";
 
 const PHOTOS = [
   {
@@ -199,6 +200,13 @@ export function PressKitPage() {
             Please credit <span className="text-foreground">Abenaa Bailey / Her Empire Era</span>.
             Images may be cropped but not altered, filtered or overlaid with third-party branding.
           </p>
+          <div className="mt-6">
+            <Button variant="lux" size="lg" asChild>
+              <a href={pressKitZip.url} download="her-empire-era-press-kit.zip">
+                Download all assets (.zip)
+              </a>
+            </Button>
+          </div>
 
           <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {PHOTOS.map((photo) => (
