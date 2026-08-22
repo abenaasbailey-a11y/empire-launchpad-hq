@@ -33,6 +33,7 @@ import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } fr
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
 import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
+import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -162,6 +163,11 @@ const AuthenticatedPromptVaultAdminRoute =
     path: '/prompt-vault-admin',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/checkout/success',
+  path: '/checkout/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -244,6 +251,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -276,6 +284,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -308,6 +317,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/prompt-vault'
     | '/prompt-vault-admin'
+    | '/checkout/success'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/payments/webhook'
@@ -338,6 +348,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/prompt-vault'
     | '/prompt-vault-admin'
+    | '/checkout/success'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/payments/webhook'
@@ -369,6 +380,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/prompt-vault'
     | '/_authenticated/prompt-vault-admin'
+    | '/checkout/success'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/payments/webhook'
@@ -398,6 +410,7 @@ export interface RootRouteChildren {
   ToolkitRoute: typeof ToolkitRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -575,6 +588,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPromptVaultAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/checkout/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -651,6 +671,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  CheckoutSuccessRoute: CheckoutSuccessRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
