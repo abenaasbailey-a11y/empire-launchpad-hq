@@ -3,10 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { Check, Copy, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section, SectionHeading } from "@/components/landing/Section";
-import { PROMPT_CATEGORIES, PROMPT_FAQ, SEO_PROMPTS, type SeoPrompt } from "@/lib/chatgpt-prompts";
+import {
+  MARKETING_PROMPTS,
+  MARKETING_PROMPT_CATEGORIES,
+  MARKETING_PROMPT_FAQ,
+  type MarketingPrompt,
+} from "@/lib/marketing-prompts";
 import { trackEvent, trackStartFreeClick } from "@/lib/analytics";
 
-function PromptCard({ prompt }: { prompt: SeoPrompt }) {
+function PromptCard({ prompt }: { prompt: MarketingPrompt }) {
   const [copied, setCopied] = useState(false);
 
   return (
@@ -32,7 +37,7 @@ function PromptCard({ prompt }: { prompt: SeoPrompt }) {
         onClick={() => {
           void navigator.clipboard?.writeText(prompt.body);
           setCopied(true);
-          trackEvent("seo_prompt_copy", { prompt: prompt.slug });
+          trackEvent("marketing_prompt_copy", { prompt: prompt.slug });
           window.setTimeout(() => setCopied(false), 1800);
         }}
       >
@@ -50,11 +55,14 @@ function PromptCard({ prompt }: { prompt: SeoPrompt }) {
   );
 }
 
-export function ChatgptPromptsPage() {
+export function MarketingPromptsPage() {
   const [active, setActive] = useState<string>("All");
 
   const shown = useMemo(
-    () => (active === "All" ? SEO_PROMPTS : SEO_PROMPTS.filter((p) => p.category === active)),
+    () =>
+      active === "All"
+        ? MARKETING_PROMPTS
+        : MARKETING_PROMPTS.filter((p) => p.category === active),
     [active],
   );
 
@@ -72,7 +80,7 @@ export function ChatgptPromptsPage() {
             <Link
               to="/auth"
               search={{ mode: "signup" }}
-              onClick={() => trackStartFreeClick("chatgpt_prompts_header")}
+              onClick={() => trackStartFreeClick("marketing_prompts_header")}
             >
               Start Free
             </Link>
@@ -90,12 +98,12 @@ export function ChatgptPromptsPage() {
         <div className="relative mx-auto w-full max-w-3xl text-center">
           <p className="eyebrow eyebrow-blush">Free · Nothing to unlock</p>
           <h1 className="font-display mt-4 text-[2.3rem] leading-[1.07] font-light md:mt-6 md:text-6xl md:leading-[1.03]">
-            Free ChatGPT prompts for your business
+            Marketing prompts for ChatGPT
           </h1>
           <p className="text-muted-foreground mx-auto mt-5 max-w-2xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
-            Fourteen prompts written the way a strategist would ask &mdash; for pricing, offers,
-            content, emails, planning, grants and operations. Copy any of them, fill in the brackets
-            with your own details, and paste into ChatGPT, Claude, Gemini or Victoria.
+            Sixteen free marketing prompts for positioning, website copy, social captions, email
+            sequences, launches and ads. Copy any of them, fill in the brackets with your own
+            details, and paste into ChatGPT, Claude, Gemini or Victoria.
           </p>
           <div className="mt-8 flex justify-center">
             <GoldRule />
@@ -107,24 +115,28 @@ export function ChatgptPromptsPage() {
       <Section className="py-14 md:py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="font-display text-2xl leading-snug font-light md:text-4xl">
-            How to get a usable answer the first time
+            What makes a marketing prompt work
           </h2>
           <ol className="text-muted-foreground mt-7 space-y-5 text-sm leading-relaxed md:text-base">
             <li>
-              <span className="text-foreground font-medium">1. Replace every bracket.</span> AI
-              guesses when you are vague. Give it your real offer, price, audience and numbers.
+              <span className="text-foreground font-medium">1. Name the role.</span> Every prompt
+              below starts with &ldquo;act as&rdquo; because it sets the standard of the answer &mdash;
+              a positioning strategist writes differently from a general assistant.
             </li>
             <li>
-              <span className="text-foreground font-medium">2. Name the role.</span> Each prompt
-              starts with &ldquo;act as&rdquo; on purpose &mdash; it sets the standard of the answer.
+              <span className="text-foreground font-medium">2. Give real inputs.</span> Replace each
+              bracket with your actual offer, price, audience and numbers. Generic input is the
+              reason AI marketing copy sounds generic.
             </li>
             <li>
-              <span className="text-foreground font-medium">3. Revise, don&rsquo;t regenerate.</span>{" "}
-              Ask for one section to be rewritten instead of starting over, and the quality climbs.
+              <span className="text-foreground font-medium">3. Ask for a format.</span> Tell the AI
+              the structure you want &mdash; sections, word limits, how many variations &mdash; so the
+              output is usable without a rewrite.
             </li>
             <li>
-              <span className="text-foreground font-medium">4. Keep what works.</span> Save your best
-              edited versions so you are not rebuilding the same prompt every month.
+              <span className="text-foreground font-medium">4. Revise one part at a time.</span> Ask
+              for a single section to be rewritten instead of regenerating the whole answer, and the
+              quality climbs quickly.
             </li>
           </ol>
         </div>
@@ -134,12 +146,12 @@ export function ChatgptPromptsPage() {
       <Section id="prompts" className="pt-0 md:pt-0">
         <SectionHeading
           eyebrow="The prompts"
-          title="Copy any prompt below"
+          title="Copy any marketing prompt below"
           lead="Filter by what you need today. Every prompt is complete — no email, no gate."
         />
 
         <div className="mt-10 flex flex-wrap justify-center gap-2 md:mt-12">
-          {["All", ...PROMPT_CATEGORIES].map((c) => (
+          {["All", ...MARKETING_PROMPT_CATEGORIES].map((c) => (
             <button
               key={c}
               type="button"
@@ -160,11 +172,6 @@ export function ChatgptPromptsPage() {
             <PromptCard key={p.slug} prompt={p} />
           ))}
         </div>
-
-        <p className="text-muted-foreground mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed">
-          Grant prompts are educational drafting tools only. They do not guarantee funding, and every
-          figure you submit should be verified against the funder&rsquo;s own guidelines.
-        </p>
       </Section>
 
       {/* CTA */}
@@ -183,7 +190,7 @@ export function ChatgptPromptsPage() {
             <Link
               to="/auth"
               search={{ mode: "signup" }}
-              onClick={() => trackStartFreeClick("chatgpt_prompts_cta")}
+              onClick={() => trackStartFreeClick("marketing_prompts_cta")}
             >
               Start Free
             </Link>
@@ -198,10 +205,10 @@ export function ChatgptPromptsPage() {
       <Section id="faq" className="pt-0 md:pt-0">
         <div className="mx-auto max-w-3xl">
           <h2 className="font-display text-2xl leading-snug font-light md:text-4xl">
-            Questions about AI prompts
+            Questions about marketing prompts
           </h2>
           <dl className="mt-8 space-y-7">
-            {PROMPT_FAQ.map((item) => (
+            {MARKETING_PROMPT_FAQ.map((item) => (
               <div key={item.q} className="border-border/60 border-t pt-6">
                 <dt className="font-display text-lg leading-snug font-light md:text-xl">{item.q}</dt>
                 <dd className="text-muted-foreground mt-3 text-sm leading-relaxed">{item.a}</dd>
@@ -212,20 +219,12 @@ export function ChatgptPromptsPage() {
           <div className="text-muted-foreground mt-12 text-sm leading-relaxed">
             <p>
               Next:{" "}
-              <Link to="/marketing-prompts" className="text-blush hover:text-gold transition-colors">
-                marketing prompts for ChatGPT
+              <Link to="/chatgpt-prompts" className="text-blush hover:text-gold transition-colors">
+                free ChatGPT prompts for business
               </Link>
               ,{" "}
               <Link to="/free-prompts" className="text-blush hover:text-gold transition-colors">
-
                 the 10-prompt starter pack
-              </Link>
-              ,{" "}
-              <Link
-                to="/opportunity-center"
-                className="text-blush hover:text-gold transition-colors"
-              >
-                the Empire Opportunity Center
               </Link>{" "}
               or{" "}
               <Link to="/meet-victoria" className="text-blush hover:text-gold transition-colors">

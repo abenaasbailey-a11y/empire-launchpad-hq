@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChatgptPromptsRouteImport } from './routes/chatgpt-prompts'
 import { Route as FreePromptsRouteImport } from './routes/free-prompts'
 import { Route as JoinRouteImport } from './routes/join'
+import { Route as MarketingPromptsRouteImport } from './routes/marketing-prompts'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MeetVictoriaRouteImport } from './routes/meet-victoria'
 import { Route as OpportunityCenterRouteImport } from './routes/opportunity-center'
@@ -59,6 +60,11 @@ const FreePromptsRoute = FreePromptsRouteImport.update({
 const JoinRoute = JoinRouteImport.update({
   id: '/join',
   path: '/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingPromptsRoute = MarketingPromptsRouteImport.update({
+  id: '/marketing-prompts',
+  path: '/marketing-prompts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
+  '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
   '/opportunity-center': typeof OpportunityCenterRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
+  '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
   '/opportunity-center': typeof OpportunityCenterRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
   '/join': typeof JoinRoute
+  '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
   '/opportunity-center': typeof OpportunityCenterRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
     | '/chatgpt-prompts'
     | '/free-prompts'
     | '/join'
+    | '/marketing-prompts'
     | '/mcp'
     | '/meet-victoria'
     | '/opportunity-center'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/chatgpt-prompts'
     | '/free-prompts'
     | '/join'
+    | '/marketing-prompts'
     | '/mcp'
     | '/meet-victoria'
     | '/opportunity-center'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/chatgpt-prompts'
     | '/free-prompts'
     | '/join'
+    | '/marketing-prompts'
     | '/mcp'
     | '/meet-victoria'
     | '/opportunity-center'
@@ -298,6 +310,7 @@ export interface RootRouteChildren {
   ChatgptPromptsRoute: typeof ChatgptPromptsRoute
   FreePromptsRoute: typeof FreePromptsRoute
   JoinRoute: typeof JoinRoute
+  MarketingPromptsRoute: typeof MarketingPromptsRoute
   McpRoute: typeof McpRoute
   MeetVictoriaRoute: typeof MeetVictoriaRoute
   OpportunityCenterRoute: typeof OpportunityCenterRoute
@@ -355,6 +368,13 @@ declare module '@tanstack/react-router' {
       path: '/join'
       fullPath: '/join'
       preLoaderRoute: typeof JoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing-prompts': {
+      id: '/marketing-prompts'
+      path: '/marketing-prompts'
+      fullPath: '/marketing-prompts'
+      preLoaderRoute: typeof MarketingPromptsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -494,6 +514,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatgptPromptsRoute: ChatgptPromptsRoute,
   FreePromptsRoute: FreePromptsRoute,
   JoinRoute: JoinRoute,
+  MarketingPromptsRoute: MarketingPromptsRoute,
   McpRoute: McpRoute,
   MeetVictoriaRoute: MeetVictoriaRoute,
   OpportunityCenterRoute: OpportunityCenterRoute,
