@@ -118,6 +118,9 @@ export function LegalFooter() {
       <div className="text-muted-foreground mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 text-[0.65rem] tracking-[0.18em] uppercase sm:flex-row sm:text-xs">
         <p className="font-display text-sm tracking-[0.22em]">Her Empire Era</p>
         <nav className="flex items-center gap-5">
+          <Link to="/press" className="hover:text-blush transition-colors">
+            Press
+          </Link>
           <Link to="/privacy" className="hover:text-blush transition-colors">
             Privacy
           </Link>
