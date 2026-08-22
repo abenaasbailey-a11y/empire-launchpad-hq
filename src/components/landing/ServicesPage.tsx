@@ -137,6 +137,8 @@ const trustBadges = [
 ];
 
 function ServiceCard({ service }: { service: (typeof services)[number] }) {
+  const { openCheckout, loading, error } = usePaddleCheckout();
+
   return (
     <article
       className={`border-border bg-card/50 relative flex h-full flex-col rounded-2xl border p-6 backdrop-blur-sm md:p-8 ${
@@ -162,7 +164,18 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           </li>
         ))}
       </ul>
-      <div className="border-border mt-6 flex items-center justify-between border-t pt-4">
+      <Button
+        variant="lux"
+        className="mt-6 w-full"
+        disabled={loading}
+        onClick={() =>
+          openCheckout({ priceId: service.priceId, serviceTitle: service.title })
+        }
+      >
+        {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
+      </Button>
+      {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
+      <div className="border-border mt-4 flex items-center justify-between border-t pt-4">
         <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
           <Clock className="h-3.5 w-3.5" /> {service.turnaround}
         </span>
@@ -170,7 +183,7 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           href="#order"
           className="text-blush flex items-center gap-1 text-xs font-medium tracking-wide transition-colors hover:text-blush/80"
         >
-          Order <ArrowRight className="h-3.5 w-3.5" />
+          Questions first? <ArrowRight className="h-3.5 w-3.5" />
         </a>
       </div>
     </article>
