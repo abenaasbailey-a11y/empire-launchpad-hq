@@ -290,6 +290,9 @@ export function GrantsForWomenPage() {
             <Link to="/join" className="hover:text-blush transition-colors">
               Membership
             </Link>
+            <Link to="/services" className="hover:text-blush transition-colors">
+              Services
+            </Link>
             <Link to="/press" className="hover:text-blush transition-colors">
               Press
             </Link>

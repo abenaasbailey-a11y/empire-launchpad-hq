@@ -24,6 +24,7 @@ import { Route as OpportunityCenterRouteImport } from './routes/opportunity-cent
 import { Route as PitchTemplatesRouteImport } from './routes/pitch-templates'
 import { Route as PressRouteImport } from './routes/press'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
@@ -111,6 +112,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -192,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
@@ -250,6 +258,7 @@ export interface FileRoutesById {
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/pitch-templates'
     | '/press'
     | '/privacy'
+    | '/services'
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/pitch-templates'
     | '/press'
     | '/privacy'
+    | '/services'
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/pitch-templates'
     | '/press'
     | '/privacy'
+    | '/services'
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
@@ -367,6 +379,7 @@ export interface RootRouteChildren {
   PitchTemplatesRoute: typeof PitchTemplatesRoute
   PressRoute: typeof PressRoute
   PrivacyRoute: typeof PrivacyRoute
+  ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ToolkitRoute: typeof ToolkitRoute
@@ -483,6 +496,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -603,6 +623,7 @@ const rootRouteChildren: RootRouteChildren = {
   PitchTemplatesRoute: PitchTemplatesRoute,
   PressRoute: PressRoute,
   PrivacyRoute: PrivacyRoute,
+  ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ToolkitRoute: ToolkitRoute,

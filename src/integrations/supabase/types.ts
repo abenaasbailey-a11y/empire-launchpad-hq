@@ -221,6 +221,45 @@ export type Database = {
         }
         Relationships: []
       }
+      service_requests: {
+        Row: {
+          budget: string | null
+          business_name: string | null
+          created_at: string
+          details: string
+          email: string
+          id: string
+          name: string
+          phone: string | null
+          service_type: string
+          status: string
+        }
+        Insert: {
+          budget?: string | null
+          business_name?: string | null
+          created_at?: string
+          details: string
+          email: string
+          id?: string
+          name: string
+          phone?: string | null
+          service_type: string
+          status?: string
+        }
+        Update: {
+          budget?: string | null
+          business_name?: string | null
+          created_at?: string
+          details?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string | null
+          service_type?: string
+          status?: string
+        }
+        Relationships: []
+      }
       side_hustles: {
         Row: {
           category: string
