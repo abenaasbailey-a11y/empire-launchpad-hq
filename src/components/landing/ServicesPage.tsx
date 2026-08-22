@@ -21,7 +21,8 @@ const services = [
   {
     icon: Landmark,
     title: "Government Grant Writing",
-    price: "$350 – $750",
+    price: "$350",
+    priceId: "govt_grant_writing_onetime",
     body: "Federal, state, and local government grant applications — narrative, budget justification, and supporting documents. SBIR, SBA, USDA, HUD, and municipal programs.",
     deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
     turnaround: "5 – 7 days",
@@ -30,7 +31,8 @@ const services = [
   {
     icon: Building2,
     title: "Private & Foundation Grants",
-    price: "$250 – $500",
+    price: "$250",
+    priceId: "private_foundation_grants_onetime",
     body: "Applications for private foundations, corporate giving programs, and nonprofit grants. Letters of inquiry, full proposals, and post-award reports.",
     deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
     turnaround: "3 – 5 days",
@@ -39,7 +41,8 @@ const services = [
   {
     icon: FileText,
     title: "Business Plan",
-    price: "$300 – $600",
+    price: "$300",
+    priceId: "business_plan_onetime",
     body: "Investor-ready business plans with executive summary, market analysis, financial projections, and growth strategy — built with AI, polished by a real strategist.",
     deliverables: ["Executive summary", "Market analysis", "Financial projections", "Growth strategy"],
     turnaround: "4 – 6 days",
@@ -48,7 +51,8 @@ const services = [
   {
     icon: Sparkles,
     title: "Résumé & Cover Letter Makeover",
-    price: "$75 – $150",
+    price: "$75",
+    priceId: "resume_makeover_onetime",
     body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a grant committee.",
     deliverables: ["ATS-optimized résumé", "Tailored cover letter", "LinkedIn summary", "1 revision round"],
     turnaround: "2 – 3 days",
@@ -57,7 +61,8 @@ const services = [
   {
     icon: Megaphone,
     title: "Social Media Content Package",
-    price: "$200 – $500 / month",
+    price: "$200 / month",
+    priceId: "social_content_monthly",
     body: "A full month of captions, hashtags, and content ideas in your brand voice — ready to post. Instagram, Facebook, LinkedIn, or TikTok-ready.",
     deliverables: ["30 captions", "Hashtag sets", "Content calendar", "Monthly strategy"],
     turnaround: "2 – 4 days",
@@ -66,7 +71,8 @@ const services = [
   {
     icon: Mail,
     title: "Email Marketing Sequence",
-    price: "$150 – $400",
+    price: "$150",
+    priceId: "email_sequence_onetime",
     body: "Welcome sequences, sales funnels, and nurture campaigns that turn subscribers into buyers. Written in your voice, optimized for opens and clicks.",
     deliverables: ["5 – 7 email sequence", "Subject lines", "Call-to-action strategy", "1 revision round"],
     turnaround: "2 – 3 days",
