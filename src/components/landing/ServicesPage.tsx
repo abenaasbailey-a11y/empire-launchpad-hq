@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
@@ -21,7 +23,8 @@ const services = [
   {
     icon: Landmark,
     title: "Government Grant Writing",
-    price: "$350 – $750",
+    price: "$350",
+    priceId: "govt_grant_writing_onetime",
     body: "Federal, state, and local government grant applications — narrative, budget justification, and supporting documents. SBIR, SBA, USDA, HUD, and municipal programs.",
     deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
     turnaround: "5 – 7 days",
@@ -30,7 +33,8 @@ const services = [
   {
     icon: Building2,
     title: "Private & Foundation Grants",
-    price: "$250 – $500",
+    price: "$250",
+    priceId: "private_foundation_grants_onetime",
     body: "Applications for private foundations, corporate giving programs, and nonprofit grants. Letters of inquiry, full proposals, and post-award reports.",
     deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
     turnaround: "3 – 5 days",
@@ -39,7 +43,8 @@ const services = [
   {
     icon: FileText,
     title: "Business Plan",
-    price: "$300 – $600",
+    price: "$300",
+    priceId: "business_plan_onetime",
     body: "Investor-ready business plans with executive summary, market analysis, financial projections, and growth strategy — built with AI, polished by a real strategist.",
     deliverables: ["Executive summary", "Market analysis", "Financial projections", "Growth strategy"],
     turnaround: "4 – 6 days",
@@ -48,7 +53,8 @@ const services = [
   {
     icon: Sparkles,
     title: "Résumé & Cover Letter Makeover",
-    price: "$75 – $150",
+    price: "$75",
+    priceId: "resume_makeover_onetime",
     body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a grant committee.",
     deliverables: ["ATS-optimized résumé", "Tailored cover letter", "LinkedIn summary", "1 revision round"],
     turnaround: "2 – 3 days",
@@ -57,7 +63,8 @@ const services = [
   {
     icon: Megaphone,
     title: "Social Media Content Package",
-    price: "$200 – $500 / month",
+    price: "$200 / month",
+    priceId: "social_content_monthly",
     body: "A full month of captions, hashtags, and content ideas in your brand voice — ready to post. Instagram, Facebook, LinkedIn, or TikTok-ready.",
     deliverables: ["30 captions", "Hashtag sets", "Content calendar", "Monthly strategy"],
     turnaround: "2 – 4 days",
@@ -66,7 +73,8 @@ const services = [
   {
     icon: Mail,
     title: "Email Marketing Sequence",
-    price: "$150 – $400",
+    price: "$150",
+    priceId: "email_sequence_onetime",
     body: "Welcome sequences, sales funnels, and nurture campaigns that turn subscribers into buyers. Written in your voice, optimized for opens and clicks.",
     deliverables: ["5 – 7 email sequence", "Subject lines", "Call-to-action strategy", "1 revision round"],
     turnaround: "2 – 3 days",
@@ -112,7 +120,7 @@ const faqs = [
   },
   {
     q: "How do I pay?",
-    a: "After you submit your request, we'll send you a payment link and confirm the scope and timeline. Work begins once payment is received. Most projects are completed within 2 – 7 days depending on the service.",
+    a: "Instantly. Tap 'Pay & start' on any service and you'll check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Prefer to talk first? Use the order form below and we'll confirm scope before you pay.",
   },
   {
     q: "Do you work with nonprofits and for-profits?",
@@ -131,6 +139,8 @@ const trustBadges = [
 ];
 
 function ServiceCard({ service }: { service: (typeof services)[number] }) {
+  const { openCheckout, loading, error } = usePaddleCheckout();
+
   return (
     <article
       className={`border-border bg-card/50 relative flex h-full flex-col rounded-2xl border p-6 backdrop-blur-sm md:p-8 ${
@@ -156,7 +166,18 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           </li>
         ))}
       </ul>
-      <div className="border-border mt-6 flex items-center justify-between border-t pt-4">
+      <Button
+        variant="lux"
+        className="mt-6 w-full"
+        disabled={loading}
+        onClick={() =>
+          openCheckout({ priceId: service.priceId, serviceTitle: service.title })
+        }
+      >
+        {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
+      </Button>
+      {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
+      <div className="border-border mt-4 flex items-center justify-between border-t pt-4">
         <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
           <Clock className="h-3.5 w-3.5" /> {service.turnaround}
         </span>
@@ -164,7 +185,7 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           href="#order"
           className="text-blush flex items-center gap-1 text-xs font-medium tracking-wide transition-colors hover:text-blush/80"
         >
-          Order <ArrowRight className="h-3.5 w-3.5" />
+          Questions first? <ArrowRight className="h-3.5 w-3.5" />
         </a>
       </div>
     </article>
@@ -359,6 +380,7 @@ export function ServicesPage() {
   return (
     <main>
       <header className="border-border/60 bg-background/85 fixed top-0 z-50 w-full border-b backdrop-blur-md">
+        <PaymentTestModeBanner />
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-3.5 md:px-10 md:py-4">
           <Link
             to="/join"
