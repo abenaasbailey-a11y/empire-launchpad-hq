@@ -4,15 +4,12 @@
 
 export type PaddleEnv = "sandbox" | "live";
 
-const API_BASE: Record<PaddleEnv, string> = {
-  sandbox: "https://sandbox-api.paddle.com",
-  live: "https://api.paddle.com",
-};
+const GATEWAY_BASE = "https://connector-gateway.lovable.dev/paddle";
 
-function apiKey(env: PaddleEnv): string {
+function connectionKey(env: PaddleEnv): string {
   const key =
     env === "live" ? process.env["PADDLE_LIVE_API_KEY"] : process.env["PADDLE_SANDBOX_API_KEY"];
-  if (!key) throw new Error(`Missing Paddle API key for ${env}`);
+  if (!key) throw new Error(`Missing Paddle connection key for ${env}`);
   return key;
 }
 
@@ -25,15 +22,17 @@ function webhookSecret(env: PaddleEnv): string {
   return secret;
 }
 
+/** Calls the Paddle API through Lovable's connector gateway. */
 export async function paddleFetch(
   env: PaddleEnv,
   path: string,
   init?: RequestInit,
 ): Promise<Response> {
-  const response = await fetch(`${API_BASE[env]}${path}`, {
+  const response = await fetch(`${GATEWAY_BASE}${path}`, {
     ...init,
     headers: {
-      Authorization: `Bearer ${apiKey(env)}`,
+      Authorization: `Bearer ${process.env["LOVABLE_API_KEY"]!}`,
+      "X-Connection-Api-Key": connectionKey(env),
       "Content-Type": "application/json",
       ...(init?.headers ?? {}),
     },
