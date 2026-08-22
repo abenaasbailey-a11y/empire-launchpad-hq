@@ -3,6 +3,7 @@ import heroPromo from "@/assets/her-empire-era-prompt-hero.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { VictoriaDemo } from "@/components/landing/VictoriaDemo";
+import { VideoDemoSection } from "@/components/landing/VideoDemoSection";
 import { StartFreeForm } from "@/components/landing/StartFreeForm";
 import { trackStartFreeClick } from "@/lib/analytics";
 import {
@@ -260,6 +261,19 @@ export function JoinLanding() {
               </div>
             </div>
           ))}
+        </div>
+      </Section>
+
+      {/* Product demo video */}
+      <Section id="demo-video" className="bg-secondary/25">
+        <SectionHeading
+          eyebrow="See it in 22 seconds"
+          title={<>How Victoria works.</>}
+          lead="A quick look at what happens the moment you ask Victoria for help — from launch to pricing to a finished plan."
+          glow
+        />
+        <div className="mt-10 md:mt-14">
+          <VideoDemoSection />
         </div>
       </Section>
 
