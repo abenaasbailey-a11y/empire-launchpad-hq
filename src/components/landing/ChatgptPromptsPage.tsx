@@ -247,6 +247,9 @@ export function ChatgptPromptsPage() {
             <Link to="/join" className="hover:text-blush transition-colors">
               Membership
             </Link>
+            <Link to="/press" className="hover:text-blush transition-colors">
+              Press
+            </Link>
             <Link to="/privacy" className="hover:text-blush transition-colors">
               Privacy
             </Link>

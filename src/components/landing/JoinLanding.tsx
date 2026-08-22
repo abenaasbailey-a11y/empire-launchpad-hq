@@ -396,6 +396,9 @@ export function JoinLanding() {
             <Link to="/opportunity-center" className="hover:text-blush transition-colors">
               Opportunities
             </Link>
+            <Link to="/press" className="hover:text-blush transition-colors">
+              Press
+            </Link>
             <Link to="/privacy" className="hover:text-blush transition-colors">
               Privacy
             </Link>
