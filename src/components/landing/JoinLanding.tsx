@@ -264,6 +264,19 @@ export function JoinLanding() {
         </div>
       </Section>
 
+      {/* Product demo video */}
+      <Section id="demo-video" className="bg-secondary/25">
+        <SectionHeading
+          eyebrow="See it in 22 seconds"
+          title={<>How Victoria works.</>}
+          lead="A quick look at what happens the moment you ask Victoria for help — from launch to pricing to a finished plan."
+          glow
+        />
+        <div className="mt-10 md:mt-14">
+          <VideoDemoSection />
+        </div>
+      </Section>
+
       {/* Demonstration */}
       <Section id="demonstration">
         <SectionHeading
