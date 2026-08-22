@@ -129,7 +129,7 @@ export function PressKitPage() {
             <div className="border-gold/30 overflow-hidden rounded-sm border shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)]">
               <img
                 src={headshot.url}
-                alt={PHOTOS[0].alt}
+                alt="Abenaa Bailey, founder of Her Empire Era, in a black dress against a warm gold backdrop"
                 width={1200}
                 height={1600}
                 className="h-full w-full object-cover"
