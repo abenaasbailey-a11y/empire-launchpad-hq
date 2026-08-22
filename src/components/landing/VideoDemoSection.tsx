@@ -57,15 +57,16 @@ export function VideoDemoSection() {
         <div className="relative aspect-video w-full bg-black">
           <video
             ref={videoRef}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
             poster="/og-image.jpg"
             preload="metadata"
             playsInline
+            muted
+            src="/victoria-demo.mp4"
             onEnded={handleEnded}
             onClick={togglePlay}
-          >
-            <source src="/victoria-demo.mp4" type="video/mp4" />
-          </video>
+          />
+
 
           {/* Play overlay */}
           {!isPlaying && (
