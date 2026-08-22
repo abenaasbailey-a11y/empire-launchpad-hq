@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChatgptPromptsRouteImport } from './routes/chatgpt-prompts'
 import { Route as FreePromptsRouteImport } from './routes/free-prompts'
+import { Route as GrantsForWomenRouteImport } from './routes/grants-for-women'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as MarketingPromptsRouteImport } from './routes/marketing-prompts'
 import { Route as McpRouteImport } from './routes/mcp'
@@ -55,6 +56,11 @@ const ChatgptPromptsRoute = ChatgptPromptsRouteImport.update({
 const FreePromptsRoute = FreePromptsRouteImport.update({
   id: '/free-prompts',
   path: '/free-prompts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrantsForWomenRoute = GrantsForWomenRouteImport.update({
+  id: '/grants-for-women',
+  path: '/grants-for-women',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinRoute = JoinRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
+  '/grants-for-women': typeof GrantsForWomenRoute
   '/join': typeof JoinRoute
   '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
+  '/grants-for-women': typeof GrantsForWomenRoute
   '/join': typeof JoinRoute
   '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
@@ -208,6 +216,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
+  '/grants-for-women': typeof GrantsForWomenRoute
   '/join': typeof JoinRoute
   '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/chatgpt-prompts'
     | '/free-prompts'
+    | '/grants-for-women'
     | '/join'
     | '/marketing-prompts'
     | '/mcp'
@@ -258,6 +268,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/chatgpt-prompts'
     | '/free-prompts'
+    | '/grants-for-women'
     | '/join'
     | '/marketing-prompts'
     | '/mcp'
@@ -283,6 +294,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/chatgpt-prompts'
     | '/free-prompts'
+    | '/grants-for-women'
     | '/join'
     | '/marketing-prompts'
     | '/mcp'
@@ -309,6 +321,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ChatgptPromptsRoute: typeof ChatgptPromptsRoute
   FreePromptsRoute: typeof FreePromptsRoute
+  GrantsForWomenRoute: typeof GrantsForWomenRoute
   JoinRoute: typeof JoinRoute
   MarketingPromptsRoute: typeof MarketingPromptsRoute
   McpRoute: typeof McpRoute
@@ -361,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/free-prompts'
       fullPath: '/free-prompts'
       preLoaderRoute: typeof FreePromptsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grants-for-women': {
+      id: '/grants-for-women'
+      path: '/grants-for-women'
+      fullPath: '/grants-for-women'
+      preLoaderRoute: typeof GrantsForWomenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join': {
@@ -513,6 +533,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ChatgptPromptsRoute: ChatgptPromptsRoute,
   FreePromptsRoute: FreePromptsRoute,
+  GrantsForWomenRoute: GrantsForWomenRoute,
   JoinRoute: JoinRoute,
   MarketingPromptsRoute: MarketingPromptsRoute,
   McpRoute: McpRoute,
