@@ -16,7 +16,15 @@ export function VideoDemoSection() {
     const el = videoRef.current;
     if (!el) return;
     if (el.paused) {
-      void el.play();
+      el.muted = true;
+      const attempt = el.play();
+      if (attempt && typeof attempt.catch === "function") {
+        attempt.catch(() => {
+          // Fall back to native controls if the browser blocks scripted playback.
+          el.controls = true;
+          setIsPlaying(false);
+        });
+      }
       setIsPlaying(true);
       setHasStarted(true);
     } else {
@@ -24,6 +32,7 @@ export function VideoDemoSection() {
       setIsPlaying(false);
     }
   }
+
 
   function handleEnded() {
     setIsPlaying(false);
