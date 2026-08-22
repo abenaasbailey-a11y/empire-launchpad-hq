@@ -219,6 +219,10 @@ export function MarketingPromptsPage() {
           <div className="text-muted-foreground mt-12 text-sm leading-relaxed">
             <p>
               Next:{" "}
+              <Link to="/grants-for-women" className="text-blush hover:text-gold transition-colors">
+                grants for women business owners
+              </Link>
+              ,{" "}
               <Link to="/chatgpt-prompts" className="text-blush hover:text-gold transition-colors">
                 free ChatGPT prompts for business
               </Link>
