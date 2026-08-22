@@ -120,7 +120,7 @@ const faqs = [
   },
   {
     q: "How do I pay?",
-    a: "After you submit your request, we'll send you a payment link and confirm the scope and timeline. Work begins once payment is received. Most projects are completed within 2 – 7 days depending on the service.",
+    a: "Instantly. Tap 'Pay & start' on any service and you'll check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Prefer to talk first? Use the order form below and we'll confirm scope before you pay.",
   },
   {
     q: "Do you work with nonprofits and for-profits?",
