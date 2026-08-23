@@ -42,7 +42,7 @@ const services: Array<{
     title: "Résumé & Cover Letter Makeover",
     price: "$75",
     priceId: "resume_makeover_onetime",
-    body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a grant committee.",
+    body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a committee.",
     deliverables: ["ATS-optimized résumé", "Tailored cover letter", "LinkedIn summary", "1 revision round"],
     turnaround: "2 – 3 days",
     featured: false,
@@ -74,7 +74,7 @@ const processSteps = [
   {
     step: "01",
     title: "Tell us what you need",
-    body: "Fill out the order form below. Share your business, your goal, and any details that matter — grant deadline, target funder, job title, whatever applies.",
+    body: "Fill out the order form below. Share your business, your goal, and any details that matter — target role, business stage, job title, whatever applies.",
   },
   {
     step: "02",
@@ -89,7 +89,7 @@ const processSteps = [
   {
     step: "04",
     title: "Submit with confidence",
-    body: "Your document is ready to submit — grant application, business plan, résumé, or content calendar. You take the credit.",
+    body: "Your document is ready to submit — business plan, résumé, or content calendar. You take the credit.",
   },
 ];
 
@@ -352,7 +352,7 @@ function OrderForm() {
           value={form.details}
           onChange={(e) => update("details", e.target.value)}
           className="border-input bg-card/60 text-foreground placeholder:text-muted-foreground focus:ring-ring mt-2 w-full rounded-xl border px-4 py-3 text-sm outline-none focus:ring-1"
-          placeholder="What do you need? Grant deadline? Target funder or job? Include anything that helps us understand your goal."
+          placeholder="What do you need? Target role? Business stage? Include anything that helps us understand your goal."
         />
       </div>
 
