@@ -6,10 +6,8 @@ import { useSubscription } from "@/hooks/useSubscription";
 import { createBillingPortalLink } from "@/lib/billing.functions";
 
 const PLAN_NAMES: Record<string, string> = {
-  social_content_monthly: "Social Media Content Package",
-  business_plan_onetime: "Business Plan",
-  resume_makeover_onetime: "Résumé & Cover Letter Makeover",
-  email_sequence_onetime: "Email Marketing Sequence",
+  empire_membership_monthly: "Her Empire Era Membership — Monthly",
+  empire_membership_annual: "Her Empire Era Membership — Annual",
 };
 
 function planName(priceId: string | null | undefined): string {

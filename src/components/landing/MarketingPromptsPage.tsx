@@ -247,6 +247,9 @@ export function MarketingPromptsPage() {
             <Link to="/join" className="hover:text-blush transition-colors">
               Membership
             </Link>
+            <Link to="/membership" className="hover:text-blush transition-colors">
+              Membership
+            </Link>
             <Link to="/services" className="hover:text-blush transition-colors">
               Services
             </Link>
