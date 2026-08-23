@@ -92,8 +92,9 @@ function CheckoutSuccess() {
   }, [order?.email]);
 
   useEffect(() => {
+    const custom = (order?.custom_data ?? null) as { serviceTitle?: string } | null;
     const fromOrder =
-      (order?.custom_data?.["serviceTitle"] as string | undefined) ??
+      custom?.serviceTitle ??
       (order?.price_id ? SERVICE_BY_PRICE[order.price_id] : undefined);
     if (fromOrder) setForm((f) => (f.service_type ? f : { ...f, service_type: fromOrder }));
   }, [order?.price_id, order?.custom_data]);
