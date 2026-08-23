@@ -43,9 +43,18 @@ const sections: LegalSection[] = [
     ],
   },
   {
-    heading: "Sharing your information",
+    heading: "Who we share your information with",
     body: [
-      "We do not sell your personal information. We share it only with the service providers who help us run Her Empire Era — for example hosting, authentication, email delivery and AI processing — and only to the extent needed to provide those services.",
+      "We do not sell your personal information. We share it only with the recipients below, and only to the extent needed to run Her Empire Era:",
+    ],
+    bullets: [
+      "Paddle.com — our online reseller and Merchant of Record. Your order, billing and contact details are shared with Paddle so it can process payments, issue invoices, calculate tax and handle refunds.",
+      "Hosting and database providers — to store your account and content securely.",
+      "Authentication providers, including Google, when you choose to sign in with them.",
+      "Email delivery providers — to send account, service and (if you opt in) marketing messages.",
+      "AI model providers — to process the prompts and business details you submit to Victoria and generate your results.",
+    ],
+    body2: [
       "We may also disclose information where required by law, or to protect the rights, safety and security of our members and our platform.",
     ],
   },
