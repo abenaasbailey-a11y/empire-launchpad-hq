@@ -13,28 +13,30 @@ export type CheckoutOptions = {
 export function usePaddleCheckout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
 
   const openCheckout = async (options: CheckoutOptions) => {
     setLoading(true);
     setError(null);
     try {
+      // Purchases must be tied to a member account so the order, entitlement and
+      // billing portal all resolve to a real user.
+      const { data } = await supabase.auth.getUser();
+      const user = data.user;
+      if (!user) {
+        setNeedsAuth(true);
+        return;
+      }
+
       await initializePaddle();
       const paddlePriceId = await getPaddlePriceId(options.priceId);
 
-      const { data } = await supabase.auth.getUser();
-      const user = data.user;
-
-      const customData: Record<string, string> = {};
-      if (user?.id) customData["userId"] = user.id;
+      const customData: Record<string, string> = { userId: user.id };
       if (options.serviceTitle) customData["serviceTitle"] = options.serviceTitle;
 
       window.Paddle.Checkout.open({
         items: [{ priceId: paddlePriceId, quantity: options.quantity ?? 1 }],
-        customer: options.customerEmail
-          ? { email: options.customerEmail }
-          : user?.email
-            ? { email: user.email }
-            : undefined,
+        customer: { email: options.customerEmail ?? user.email ?? "" },
         customData: Object.keys(customData).length ? customData : undefined,
         settings: {
           displayMode: "overlay",
@@ -50,5 +52,5 @@ export function usePaddleCheckout() {
     }
   };
 
-  return { openCheckout, loading, error };
+  return { openCheckout, loading, error, needsAuth, clearNeedsAuth: () => setNeedsAuth(false) };
 }
