@@ -3,7 +3,8 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { FREE_AI_RUNS_PER_MONTH } from "@/lib/entitlement.functions";
 
 /** Membership check used to gate Victoria's weekly picks. Server-side only. */
-async function isMember(supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> }): Promise<boolean> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function isMember(supabase: any): Promise<boolean> {
   const { data } = await supabase.rpc("my_entitlement", { free_limit: FREE_AI_RUNS_PER_MONTH });
   return Boolean((data as { member?: boolean } | null)?.member);
 }
