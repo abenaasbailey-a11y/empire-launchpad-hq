@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Section } from "@/components/landing/Section";
 import { PromptCard } from "@/components/prompt-vault/PromptCard";
 import { useIsAdmin } from "@/hooks/use-admin";
+import { MembershipGate } from "@/components/MembershipGate";
 import { PROMPT_CATEGORIES, GRANTS_CATEGORY, GRANTS_DISCLAIMER, type VaultPrompt } from "@/lib/prompt-vault";
 
 export const Route = createFileRoute("/_authenticated/prompt-vault")({
@@ -162,6 +163,9 @@ function PromptVaultPage() {
           Fill in a few details, copy the prompt, or send it straight to Empire Builder AI. Every
           prompt is written to give you work you can use the same day.
         </p>
+
+        <MembershipGate className="mt-8" />
+
 
         <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center">
           <Input

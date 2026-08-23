@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_usage: {
+        Row: {
+          month_key: string
+          runs: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          month_key: string
+          runs?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          month_key?: string
+          runs?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_leads: {
         Row: {
           converted_at: string | null
@@ -236,6 +257,7 @@ export type Database = {
           description: string
           id: string
           is_featured: boolean
+          is_free: boolean
           is_published: boolean
           save_count: number
           slug: string
@@ -251,6 +273,7 @@ export type Database = {
           description: string
           id?: string
           is_featured?: boolean
+          is_free?: boolean
           is_published?: boolean
           save_count?: number
           slug: string
@@ -266,6 +289,7 @@ export type Database = {
           description?: string
           id?: string
           is_featured?: boolean
+          is_free?: boolean
           is_published?: boolean
           save_count?: number
           slug?: string
@@ -491,8 +515,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      consume_ai_run: { Args: { free_limit?: number }; Returns: Json }
       has_active_subscription: {
         Args: { check_env?: string; user_uuid: string }
+        Returns: boolean
+      }
+      has_any_active_subscription: {
+        Args: { user_uuid: string }
         Returns: boolean
       }
       has_role: {
@@ -502,6 +531,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      my_entitlement: { Args: { free_limit?: number }; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "member"

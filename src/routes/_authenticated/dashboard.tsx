@@ -8,6 +8,8 @@ import { useIsAdmin } from "@/hooks/use-admin";
 import { getSavedPickNotes } from "@/lib/victoria-picks.functions";
 import { SavedPickNotes } from "@/components/dashboard/SavedPickNotes";
 import { BillingPanel } from "@/components/dashboard/BillingPanel";
+import { MembershipGate } from "@/components/MembershipGate";
+import { useEntitlement } from "@/hooks/useEntitlement";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -42,6 +44,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { isAdmin } = useIsAdmin();
+  const { isMember } = useEntitlement();
   const fetchSavedNotes = useServerFn(getSavedPickNotes);
 
   const { data: savedNotes = [], isLoading: notesLoading } = useQuery({
@@ -100,9 +103,15 @@ function Dashboard() {
           Welcome{firstName ? `, ${firstName}` : ""}. Your era starts here.
         </h1>
         <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed">
-          Your free membership is active{profile?.email ? ` for ${profile.email}` : ""}. Victoria is
-          ready whenever you are.
+          {isMember ? "Your membership is active" : "Your free account is active"}
+          {profile?.email ? ` for ${profile.email}` : ""}. Victoria is ready whenever you are.
         </p>
+
+        <MembershipGate
+          className="mt-10"
+          title="Unlock the full empire toolkit"
+          body="Your free account includes sample prompts, limited Empire Builder AI runs and one of Victoria's weekly picks. Members get the full 56+ prompt vault, unlimited AI runs and all of Victoria's picks."
+        />
 
         <div className="mt-10 flex flex-wrap gap-3 md:mt-12">
           <Button variant="gold" size="lg" asChild>

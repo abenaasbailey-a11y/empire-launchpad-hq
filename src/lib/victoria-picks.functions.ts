@@ -1,5 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { FREE_AI_RUNS_PER_MONTH } from "@/lib/entitlement.functions";
+
+/** Membership check used to gate Victoria's weekly picks. Server-side only. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function isMember(supabase: any): Promise<boolean> {
+  const { data } = await supabase.rpc("my_entitlement", { free_limit: FREE_AI_RUNS_PER_MONTH });
+  return Boolean((data as { member?: boolean } | null)?.member);
+}
 
 export interface SavedPickNote {
   id: string;
@@ -26,6 +34,7 @@ export interface SavedPickNote {
 }
 
 export interface WeeklyPicksResult {
+  locked?: boolean;
   week: string;
   startsAt: string;
   endsAt: string;
@@ -94,12 +103,16 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
     const noted = await addVictoriaNotes(picks, signals, library, firstName);
     await persistNotes(supabase, userId, week, noted);
 
+    // Free accounts see one pick as a taste test; the full set is a member perk.
+    const member = await isMember(supabase);
+
     return {
+      locked: !member,
       week,
       startsAt: window.startsAt,
       endsAt: window.endsAt,
       refreshAt: window.refreshAt,
-      picks: noted,
+      picks: member ? noted : noted.slice(0, 1),
     };
   });
 
@@ -112,6 +125,11 @@ export const refreshWeeklyPicks = createServerFn({ method: "POST" })
   .handler(async ({ context }): Promise<WeeklyPicksResult> => {
     const { shortlist, addVictoriaNotes, weekKey, weekWindow, persistNotes } = await import("./victoria-picks.server");
     const { supabase, userId } = context;
+
+    // Advancing the week early is a member perk.
+    if (!(await isMember(supabase))) {
+      throw new Error("Become a member to unlock Victoria's full weekly picks.");
+    }
 
     const [libraryRes, signalsRes, profileRes] = await Promise.all([
       supabase
