@@ -1,8 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
 const VALID_SERVICES = [
-  "Government Grant Writing",
-  "Private & Foundation Grants",
   "Business Plan",
   "Résumé & Cover Letter Makeover",
   "Social Media Content Package",

@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicesPage } from "@/components/landing/ServicesPage";
 
-const TITLE = "Hire Us — Grant Writing, Business Plans & Résumés | Her Empire Era";
+const TITLE = "Hire Us — Business Plans, Résumés & Content | Her Empire Era";
 const DESCRIPTION =
-  "Done-for-you AI-powered services: government grant writing, foundation grants, business plans, résumé makeovers, social media content, and email sequences. Human-reviewed and ready to submit.";
+  "Done-for-you AI-powered services: business plans, résumé makeovers, social media content, and email sequences. Human-reviewed and ready to submit.";
 const OG_DESCRIPTION =
-  "Professional grant writing, business plans, résumés and content — drafted by Victoria AI, polished by a human strategist. Submit your request in minutes.";
+  "Professional business plans, résumés and content — drafted by Victoria AI, polished by a human strategist. Submit your request in minutes.";
 
 export const Route = createFileRoute("/services")({
   component: ServicesPage,
