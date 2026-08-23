@@ -31,6 +31,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRouteImport } from './routes/[.well-known]/apple-developer-merchantid-domain-association'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin-orders'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -153,6 +154,14 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute =
+  Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRouteImport.update(
+    {
+      id: '/.well-known/apple-developer-merchantid-domain-association',
+      path: '/.well-known/apple-developer-merchantid-domain-association',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
     id: '/.well-known/oauth-protected-resource',
@@ -237,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/apple-developer-merchantid-domain-association': typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin-orders': typeof AuthenticatedAdminOrdersRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -271,6 +281,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/apple-developer-merchantid-domain-association': typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin-orders': typeof AuthenticatedAdminOrdersRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -307,6 +318,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/apple-developer-merchantid-domain-association': typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/admin-orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -343,6 +355,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/toolkit'
     | '/.mcp/list-tools'
+    | '/.well-known/apple-developer-merchantid-domain-association'
     | '/.well-known/oauth-protected-resource'
     | '/admin-orders'
     | '/dashboard'
@@ -377,6 +390,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/toolkit'
     | '/.mcp/list-tools'
+    | '/.well-known/apple-developer-merchantid-domain-association'
     | '/.well-known/oauth-protected-resource'
     | '/admin-orders'
     | '/dashboard'
@@ -412,6 +426,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/toolkit'
     | '/.mcp/list-tools'
+    | '/.well-known/apple-developer-merchantid-domain-association'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/admin-orders'
     | '/_authenticated/dashboard'
@@ -448,6 +463,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ToolkitRoute: typeof ToolkitRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute: typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -613,6 +629,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/apple-developer-merchantid-domain-association': {
+      id: '/.well-known/apple-developer-merchantid-domain-association'
+      path: '/.well-known/apple-developer-merchantid-domain-association'
+      fullPath: '/.well-known/apple-developer-merchantid-domain-association'
+      preLoaderRoute: typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
       path: '/.well-known/oauth-protected-resource'
@@ -733,6 +756,8 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ToolkitRoute: ToolkitRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute:
+    Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
