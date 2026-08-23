@@ -19,27 +19,16 @@ import {
 import { useServerFn } from "@tanstack/react-start";
 import { captureServiceRequest, servicesList } from "@/lib/service-requests.functions";
 
-const services = [
-  {
-    icon: Landmark,
-    title: "Government Grant Writing",
-    price: "$350",
-    priceId: "govt_grant_writing_onetime",
-    body: "Federal, state, and local government grant applications — narrative, budget justification, and supporting documents. SBIR, SBA, USDA, HUD, and municipal programs.",
-    deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
-    turnaround: "5 – 7 days",
-    featured: true,
-  },
-  {
-    icon: Building2,
-    title: "Private & Foundation Grants",
-    price: "$250",
-    priceId: "private_foundation_grants_onetime",
-    body: "Applications for private foundations, corporate giving programs, and nonprofit grants. Letters of inquiry, full proposals, and post-award reports.",
-    deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
-    turnaround: "3 – 5 days",
-    featured: false,
-  },
+const services: Array<{
+  icon: typeof Landmark;
+  title: string;
+  price: string;
+  priceId: string | null;
+  body: string;
+  deliverables: string[];
+  turnaround: string;
+  featured: boolean;
+}> = [
   {
     icon: FileText,
     title: "Business Plan",
@@ -48,7 +37,7 @@ const services = [
     body: "Investor-ready business plans with executive summary, market analysis, financial projections, and growth strategy — built with AI, polished by a real strategist.",
     deliverables: ["Executive summary", "Market analysis", "Financial projections", "Growth strategy"],
     turnaround: "4 – 6 days",
-    featured: false,
+    featured: true,
   },
   {
     icon: Sparkles,
@@ -80,7 +69,28 @@ const services = [
     turnaround: "2 – 3 days",
     featured: false,
   },
+  {
+    icon: Landmark,
+    title: "Government Grant Writing",
+    price: "By quote",
+    priceId: null,
+    body: "Federal, state, and local grant applications — narrative, budget justification, and supporting documents. Scoped and quoted individually after we review your program and deadline.",
+    deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
+    turnaround: "5 – 7 days",
+    featured: false,
+  },
+  {
+    icon: Building2,
+    title: "Private & Foundation Grants",
+    price: "By quote",
+    priceId: null,
+    body: "Applications for private foundations, corporate giving programs, and nonprofit proposals. Letters of inquiry, full proposals, and post-award reports, scoped to your funder.",
+    deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
+    turnaround: "3 – 5 days",
+    featured: false,
+  },
 ];
+
 
 const processSteps = [
   {
@@ -108,7 +118,7 @@ const processSteps = [
 const faqs = [
   {
     q: "Do you actually write government grants?",
-    a: "Yes. We draft full government grant narratives and budget justifications for federal, state, and local programs — including SBIR, SBA, USDA, and HUD. We write the application; you submit it under your organization's name. We do not submit on your behalf, and we do not guarantee funding — no ethical grant writer can.",
+    a: "Yes. We draft full grant narratives and budget justifications for federal, state, local and foundation programs. Grant work is quoted individually rather than bought from this page — request a quote using the order form and we'll confirm scope, price and timeline first. We write the application; you submit it under your organization's name. We never guarantee funding — no ethical grant writer can.",
   },
   {
     q: "Can you guarantee my grant will be approved?",
@@ -120,8 +130,9 @@ const faqs = [
   },
   {
     q: "How do I pay?",
-    a: "Instantly. Tap 'Pay & start' on any service and you'll check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Prefer to talk first? Use the order form below and we'll confirm scope before you pay.",
+    a: "For the fixed-price packages, tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Quote-only services are invoiced after we agree scope with you.",
   },
+
   {
     q: "Do you work with nonprofits and for-profits?",
     a: "Both. We write grants for 501(c)(3) nonprofits, social enterprises, small businesses, and individual entrepreneurs. Government grants often require a registered organization — we'll let you know if you're eligible during the intake.",
@@ -166,29 +177,38 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           </li>
         ))}
       </ul>
-      <Button
-        variant="lux"
-        className="mt-6 w-full"
-        disabled={loading}
-        onClick={() =>
-          openCheckout({ priceId: service.priceId, serviceTitle: service.title })
-        }
-      >
-        {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
-      </Button>
-      {needsAuth ? (
-        <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
-          Create your free account first so we can attach this order to you.{" "}
-          <Link
-            to="/auth"
-            search={{ mode: "signup", next: "/services" }}
-            className="text-gold underline"
+      {service.priceId ? (
+        <>
+          <Button
+            variant="lux"
+            className="mt-6 w-full"
+            disabled={loading}
+            onClick={() =>
+              openCheckout({ priceId: service.priceId!, serviceTitle: service.title })
+            }
           >
-            Sign in or join free
-          </Link>
-          , then tap Pay & start again.
-        </p>
-      ) : null}
+            {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
+          </Button>
+          {needsAuth ? (
+            <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
+              Create your free account first so we can attach this order to you.{" "}
+              <Link
+                to="/auth"
+                search={{ mode: "signup", next: "/services" }}
+                className="text-gold underline"
+              >
+                Sign in or join free
+              </Link>
+              , then tap Pay & start again.
+            </p>
+          ) : null}
+        </>
+      ) : (
+        <Button variant="lux" className="mt-6 w-full" asChild>
+          <a href="#order">Request a quote</a>
+        </Button>
+      )}
+
       {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
       <div className="border-border mt-4 flex items-center justify-between border-t pt-4">
         <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
