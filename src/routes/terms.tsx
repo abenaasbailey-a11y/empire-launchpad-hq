@@ -8,9 +8,16 @@ const CANONICAL = "https://yourempireconcierge.com/terms";
 
 const sections: LegalSection[] = [
   {
+    heading: "Who we are",
+    body: [
+      "This site and all products and services offered on it are provided by HER EMPIRE ERA LLC, a limited liability company registered in the United States (\"Her Empire Era\", \"we\", \"us\"). HER EMPIRE ERA LLC is the seller and provider of the Her Empire Era membership and all professional services listed on yourempireconcierge.com.",
+      "Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service enquiries and handles returns, refunds, invoices and taxes on our behalf.",
+    ],
+  },
+  {
     heading: "Agreement to these terms",
     body: [
-      "By creating a membership or using yourempireconcierge.com, you agree to these terms. If you do not agree, please do not use the site.",
+      "By creating a membership, purchasing a service or otherwise using yourempireconcierge.com, you agree to these terms. If you do not agree, please do not use the site.",
     ],
   },
   {
