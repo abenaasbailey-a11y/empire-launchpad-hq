@@ -38,8 +38,8 @@ export const Route = createFileRoute("/services")({
             "@type": "AggregateOffer",
             priceCurrency: "USD",
             lowPrice: "75",
-            highPrice: "750",
-            offerCount: "6",
+            highPrice: "300",
+            offerCount: "4",
           },
         }),
       },
@@ -49,22 +49,6 @@ export const Route = createFileRoute("/services")({
           "@context": "https://schema.org",
           "@type": "FAQPage",
           mainEntity: [
-            {
-              "@type": "Question",
-              name: "Do you actually write government grants?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Yes. We draft full government grant narratives and budget justifications for federal, state, and local programs — including SBIR, SBA, USDA, and HUD. We write the application; you submit it under your organization's name.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Can you guarantee my grant will be approved?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "No. Anyone who promises a guaranteed grant is scamming you. What we guarantee is a professional, well-written application that gives you the best possible chance. Funding decisions depend on the funder, the competition, and how well your project fits their priorities.",
-              },
-            },
             {
               "@type": "Question",
               name: "How is this different from using the free Victoria AI?",
