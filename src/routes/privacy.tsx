@@ -8,14 +8,24 @@ const CANONICAL = "https://yourempireconcierge.com/privacy";
 
 const sections: LegalSection[] = [
   {
-    heading: "Information we collect",
+    heading: "Who is responsible for your data",
     body: [
-      "We collect only what we need to give you a membership and a working concierge experience.",
+      "HER EMPIRE ERA LLC, a limited liability company registered in the United States, is the data controller for the personal information collected through yourempireconcierge.com and the Her Empire Era membership.",
+      "Our order process is conducted by our online reseller Paddle.com, which is the Merchant of Record for all our orders. Paddle acts as an independent data controller for the payment and billing information you provide at checkout.",
+    ],
+  },
+  {
+    heading: "Categories of personal data we collect",
+    body: [
+      "We collect only what we need to give you a membership, deliver the services you order, and run a working concierge experience.",
     ],
     bullets: [
-      "Account details you give us: your name, email address and, if you sign in with Google, the basic profile information Google shares.",
+      "Identity and contact data: your name, email address and, if you sign in with Google, the basic profile information Google shares.",
+      "Business and service request data: business name, phone number, project details and any information you send us when requesting a service.",
       "Content you create: the goals, notes, prompts and drafts you enter while using the toolkit and Victoria.",
-      "Technical information: standard log data such as device type, browser and pages visited, used to keep the site secure and working.",
+      "Transaction data: the products you purchased, order and invoice references, and subscription status. Full payment card details are collected and stored by Paddle, never by us.",
+      "Technical and usage data: standard log data such as device type, browser, IP address and pages visited, used to keep the site secure and working.",
+      "Marketing preferences: whether you have opted in to updates and your unsubscribe choices.",
     ],
   },
   {

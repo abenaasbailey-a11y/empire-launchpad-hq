@@ -63,9 +63,11 @@ const sections: LegalSection[] = [
     ],
   },
   {
-    heading: "Paid features",
+    heading: "Paid services, billing and refunds",
     body: [
-      "If we introduce paid plans or add-ons, the price, billing cycle and cancellation terms will be shown clearly before you purchase. Free membership features remain free unless we tell you otherwise.",
+      "Prices, billing cycles and cancellation terms are shown clearly before you purchase. Free membership features remain free unless we tell you otherwise.",
+      "Payments are processed by Paddle.com as Merchant of Record, and your invoice and receipt come from Paddle. Applicable sales tax and VAT are calculated and collected by Paddle at checkout.",
+      "Subscriptions can be cancelled at any time; cancellation stops future billing and access ends immediately. Refunds are governed by our Refund Policy, which gives you 30 days from purchase to request a refund.",
     ],
   },
   {
