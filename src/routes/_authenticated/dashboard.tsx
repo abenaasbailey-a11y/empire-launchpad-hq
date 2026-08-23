@@ -9,6 +9,7 @@ import { getSavedPickNotes } from "@/lib/victoria-picks.functions";
 import { SavedPickNotes } from "@/components/dashboard/SavedPickNotes";
 import { BillingPanel } from "@/components/dashboard/BillingPanel";
 import { MembershipGate } from "@/components/MembershipGate";
+import { useEntitlement } from "@/hooks/useEntitlement";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -101,8 +102,8 @@ function Dashboard() {
           Welcome{firstName ? `, ${firstName}` : ""}. Your era starts here.
         </h1>
         <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed">
-          Your free membership is active{profile?.email ? ` for ${profile.email}` : ""}. Victoria is
-          ready whenever you are.
+          {isMember ? "Your membership is active" : "Your free account is active"}
+          {profile?.email ? ` for ${profile.email}` : ""}. Victoria is ready whenever you are.
         </p>
 
         <MembershipGate
