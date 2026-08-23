@@ -24,6 +24,7 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
       business_name?: string | undefined;
       details: string;
       budget?: string | undefined;
+      paddle_transaction_id?: string | undefined;
     }) => {
       const name = String(input?.name ?? "").trim();
       if (!name || name.length > 120) {
@@ -61,12 +62,30 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
         business_name: clean(input?.business_name, 200),
         details,
         budget: clean(input?.budget, 100),
+        paddle_transaction_id: clean(input?.paddle_transaction_id, 120),
       };
     },
   )
   .handler(async ({ data }): Promise<{ ok: boolean }> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin.from("service_requests").insert(data);
+
+    // When the request follows a paid checkout, attach it to that order (and the
+    // buyer's account) so admins see payment and project details together.
+    let order_id: string | null = null;
+    let user_id: string | null = null;
+    if (data.paddle_transaction_id) {
+      const { data: order } = await supabaseAdmin
+        .from("orders")
+        .select("id, user_id")
+        .eq("paddle_transaction_id", data.paddle_transaction_id)
+        .maybeSingle();
+      order_id = order?.id ?? null;
+      user_id = order?.user_id ?? null;
+    }
+
+    const { error } = await supabaseAdmin
+      .from("service_requests")
+      .insert({ ...data, order_id, user_id });
     if (error) {
       console.error("[services] capture failed", error.message);
       throw new Error("We could not submit your request just now. Please try again.");

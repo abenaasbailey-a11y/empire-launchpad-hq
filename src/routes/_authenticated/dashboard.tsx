@@ -7,6 +7,7 @@ import { GoldRule, Section } from "@/components/landing/Section";
 import { useIsAdmin } from "@/hooks/use-admin";
 import { getSavedPickNotes } from "@/lib/victoria-picks.functions";
 import { SavedPickNotes } from "@/components/dashboard/SavedPickNotes";
+import { BillingPanel } from "@/components/dashboard/BillingPanel";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -127,6 +128,8 @@ function Dashboard() {
 
         <SavedPickNotes notes={savedNotes} isLoading={notesLoading} />
 
+        <BillingPanel />
+
         {isAdmin && (
           <div className="border-border bg-card/50 mt-12 rounded-2xl border p-6 backdrop-blur-sm md:mt-16 md:p-8">
             <p className="eyebrow eyebrow-blush">Admin only</p>
@@ -143,6 +146,9 @@ function Dashboard() {
               </Button>
               <Button variant="lux" size="sm" asChild>
                 <Link to="/prompt-vault-admin">Manage Prompt Vault</Link>
+              </Button>
+              <Button variant="lux" size="sm" asChild>
+                <Link to="/admin-orders">Orders & Subscriptions</Link>
               </Button>
             </div>
           </div>

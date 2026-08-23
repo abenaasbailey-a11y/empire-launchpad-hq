@@ -284,9 +284,12 @@ export type Database = {
           email: string
           id: string
           name: string
+          order_id: string | null
+          paddle_transaction_id: string | null
           phone: string | null
           service_type: string
           status: string
+          user_id: string | null
         }
         Insert: {
           budget?: string | null
@@ -296,9 +299,12 @@ export type Database = {
           email: string
           id?: string
           name: string
+          order_id?: string | null
+          paddle_transaction_id?: string | null
           phone?: string | null
           service_type: string
           status?: string
+          user_id?: string | null
         }
         Update: {
           budget?: string | null
@@ -308,11 +314,22 @@ export type Database = {
           email?: string
           id?: string
           name?: string
+          order_id?: string | null
+          paddle_transaction_id?: string | null
           phone?: string | null
           service_type?: string
           status?: string
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "service_requests_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       side_hustles: {
         Row: {
