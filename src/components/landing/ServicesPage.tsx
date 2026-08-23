@@ -69,7 +69,28 @@ const services: Array<{
     turnaround: "2 – 3 days",
     featured: false,
   },
+  {
+    icon: Landmark,
+    title: "Government Grant Writing",
+    price: "By quote",
+    priceId: null,
+    body: "Federal, state, and local grant applications — narrative, budget justification, and supporting documents. Scoped and quoted individually after we review your program and deadline.",
+    deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
+    turnaround: "5 – 7 days",
+    featured: false,
+  },
+  {
+    icon: Building2,
+    title: "Private & Foundation Grants",
+    price: "By quote",
+    priceId: null,
+    body: "Applications for private foundations, corporate giving programs, and nonprofit proposals. Letters of inquiry, full proposals, and post-award reports, scoped to your funder.",
+    deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
+    turnaround: "3 – 5 days",
+    featured: false,
+  },
 ];
+
 
 const processSteps = [
   {
