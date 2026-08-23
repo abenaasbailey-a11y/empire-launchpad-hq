@@ -164,6 +164,9 @@ function PromptVaultPage() {
           prompt is written to give you work you can use the same day.
         </p>
 
+        <MembershipGate className="mt-8" />
+
+
         <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center">
           <Input
             value={search}
