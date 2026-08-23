@@ -118,7 +118,7 @@ const processSteps = [
 const faqs = [
   {
     q: "Do you actually write government grants?",
-    a: "Yes. We draft full government grant narratives and budget justifications for federal, state, and local programs — including SBIR, SBA, USDA, and HUD. We write the application; you submit it under your organization's name. We do not submit on your behalf, and we do not guarantee funding — no ethical grant writer can.",
+    a: "Yes. We draft full grant narratives and budget justifications for federal, state, local and foundation programs. Grant work is quoted individually rather than bought from this page — request a quote using the order form and we'll confirm scope, price and timeline first. We write the application; you submit it under your organization's name. We never guarantee funding — no ethical grant writer can.",
   },
   {
     q: "Can you guarantee my grant will be approved?",
@@ -130,8 +130,9 @@ const faqs = [
   },
   {
     q: "How do I pay?",
-    a: "Instantly. Tap 'Pay & start' on any service and you'll check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Prefer to talk first? Use the order form below and we'll confirm scope before you pay.",
+    a: "For the fixed-price packages, tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Quote-only services are invoiced after we agree scope with you.",
   },
+
   {
     q: "Do you work with nonprofits and for-profits?",
     a: "Both. We write grants for 501(c)(3) nonprofits, social enterprises, small businesses, and individual entrepreneurs. Government grants often require a registered organization — we'll let you know if you're eligible during the intake.",
