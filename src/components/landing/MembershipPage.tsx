@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { useEntitlement } from "@/hooks/useEntitlement";
 
 type Plan = {
   id: string;
@@ -92,7 +93,7 @@ const faqs = [
   },
 ];
 
-function PlanCard({ plan }: { plan: Plan }) {
+function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
   const { openCheckout, loading, error, needsAuth } = usePaddleCheckout();
 
   return (
@@ -122,6 +123,11 @@ function PlanCard({ plan }: { plan: Plan }) {
           </li>
         ))}
       </ul>
+      {isMember ? (
+        <Button variant="lux" className="mt-7 w-full" asChild>
+          <Link to="/prompt-vault">You're a member — open the vault</Link>
+        </Button>
+      ) : (
       <Button
         variant={plan.featured ? "gold" : "lux"}
         className="mt-7 w-full"
@@ -130,6 +136,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       >
         {loading ? "Opening checkout…" : `Become a member — ${plan.price}`}
       </Button>
+      )}
       {needsAuth ? (
         <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
           Create your free account first so we can attach the membership to you.{" "}
@@ -151,6 +158,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 /** Public pricing page for the Her Empire Era digital membership. */
 export function MembershipPage() {
   const [showAll, setShowAll] = useState(false);
+  const { isMember } = useEntitlement();
   const visibleFaqs = showAll ? faqs : faqs.slice(0, 3);
 
   return (
@@ -181,7 +189,7 @@ export function MembershipPage() {
       <Section id="pricing">
         <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 md:gap-8">
           {plans.map((plan) => (
-            <PlanCard key={plan.id} plan={plan} />
+            <PlanCard key={plan.id} plan={plan} isMember={isMember} />
           ))}
         </div>
         <p className="text-muted-foreground mx-auto mt-8 flex max-w-xl items-center justify-center gap-2 text-center text-xs leading-relaxed">

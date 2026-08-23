@@ -39,13 +39,14 @@ const inputClass =
   "border-input bg-card/60 text-foreground placeholder:text-muted-foreground focus:ring-ring mt-2 h-12 w-full rounded-xl border px-4 text-sm outline-none focus:ring-1";
 
 const SERVICE_BY_PRICE: Record<string, string> = {
-  govt_grant_writing_onetime: "Government Grant Writing",
-  private_foundation_grants_onetime: "Private & Foundation Grants",
   business_plan_onetime: "Business Plan",
   resume_makeover_onetime: "Résumé & Cover Letter Makeover",
   social_content_monthly: "Social Media Content Package",
   email_sequence_onetime: "Email Marketing Sequence",
 };
+
+/** Membership purchases are self-serve software — no project brief needed. */
+const MEMBERSHIP_PRICES = ["empire_membership_monthly", "empire_membership_annual"];
 
 function CheckoutSuccess() {
   const search = Route.useSearch();
@@ -125,6 +126,41 @@ function CheckoutSuccess() {
       setSubmitting(false);
     }
   };
+
+  const isMembership = Boolean(order?.price_id && MEMBERSHIP_PRICES.includes(order.price_id));
+
+  if (isMembership) {
+    return (
+      <main className="bg-background flex min-h-screen items-center justify-center px-5 py-20">
+        <div className="border-gold/30 bg-card/50 w-full max-w-xl rounded-2xl border p-8 text-center backdrop-blur-sm md:p-12">
+          <div className="bg-gold/10 text-gold mx-auto flex h-14 w-14 items-center justify-center rounded-full">
+            <Check className="h-7 w-7" />
+          </div>
+          <p className="text-gold mt-6 text-[0.65rem] tracking-[0.24em] uppercase">
+            Membership active
+          </p>
+          <h1 className="font-display mt-3 text-3xl font-light md:text-4xl">
+            Welcome to your <span className="text-gold">empire era</span>
+          </h1>
+          <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+            Your receipt is on its way. The full Prompt Vault, unlimited Empire Builder AI and
+            Victoria's weekly picks are unlocked right now — no waiting.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <Button variant="gold" asChild>
+              <Link to="/prompt-vault">Open the Prompt Vault</Link>
+            </Button>
+            <Button variant="lux" asChild>
+              <Link to="/dashboard">Go to my dashboard</Link>
+            </Button>
+          </div>
+          <p className="text-muted-foreground mt-6 text-xs leading-relaxed">
+            Manage or cancel anytime in Billing & account on your dashboard.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-background flex min-h-screen items-center justify-center px-5 py-20">
