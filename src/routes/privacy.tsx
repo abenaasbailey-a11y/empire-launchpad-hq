@@ -54,9 +54,6 @@ const sections: LegalSection[] = [
       "Email delivery providers — to send account, service and (if you opt in) marketing messages.",
       "AI model providers — to process the prompts and business details you submit to Victoria and generate your results.",
     ],
-    body2: [
-      "We may also disclose information where required by law, or to protect the rights, safety and security of our members and our platform.",
-    ],
   },
   {
     heading: "Cookies and similar technologies",
