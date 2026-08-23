@@ -4,6 +4,7 @@ import { AlertTriangle, CreditCard, ExternalLink, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSubscription } from "@/hooks/useSubscription";
 import { createBillingPortalLink } from "@/lib/billing.functions";
+import { Link } from "@tanstack/react-router";
 
 const PLAN_NAMES: Record<string, string> = {
   empire_membership_monthly: "Her Empire Era Membership — Monthly",
@@ -70,7 +71,23 @@ export function BillingPanel() {
     );
   }
 
-  if (!hasBilling) return null;
+  if (!hasBilling) {
+    return (
+      <div className="border-border bg-card/50 mt-12 rounded-2xl border p-6 backdrop-blur-sm md:mt-16 md:p-8">
+        <p className="eyebrow eyebrow-blush">Billing & account</p>
+        <h2 className="font-display mt-4 text-2xl font-light">You're on the free plan</h2>
+        <p className="text-muted-foreground mt-3 max-w-xl text-sm leading-relaxed">
+          No card on file and nothing to manage yet. Become a member for the full Prompt Vault,
+          unlimited Empire Builder AI and Victoria's weekly picks — cancel anytime from this panel.
+        </p>
+        <div className="mt-6">
+          <Button variant="gold" asChild>
+            <Link to="/membership">See membership — $19/mo</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-border bg-card/50 mt-12 rounded-2xl border p-6 backdrop-blur-sm md:mt-16 md:p-8">

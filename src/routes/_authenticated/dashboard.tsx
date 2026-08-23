@@ -8,6 +8,7 @@ import { useIsAdmin } from "@/hooks/use-admin";
 import { getSavedPickNotes } from "@/lib/victoria-picks.functions";
 import { SavedPickNotes } from "@/components/dashboard/SavedPickNotes";
 import { BillingPanel } from "@/components/dashboard/BillingPanel";
+import { MembershipGate } from "@/components/MembershipGate";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -103,6 +104,12 @@ function Dashboard() {
           Your free membership is active{profile?.email ? ` for ${profile.email}` : ""}. Victoria is
           ready whenever you are.
         </p>
+
+        <MembershipGate
+          className="mt-10"
+          title="Unlock the full empire toolkit"
+          body="Your free account includes sample prompts, limited Empire Builder AI runs and one of Victoria's weekly picks. Members get the full 56+ prompt vault, unlimited AI runs and all of Victoria's picks."
+        />
 
         <div className="mt-10 flex flex-wrap gap-3 md:mt-12">
           <Button variant="gold" size="lg" asChild>
