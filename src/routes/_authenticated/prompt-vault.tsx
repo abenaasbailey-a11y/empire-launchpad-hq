@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Section } from "@/components/landing/Section";
 import { PromptCard } from "@/components/prompt-vault/PromptCard";
 import { useIsAdmin } from "@/hooks/use-admin";
+import { MembershipGate } from "@/components/MembershipGate";
 import { PROMPT_CATEGORIES, GRANTS_CATEGORY, GRANTS_DISCLAIMER, type VaultPrompt } from "@/lib/prompt-vault";
 
 export const Route = createFileRoute("/_authenticated/prompt-vault")({

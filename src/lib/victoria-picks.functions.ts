@@ -125,6 +125,11 @@ export const refreshWeeklyPicks = createServerFn({ method: "POST" })
     const { shortlist, addVictoriaNotes, weekKey, weekWindow, persistNotes } = await import("./victoria-picks.server");
     const { supabase, userId } = context;
 
+    // Advancing the week early is a member perk.
+    if (!(await isMember(supabase))) {
+      throw new Error("Become a member to unlock Victoria's full weekly picks.");
+    }
+
     const [libraryRes, signalsRes, profileRes] = await Promise.all([
       supabase
         .from("side_hustles")
