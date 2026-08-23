@@ -8,14 +8,24 @@ const CANONICAL = "https://yourempireconcierge.com/privacy";
 
 const sections: LegalSection[] = [
   {
-    heading: "Information we collect",
+    heading: "Who is responsible for your data",
     body: [
-      "We collect only what we need to give you a membership and a working concierge experience.",
+      "HER EMPIRE ERA LLC, a limited liability company registered in the United States, is the data controller for the personal information collected through yourempireconcierge.com and the Her Empire Era membership.",
+      "Our order process is conducted by our online reseller Paddle.com, which is the Merchant of Record for all our orders. Paddle acts as an independent data controller for the payment and billing information you provide at checkout.",
+    ],
+  },
+  {
+    heading: "Categories of personal data we collect",
+    body: [
+      "We collect only what we need to give you a membership, deliver the services you order, and run a working concierge experience.",
     ],
     bullets: [
-      "Account details you give us: your name, email address and, if you sign in with Google, the basic profile information Google shares.",
+      "Identity and contact data: your name, email address and, if you sign in with Google, the basic profile information Google shares.",
+      "Business and service request data: business name, phone number, project details and any information you send us when requesting a service.",
       "Content you create: the goals, notes, prompts and drafts you enter while using the toolkit and Victoria.",
-      "Technical information: standard log data such as device type, browser and pages visited, used to keep the site secure and working.",
+      "Transaction data: the products you purchased, order and invoice references, and subscription status. Full payment card details are collected and stored by Paddle, never by us.",
+      "Technical and usage data: standard log data such as device type, browser, IP address and pages visited, used to keep the site secure and working.",
+      "Marketing preferences: whether you have opted in to updates and your unsubscribe choices.",
     ],
   },
   {
@@ -33,10 +43,22 @@ const sections: LegalSection[] = [
     ],
   },
   {
-    heading: "Sharing your information",
+    heading: "Who we share your information with",
     body: [
-      "We do not sell your personal information. We share it only with the service providers who help us run Her Empire Era — for example hosting, authentication, email delivery and AI processing — and only to the extent needed to provide those services.",
-      "We may also disclose information where required by law, or to protect the rights, safety and security of our members and our platform.",
+      "We do not sell your personal information. We share it only with the recipients below, and only to the extent needed to run Her Empire Era:",
+    ],
+    bullets: [
+      "Paddle.com — our online reseller and Merchant of Record. Your order, billing and contact details are shared with Paddle so it can process payments, issue invoices, calculate tax and handle refunds.",
+      "Hosting and database providers — to store your account and content securely.",
+      "Authentication providers, including Google, when you choose to sign in with them.",
+      "Email delivery providers — to send account, service and (if you opt in) marketing messages.",
+      "AI model providers — to process the prompts and business details you submit to Victoria and generate your results.",
+    ],
+  },
+  {
+    heading: "Legal disclosures",
+    body: [
+      "We may disclose information where required by law, or to protect the rights, safety and security of our members and our platform.",
     ],
   },
   {
