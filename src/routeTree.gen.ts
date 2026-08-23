@@ -24,6 +24,7 @@ import { Route as OpportunityCenterRouteImport } from './routes/opportunity-cent
 import { Route as PitchTemplatesRouteImport } from './routes/pitch-templates'
 import { Route as PressRouteImport } from './routes/press'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -112,6 +113,11 @@ const PressRoute = PressRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundsRoute = RefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/refunds': typeof RefundsRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
@@ -242,6 +249,7 @@ export interface FileRoutesByTo {
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/refunds': typeof RefundsRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
@@ -275,6 +283,7 @@ export interface FileRoutesById {
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
+  '/refunds': typeof RefundsRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
@@ -308,6 +317,7 @@ export interface FileRouteTypes {
     | '/pitch-templates'
     | '/press'
     | '/privacy'
+    | '/refunds'
     | '/services'
     | '/sitemap.xml'
     | '/terms'
@@ -339,6 +349,7 @@ export interface FileRouteTypes {
     | '/pitch-templates'
     | '/press'
     | '/privacy'
+    | '/refunds'
     | '/services'
     | '/sitemap.xml'
     | '/terms'
@@ -371,6 +382,7 @@ export interface FileRouteTypes {
     | '/pitch-templates'
     | '/press'
     | '/privacy'
+    | '/refunds'
     | '/services'
     | '/sitemap.xml'
     | '/terms'
@@ -404,6 +416,7 @@ export interface RootRouteChildren {
   PitchTemplatesRoute: typeof PitchTemplatesRoute
   PressRoute: typeof PressRoute
   PrivacyRoute: typeof PrivacyRoute
+  RefundsRoute: typeof RefundsRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
@@ -523,6 +536,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refunds': {
+      id: '/refunds'
+      path: '/refunds'
+      fullPath: '/refunds'
+      preLoaderRoute: typeof RefundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -664,6 +684,7 @@ const rootRouteChildren: RootRouteChildren = {
   PitchTemplatesRoute: PitchTemplatesRoute,
   PressRoute: PressRoute,
   PrivacyRoute: PrivacyRoute,
+  RefundsRoute: RefundsRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
