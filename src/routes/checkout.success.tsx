@@ -127,9 +127,19 @@ function CheckoutSuccess() {
     }
   };
 
+  const custom = (order?.custom_data ?? null) as { serviceTitle?: string } | null;
   const isMembership = Boolean(order?.price_id && MEMBERSHIP_PRICES.includes(order.price_id));
+  // Only legacy one-off service orders need a project brief. Everything else —
+  // including a membership, or an order the webhook hasn't written yet — gets
+  // the membership welcome, which is the only thing sold today.
+  const isServiceOrder =
+    !isMembership &&
+    Boolean(
+      (order?.price_id && SERVICE_BY_PRICE[order.price_id]) ||
+        (custom?.serviceTitle && !custom.serviceTitle.startsWith("Membership")),
+    );
 
-  if (isMembership) {
+  if (!isServiceOrder) {
     return (
       <main className="bg-background flex min-h-screen items-center justify-center px-5 py-20">
         <div className="border-gold/30 bg-card/50 w-full max-w-xl rounded-2xl border p-8 text-center backdrop-blur-sm md:p-12">
@@ -288,7 +298,7 @@ function CheckoutSuccess() {
                   value={form.details}
                   onChange={(e) => update("details", e.target.value)}
                   className="border-input bg-card/60 text-foreground placeholder:text-muted-foreground focus:ring-ring mt-2 w-full rounded-xl border px-4 py-3 text-sm outline-none focus:ring-1"
-                  placeholder="Grant deadline? Target funder or job? Anything that helps us understand your goal."
+                  placeholder="Anything that helps us understand your goal and timeline."
                 />
               </div>
 
