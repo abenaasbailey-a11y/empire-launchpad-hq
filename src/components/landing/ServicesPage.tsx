@@ -139,7 +139,7 @@ const trustBadges = [
 ];
 
 function ServiceCard({ service }: { service: (typeof services)[number] }) {
-  const { openCheckout, loading, error } = usePaddleCheckout();
+  const { openCheckout, loading, error, needsAuth } = usePaddleCheckout();
 
   return (
     <article
@@ -176,6 +176,19 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
       >
         {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
       </Button>
+      {needsAuth ? (
+        <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
+          Create your free account first so we can attach this order to you.{" "}
+          <Link
+            to="/auth"
+            search={{ mode: "signup", next: "/services" }}
+            className="text-gold underline"
+          >
+            Sign in or join free
+          </Link>
+          , then tap Pay & start again.
+        </p>
+      ) : null}
       {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
       <div className="border-border mt-4 flex items-center justify-between border-t pt-4">
         <span className="text-muted-foreground flex items-center gap-1.5 text-xs">

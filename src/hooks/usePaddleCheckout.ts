@@ -36,7 +36,9 @@ export function usePaddleCheckout() {
 
       window.Paddle.Checkout.open({
         items: [{ priceId: paddlePriceId, quantity: options.quantity ?? 1 }],
-        customer: { email: options.customerEmail ?? user.email ?? "" },
+        customer: options.customerEmail || user.email
+          ? { email: options.customerEmail ?? user.email! }
+          : undefined,
         customData: Object.keys(customData).length ? customData : undefined,
         settings: {
           displayMode: "overlay",
