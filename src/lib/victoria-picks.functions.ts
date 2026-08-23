@@ -1,5 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { FREE_AI_RUNS_PER_MONTH } from "@/lib/entitlement.functions";
+
+/** Membership check used to gate Victoria's weekly picks. Server-side only. */
+async function isMember(supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> }): Promise<boolean> {
+  const { data } = await supabase.rpc("my_entitlement", { free_limit: FREE_AI_RUNS_PER_MONTH });
+  return Boolean((data as { member?: boolean } | null)?.member);
+}
 
 export interface SavedPickNote {
   id: string;
@@ -26,6 +33,7 @@ export interface SavedPickNote {
 }
 
 export interface WeeklyPicksResult {
+  locked?: boolean;
   week: string;
   startsAt: string;
   endsAt: string;
@@ -94,12 +102,16 @@ export const getWeeklyPicks = createServerFn({ method: "GET" })
     const noted = await addVictoriaNotes(picks, signals, library, firstName);
     await persistNotes(supabase, userId, week, noted);
 
+    // Free accounts see one pick as a taste test; the full set is a member perk.
+    const member = await isMember(supabase);
+
     return {
+      locked: !member,
       week,
       startsAt: window.startsAt,
       endsAt: window.endsAt,
       refreshAt: window.refreshAt,
-      picks: noted,
+      picks: member ? noted : noted.slice(0, 1),
     };
   });
 
