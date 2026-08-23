@@ -44,6 +44,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { isAdmin } = useIsAdmin();
+  const { isMember } = useEntitlement();
   const fetchSavedNotes = useServerFn(getSavedPickNotes);
 
   const { data: savedNotes = [], isLoading: notesLoading } = useQuery({
