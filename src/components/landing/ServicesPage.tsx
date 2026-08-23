@@ -557,6 +557,9 @@ export function ServicesPage() {
             <Link to="/terms" className="hover:text-blush transition-colors">
               Terms
             </Link>
+            <Link to="/refunds" className="hover:text-blush transition-colors">
+              Refunds
+            </Link>
           </nav>
           <a href="mailto:support@yourempireconcierge.com" className="hover:text-blush transition-colors">
             support@yourempireconcierge.com
