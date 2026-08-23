@@ -56,6 +56,12 @@ const sections: LegalSection[] = [
     ],
   },
   {
+    heading: "Legal disclosures",
+    body: [
+      "We may disclose information where required by law, or to protect the rights, safety and security of our members and our platform.",
+    ],
+  },
+  {
     heading: "Cookies and similar technologies",
     body: [
       "We use cookies and local browser storage to keep you signed in, remember your preferences and understand how the site is used. You can clear or block these through your browser settings, though some features may stop working.",
