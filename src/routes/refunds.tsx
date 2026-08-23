@@ -52,7 +52,7 @@ const sections: LegalSection[] = [
   {
     heading: "Contact us",
     body: [
-      "Questions about a payment, an invoice or a refund? Reach out and we will help. Payment and invoice enquiries can also be handled directly by Paddle, our Merchant of Record.",
+      "Questions about a payment, an invoice or a refund? Email us at support@yourempireconcierge.com and we will help. Payment and invoice enquiries can also be handled directly by Paddle, our Merchant of Record.",
     ],
   },
 ];
