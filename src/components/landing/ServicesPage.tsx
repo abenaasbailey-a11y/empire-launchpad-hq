@@ -413,8 +413,8 @@ export function ServicesPage() {
           </h1>
           <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-[0.95rem] leading-relaxed md:text-lg">
             Victoria AI does the heavy lifting, then a human strategist reviews and polishes every
-            document to professional standard. Grant applications, business plans, résumés, content
-            calendars — ready to submit.
+            document to professional standard. Business plans, résumés, content calendars, email
+            sequences — ready to submit.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             {trustBadges.map((b) => (
