@@ -298,7 +298,7 @@ function CheckoutSuccess() {
                   value={form.details}
                   onChange={(e) => update("details", e.target.value)}
                   className="border-input bg-card/60 text-foreground placeholder:text-muted-foreground focus:ring-ring mt-2 w-full rounded-xl border px-4 py-3 text-sm outline-none focus:ring-1"
-                  placeholder="Grant deadline? Target funder or job? Anything that helps us understand your goal."
+                  placeholder="Anything that helps us understand your goal and timeline."
                 />
               </div>
 
