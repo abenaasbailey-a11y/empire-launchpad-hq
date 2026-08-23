@@ -7,8 +7,6 @@ import { createBillingPortalLink } from "@/lib/billing.functions";
 
 const PLAN_NAMES: Record<string, string> = {
   social_content_monthly: "Social Media Content Package",
-  govt_grant_writing_onetime: "Government Grant Writing",
-  private_foundation_grants_onetime: "Private & Foundation Grants",
   business_plan_onetime: "Business Plan",
   resume_makeover_onetime: "Résumé & Cover Letter Makeover",
   email_sequence_onetime: "Email Marketing Sequence",

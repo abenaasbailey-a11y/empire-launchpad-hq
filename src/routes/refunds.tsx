@@ -24,7 +24,7 @@ const sections: LegalSection[] = [
   {
     heading: "Custom done-for-you services",
     body: [
-      "For custom deliverables such as grant writing, business plans and other written services, you may request a full refund at any point within 30 days before we have delivered the completed draft to you.",
+      "For custom deliverables such as business plans, résumés, content packages and other written services, you may request a full refund at any point within 30 days before we have delivered the completed draft to you.",
       "Once the completed draft has been delivered, we will review refund requests within the 30-day window on a case-by-case basis and will offer a revision, a partial refund, or a full refund where the work did not match what was ordered.",
     ],
   },
