@@ -1,4 +1,4 @@
-import { gatewayFetch, type PaddleEnv } from "@/lib/paddle.server";
+import { paddleFetch, type PaddleEnv } from "@/lib/paddle.server";
 
 type AnySupabase = {
   from: (table: string) => any;
@@ -42,15 +42,10 @@ export async function openBillingPortal(
     throw new Error("We could not find a billing profile for your account yet.");
   }
 
-  const response = await gatewayFetch(environment, `/customers/${customerId}/portal-sessions`, {
+  const response = await paddleFetch(environment, `/customers/${customerId}/portal-sessions`, {
     method: "POST",
     body: JSON.stringify(subscriptionIds.length ? { subscription_ids: subscriptionIds } : {}),
   });
-
-  if (!response.ok) {
-    console.error("[billing] portal session failed", response.status, await response.text());
-    throw new Error("We could not open your billing portal just now. Please try again.");
-  }
 
   const result = (await response.json()) as {
     data?: { urls?: { general?: { overview?: string } } };
