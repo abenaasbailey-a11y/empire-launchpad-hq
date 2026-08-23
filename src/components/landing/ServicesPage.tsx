@@ -5,8 +5,6 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import {
-  Landmark,
-  Building2,
   FileText,
   Mail,
   Megaphone,
@@ -20,7 +18,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { captureServiceRequest, servicesList } from "@/lib/service-requests.functions";
 
 const services: Array<{
-  icon: typeof Landmark;
+  icon: typeof FileText;
   title: string;
   price: string;
   priceId: string | null;
@@ -44,7 +42,7 @@ const services: Array<{
     title: "Résumé & Cover Letter Makeover",
     price: "$75",
     priceId: "resume_makeover_onetime",
-    body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a grant committee.",
+    body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a committee.",
     deliverables: ["ATS-optimized résumé", "Tailored cover letter", "LinkedIn summary", "1 revision round"],
     turnaround: "2 – 3 days",
     featured: false,
@@ -69,26 +67,6 @@ const services: Array<{
     turnaround: "2 – 3 days",
     featured: false,
   },
-  {
-    icon: Landmark,
-    title: "Government Grant Writing",
-    price: "By quote",
-    priceId: null,
-    body: "Federal, state, and local grant applications — narrative, budget justification, and supporting documents. Scoped and quoted individually after we review your program and deadline.",
-    deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
-    turnaround: "5 – 7 days",
-    featured: false,
-  },
-  {
-    icon: Building2,
-    title: "Private & Foundation Grants",
-    price: "By quote",
-    priceId: null,
-    body: "Applications for private foundations, corporate giving programs, and nonprofit proposals. Letters of inquiry, full proposals, and post-award reports, scoped to your funder.",
-    deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
-    turnaround: "3 – 5 days",
-    featured: false,
-  },
 ];
 
 
@@ -96,7 +74,7 @@ const processSteps = [
   {
     step: "01",
     title: "Tell us what you need",
-    body: "Fill out the order form below. Share your business, your goal, and any details that matter — grant deadline, target funder, job title, whatever applies.",
+    body: "Fill out the order form below. Share your business, your goal, and any details that matter — target role, business stage, job title, whatever applies.",
   },
   {
     step: "02",
@@ -111,31 +89,22 @@ const processSteps = [
   {
     step: "04",
     title: "Submit with confidence",
-    body: "Your document is ready to submit — grant application, business plan, résumé, or content calendar. You take the credit.",
+    body: "Your document is ready to submit — business plan, résumé, or content calendar. You take the credit.",
   },
 ];
 
 const faqs = [
-  {
-    q: "Do you actually write government grants?",
-    a: "Yes. We draft full grant narratives and budget justifications for federal, state, local and foundation programs. Grant work is quoted individually rather than bought from this page — request a quote using the order form and we'll confirm scope, price and timeline first. We write the application; you submit it under your organization's name. We never guarantee funding — no ethical grant writer can.",
-  },
-  {
-    q: "Can you guarantee my grant will be approved?",
-    a: "No. Anyone who promises a guaranteed grant is scamming you. What we guarantee is a professional, well-written application that gives you the best possible chance. Funding decisions depend on the funder, the competition, and how well your project fits their priorities.",
-  },
   {
     q: "How is this different from using the free Victoria AI?",
     a: "Free Victoria gives you drafts to work with. The Services page means a human strategist reviews, refines, and finalizes everything for you — formatted, polished, and ready to submit. You're paying for the finished product, not just the first draft.",
   },
   {
     q: "How do I pay?",
-    a: "For the fixed-price packages, tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Quote-only services are invoiced after we agree scope with you.",
+    a: "Tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears.",
   },
-
   {
     q: "Do you work with nonprofits and for-profits?",
-    a: "Both. We write grants for 501(c)(3) nonprofits, social enterprises, small businesses, and individual entrepreneurs. Government grants often require a registered organization — we'll let you know if you're eligible during the intake.",
+    a: "Both. We serve 501(c)(3) nonprofits, social enterprises, small businesses, and individual entrepreneurs.",
   },
   {
     q: "What if I need something that's not listed?",
@@ -383,7 +352,7 @@ function OrderForm() {
           value={form.details}
           onChange={(e) => update("details", e.target.value)}
           className="border-input bg-card/60 text-foreground placeholder:text-muted-foreground focus:ring-ring mt-2 w-full rounded-xl border px-4 py-3 text-sm outline-none focus:ring-1"
-          placeholder="What do you need? Grant deadline? Target funder or job? Include anything that helps us understand your goal."
+          placeholder="What do you need? Target role? Business stage? Include anything that helps us understand your goal."
         />
       </div>
 
@@ -444,8 +413,8 @@ export function ServicesPage() {
           </h1>
           <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-[0.95rem] leading-relaxed md:text-lg">
             Victoria AI does the heavy lifting, then a human strategist reviews and polishes every
-            document to professional standard. Grant applications, business plans, résumés, content
-            calendars — ready to submit.
+            document to professional standard. Business plans, résumés, content calendars, email
+            sequences — ready to submit.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             {trustBadges.map((b) => (
