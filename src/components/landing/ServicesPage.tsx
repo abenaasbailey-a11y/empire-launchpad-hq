@@ -18,7 +18,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { captureServiceRequest, servicesList } from "@/lib/service-requests.functions";
 
 const services: Array<{
-  icon: typeof Landmark;
+  icon: typeof FileText;
   title: string;
   price: string;
   priceId: string | null;
