@@ -44,11 +44,24 @@ async function handleTransactionCompleted(data: any, env: PaddleEnv) {
     customData?.email ??
     (await lookupCustomerEmail(data.customer_id, env));
 
+  // Renewal transactions carry no custom_data, so attribute them to the member
+  // that owns the subscription instead of leaving an orphaned order row.
+  let userId: string | null = customData?.userId ?? null;
+  if (!userId && data.subscription_id) {
+    const { data: sub } = await getSupabase()
+      .from("subscriptions")
+      .select("user_id")
+      .eq("paddle_subscription_id", data.subscription_id)
+      .eq("environment", env)
+      .maybeSingle();
+    userId = sub?.user_id ?? null;
+  }
+
   await getSupabase()
     .from("orders")
     .upsert(
       {
-        user_id: customData?.userId ?? null,
+        user_id: userId,
         email,
         paddle_transaction_id: data.id,
         paddle_customer_id: data.customer_id ?? null,
