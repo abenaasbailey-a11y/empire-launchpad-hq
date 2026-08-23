@@ -14,18 +14,42 @@ function getSupabase() {
   return _supabase;
 }
 
+/**
+ * Transaction webhooks do not include the buyer's email, so look it up from the
+ * Paddle customer record. Falls back to null rather than failing the webhook.
+ */
+async function lookupCustomerEmail(
+  customerId: string | null | undefined,
+  env: PaddleEnv,
+): Promise<string | null> {
+  if (!customerId) return null;
+  try {
+    const { paddleFetch } = await import("@/lib/paddle.server");
+    const response = await paddleFetch(env, `/customers/${customerId}`);
+    const result = (await response.json()) as { data?: { email?: string } };
+    return result.data?.email ?? null;
+  } catch (e) {
+    console.error("Paddle webhook: customer email lookup failed", e);
+    return null;
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleTransactionCompleted(data: any, env: PaddleEnv) {
   const item = data.items?.[0];
   const externalPriceId: string | undefined = item?.price?.import_meta?.external_id;
   const customData = data.custom_data ?? null;
+  const email =
+    data.customer?.email ??
+    customData?.email ??
+    (await lookupCustomerEmail(data.customer_id, env));
 
   await getSupabase()
     .from("orders")
     .upsert(
       {
         user_id: customData?.userId ?? null,
-        email: data.customer?.email ?? customData?.email ?? null,
+        email,
         paddle_transaction_id: data.id,
         paddle_customer_id: data.customer_id ?? null,
         product_id: item?.price?.product_id ?? null,
