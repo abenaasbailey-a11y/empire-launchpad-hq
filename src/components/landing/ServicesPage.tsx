@@ -176,29 +176,38 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
           </li>
         ))}
       </ul>
-      <Button
-        variant="lux"
-        className="mt-6 w-full"
-        disabled={loading}
-        onClick={() =>
-          openCheckout({ priceId: service.priceId, serviceTitle: service.title })
-        }
-      >
-        {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
-      </Button>
-      {needsAuth ? (
-        <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
-          Create your free account first so we can attach this order to you.{" "}
-          <Link
-            to="/auth"
-            search={{ mode: "signup", next: "/services" }}
-            className="text-gold underline"
+      {service.priceId ? (
+        <>
+          <Button
+            variant="lux"
+            className="mt-6 w-full"
+            disabled={loading}
+            onClick={() =>
+              openCheckout({ priceId: service.priceId!, serviceTitle: service.title })
+            }
           >
-            Sign in or join free
-          </Link>
-          , then tap Pay & start again.
-        </p>
-      ) : null}
+            {loading ? "Opening checkout…" : `Pay & start — ${service.price}`}
+          </Button>
+          {needsAuth ? (
+            <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
+              Create your free account first so we can attach this order to you.{" "}
+              <Link
+                to="/auth"
+                search={{ mode: "signup", next: "/services" }}
+                className="text-gold underline"
+              >
+                Sign in or join free
+              </Link>
+              , then tap Pay & start again.
+            </p>
+          ) : null}
+        </>
+      ) : (
+        <Button variant="lux" className="mt-6 w-full" asChild>
+          <a href="#order">Request a quote</a>
+        </Button>
+      )}
+
       {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
       <div className="border-border mt-4 flex items-center justify-between border-t pt-4">
         <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
