@@ -19,27 +19,27 @@ import {
 import { useServerFn } from "@tanstack/react-start";
 import { captureServiceRequest, servicesList } from "@/lib/service-requests.functions";
 
-const services = [
+const services: Array<{
+  icon: typeof Landmark;
+  title: string;
+  price: string;
+  priceId: string | null;
+  body: string;
+  deliverables: string[];
+  turnaround: string;
+  featured: boolean;
+}> = [
   {
-    icon: Landmark,
-    title: "Government Grant Writing",
-    price: "$350",
-    priceId: "govt_grant_writing_onetime",
-    body: "Federal, state, and local government grant applications — narrative, budget justification, and supporting documents. SBIR, SBA, USDA, HUD, and municipal programs.",
-    deliverables: ["Full narrative", "Budget justification", "Required forms guidance", "1 revision round"],
-    turnaround: "5 – 7 days",
+    icon: FileText,
+    title: "Business Plan",
+    price: "$300",
+    priceId: "business_plan_onetime",
+    body: "Investor-ready business plans with executive summary, market analysis, financial projections, and growth strategy — built with AI, polished by a real strategist.",
+    deliverables: ["Executive summary", "Market analysis", "Financial projections", "Growth strategy"],
+    turnaround: "4 – 6 days",
     featured: true,
   },
-  {
-    icon: Building2,
-    title: "Private & Foundation Grants",
-    price: "$250",
-    priceId: "private_foundation_grants_onetime",
-    body: "Applications for private foundations, corporate giving programs, and nonprofit grants. Letters of inquiry, full proposals, and post-award reports.",
-    deliverables: ["Letter of inquiry", "Full proposal", "Impact narrative", "1 revision round"],
-    turnaround: "3 – 5 days",
-    featured: false,
-  },
+
   {
     icon: FileText,
     title: "Business Plan",
