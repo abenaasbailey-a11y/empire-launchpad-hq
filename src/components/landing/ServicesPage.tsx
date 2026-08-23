@@ -95,25 +95,16 @@ const processSteps = [
 
 const faqs = [
   {
-    q: "Do you actually write government grants?",
-    a: "Yes. We draft full grant narratives and budget justifications for federal, state, local and foundation programs. Grant work is quoted individually rather than bought from this page — request a quote using the order form and we'll confirm scope, price and timeline first. We write the application; you submit it under your organization's name. We never guarantee funding — no ethical grant writer can.",
-  },
-  {
-    q: "Can you guarantee my grant will be approved?",
-    a: "No. Anyone who promises a guaranteed grant is scamming you. What we guarantee is a professional, well-written application that gives you the best possible chance. Funding decisions depend on the funder, the competition, and how well your project fits their priorities.",
-  },
-  {
     q: "How is this different from using the free Victoria AI?",
     a: "Free Victoria gives you drafts to work with. The Services page means a human strategist reviews, refines, and finalizes everything for you — formatted, polished, and ready to submit. You're paying for the finished product, not just the first draft.",
   },
   {
     q: "How do I pay?",
-    a: "For the fixed-price packages, tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears. Quote-only services are invoiced after we agree scope with you.",
+    a: "Tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears.",
   },
-
   {
     q: "Do you work with nonprofits and for-profits?",
-    a: "Both. We write grants for 501(c)(3) nonprofits, social enterprises, small businesses, and individual entrepreneurs. Government grants often require a registered organization — we'll let you know if you're eligible during the intake.",
+    a: "Both. We serve 501(c)(3) nonprofits, social enterprises, small businesses, and individual entrepreneurs.",
   },
   {
     q: "What if I need something that's not listed?",
