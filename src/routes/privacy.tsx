@@ -99,7 +99,7 @@ const sections: LegalSection[] = [
   {
     heading: "Contact us",
     body: [
-      "Questions about your privacy or this policy? Reach out to us and we will respond as soon as we can.",
+      "Questions about your privacy or this policy? Email us at support@yourempireconcierge.com and we will respond as soon as we can.",
     ],
   },
 ];

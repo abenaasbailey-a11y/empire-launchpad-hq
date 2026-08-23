@@ -96,7 +96,9 @@ const sections: LegalSection[] = [
   },
   {
     heading: "Contact us",
-    body: ["If you have questions about these terms, please get in touch and we will be happy to help."],
+    body: [
+      "If you have questions about these terms, please get in touch and we will be happy to help. Email us at support@yourempireconcierge.com.",
+    ],
   },
 ];
 

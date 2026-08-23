@@ -131,7 +131,9 @@ export function LegalFooter() {
             Refunds
           </Link>
         </nav>
-        <p>yourempireconcierge.com</p>
+        <a href="mailto:support@yourempireconcierge.com" className="hover:text-blush transition-colors">
+          support@yourempireconcierge.com
+        </a>
       </div>
     </footer>
   );

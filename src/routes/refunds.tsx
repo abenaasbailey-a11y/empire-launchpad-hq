@@ -38,7 +38,7 @@ const sections: LegalSection[] = [
   {
     heading: "How to request a refund",
     body: [
-      "Contact us with the email address used at checkout and your order or invoice number, and tell us briefly what went wrong.",
+      "Email us at support@yourempireconcierge.com with the email address used at checkout and your order or invoice number, and tell us briefly what went wrong.",
       "You may also contact Paddle directly at paddle.net, where you can look up your purchase and raise a refund request as the Merchant of Record.",
       "We aim to respond to every request within 3 business days. Approved refunds are processed by Paddle and typically appear on your statement within 5 to 10 business days, depending on your bank.",
     ],
@@ -52,7 +52,7 @@ const sections: LegalSection[] = [
   {
     heading: "Contact us",
     body: [
-      "Questions about a payment, an invoice or a refund? Reach out and we will help. Payment and invoice enquiries can also be handled directly by Paddle, our Merchant of Record.",
+      "Questions about a payment, an invoice or a refund? Email us at support@yourempireconcierge.com and we will help. Payment and invoice enquiries can also be handled directly by Paddle, our Merchant of Record.",
     ],
   },
 ];
