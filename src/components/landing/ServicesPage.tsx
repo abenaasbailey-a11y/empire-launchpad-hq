@@ -39,17 +39,6 @@ const services: Array<{
     turnaround: "4 – 6 days",
     featured: true,
   },
-
-  {
-    icon: FileText,
-    title: "Business Plan",
-    price: "$300",
-    priceId: "business_plan_onetime",
-    body: "Investor-ready business plans with executive summary, market analysis, financial projections, and growth strategy — built with AI, polished by a real strategist.",
-    deliverables: ["Executive summary", "Market analysis", "Financial projections", "Growth strategy"],
-    turnaround: "4 – 6 days",
-    featured: false,
-  },
   {
     icon: Sparkles,
     title: "Résumé & Cover Letter Makeover",
