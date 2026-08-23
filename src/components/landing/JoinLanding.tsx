@@ -404,6 +404,9 @@ export function JoinLanding() {
         <div className="text-muted-foreground mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 text-[0.65rem] tracking-[0.18em] uppercase sm:flex-row sm:text-xs">
           <p className="font-display text-sm tracking-[0.22em]">Her Empire Era</p>
           <nav className="flex items-center gap-5">
+            <Link to="/membership" className="hover:text-blush transition-colors">
+              Membership
+            </Link>
             <Link to="/services" className="hover:text-blush transition-colors">
               Services
             </Link>

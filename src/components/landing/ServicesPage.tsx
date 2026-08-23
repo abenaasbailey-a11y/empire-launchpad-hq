@@ -31,7 +31,7 @@ const services: Array<{
     icon: FileText,
     title: "Business Plan",
     price: "$300",
-    priceId: "business_plan_onetime",
+    priceId: null,
     body: "Investor-ready business plans with executive summary, market analysis, financial projections, and growth strategy — built with AI, polished by a real strategist.",
     deliverables: ["Executive summary", "Market analysis", "Financial projections", "Growth strategy"],
     turnaround: "4 – 6 days",
@@ -41,7 +41,7 @@ const services: Array<{
     icon: Sparkles,
     title: "Résumé & Cover Letter Makeover",
     price: "$75",
-    priceId: "resume_makeover_onetime",
+    priceId: null,
     body: "A complete rewrite of your résumé and cover letter, optimized for ATS systems and written to get you noticed — whether for a job, a board seat, or a committee.",
     deliverables: ["ATS-optimized résumé", "Tailored cover letter", "LinkedIn summary", "1 revision round"],
     turnaround: "2 – 3 days",
@@ -51,7 +51,7 @@ const services: Array<{
     icon: Megaphone,
     title: "Social Media Content Package",
     price: "$200 / month",
-    priceId: "social_content_monthly",
+    priceId: null,
     body: "A full month of captions, hashtags, and content ideas in your brand voice — ready to post. Instagram, Facebook, LinkedIn, or TikTok-ready.",
     deliverables: ["30 captions", "Hashtag sets", "Content calendar", "Monthly strategy"],
     turnaround: "2 – 4 days",
@@ -61,7 +61,7 @@ const services: Array<{
     icon: Mail,
     title: "Email Marketing Sequence",
     price: "$150",
-    priceId: "email_sequence_onetime",
+    priceId: null,
     body: "Welcome sequences, sales funnels, and nurture campaigns that turn subscribers into buyers. Written in your voice, optimized for opens and clicks.",
     deliverables: ["5 – 7 email sequence", "Subject lines", "Call-to-action strategy", "1 revision round"],
     turnaround: "2 – 3 days",
@@ -100,7 +100,7 @@ const faqs = [
   },
   {
     q: "How do I pay?",
-    a: "Tap 'Pay & start' and check out securely by card, Apple Pay, Google Pay, or PayPal — taxes handled automatically. Work begins as soon as payment clears.",
+    a: "Submit the order form and we'll send you a quote with a secure payment link and timeline within 24 hours. Nothing is charged when you submit.",
   },
   {
     q: "Do you work with nonprofits and for-profits?",
@@ -541,6 +541,9 @@ export function ServicesPage() {
           <nav className="flex flex-wrap items-center justify-center gap-5">
             <Link to="/join" className="hover:text-blush transition-colors">
               Join
+            </Link>
+            <Link to="/membership" className="hover:text-blush transition-colors">
+              Membership
             </Link>
             <Link to="/free-prompts" className="hover:text-blush transition-colors">
               Free Prompts

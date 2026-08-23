@@ -20,6 +20,7 @@ import { Route as JoinRouteImport } from './routes/join'
 import { Route as MarketingPromptsRouteImport } from './routes/marketing-prompts'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MeetVictoriaRouteImport } from './routes/meet-victoria'
+import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as OpportunityCenterRouteImport } from './routes/opportunity-center'
 import { Route as PitchTemplatesRouteImport } from './routes/pitch-templates'
 import { Route as PressRouteImport } from './routes/press'
@@ -94,6 +95,11 @@ const McpRoute = McpRouteImport.update({
 const MeetVictoriaRoute = MeetVictoriaRouteImport.update({
   id: '/meet-victoria',
   path: '/meet-victoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembershipRoute = MembershipRouteImport.update({
+  id: '/membership',
+  path: '/membership',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunityCenterRoute = OpportunityCenterRouteImport.update({
@@ -220,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
+  '/membership': typeof MembershipRoute
   '/opportunity-center': typeof OpportunityCenterRoute
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
@@ -253,6 +260,7 @@ export interface FileRoutesByTo {
   '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
+  '/membership': typeof MembershipRoute
   '/opportunity-center': typeof OpportunityCenterRoute
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
@@ -288,6 +296,7 @@ export interface FileRoutesById {
   '/marketing-prompts': typeof MarketingPromptsRoute
   '/mcp': typeof McpRoute
   '/meet-victoria': typeof MeetVictoriaRoute
+  '/membership': typeof MembershipRoute
   '/opportunity-center': typeof OpportunityCenterRoute
   '/pitch-templates': typeof PitchTemplatesRoute
   '/press': typeof PressRoute
@@ -323,6 +332,7 @@ export interface FileRouteTypes {
     | '/marketing-prompts'
     | '/mcp'
     | '/meet-victoria'
+    | '/membership'
     | '/opportunity-center'
     | '/pitch-templates'
     | '/press'
@@ -356,6 +366,7 @@ export interface FileRouteTypes {
     | '/marketing-prompts'
     | '/mcp'
     | '/meet-victoria'
+    | '/membership'
     | '/opportunity-center'
     | '/pitch-templates'
     | '/press'
@@ -390,6 +401,7 @@ export interface FileRouteTypes {
     | '/marketing-prompts'
     | '/mcp'
     | '/meet-victoria'
+    | '/membership'
     | '/opportunity-center'
     | '/pitch-templates'
     | '/press'
@@ -425,6 +437,7 @@ export interface RootRouteChildren {
   MarketingPromptsRoute: typeof MarketingPromptsRoute
   McpRoute: typeof McpRoute
   MeetVictoriaRoute: typeof MeetVictoriaRoute
+  MembershipRoute: typeof MembershipRoute
   OpportunityCenterRoute: typeof OpportunityCenterRoute
   PitchTemplatesRoute: typeof PitchTemplatesRoute
   PressRoute: typeof PressRoute
@@ -521,6 +534,13 @@ declare module '@tanstack/react-router' {
       path: '/meet-victoria'
       fullPath: '/meet-victoria'
       preLoaderRoute: typeof MeetVictoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/membership': {
+      id: '/membership'
+      path: '/membership'
+      fullPath: '/membership'
+      preLoaderRoute: typeof MembershipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/opportunity-center': {
@@ -702,6 +722,7 @@ const rootRouteChildren: RootRouteChildren = {
   MarketingPromptsRoute: MarketingPromptsRoute,
   McpRoute: McpRoute,
   MeetVictoriaRoute: MeetVictoriaRoute,
+  MembershipRoute: MembershipRoute,
   OpportunityCenterRoute: OpportunityCenterRoute,
   PitchTemplatesRoute: PitchTemplatesRoute,
   PressRoute: PressRoute,
