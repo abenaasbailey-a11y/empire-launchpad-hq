@@ -108,11 +108,19 @@ function MeetVictoriaPage() {
           >
             Her Empire <span className="text-gold">Era</span>
           </Link>
-          <Button variant="lux" size="sm" asChild>
-            <Link to="/auth" search={{ mode: "signup" }}>
-              Start Free
+          <div className="flex items-center gap-3 sm:gap-5">
+            <Link
+              to="/membership"
+              className="text-gold hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80 sm:block"
+            >
+              Membership
             </Link>
-          </Button>
+            <Button variant="lux" size="sm" asChild>
+              <Link to="/auth" search={{ mode: "signup" }}>
+                Start Free
+              </Link>
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -209,6 +217,9 @@ function MeetVictoriaPage() {
         <div className="text-muted-foreground mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 text-[0.65rem] tracking-[0.18em] uppercase sm:flex-row sm:text-xs">
           <p className="font-display text-sm tracking-[0.22em]">Her Empire Era</p>
           <nav className="flex items-center gap-5">
+            <Link to="/membership" className="hover:text-blush transition-colors">
+              Membership
+            </Link>
             <Link to="/privacy" className="hover:text-blush transition-colors">
               Privacy
             </Link>

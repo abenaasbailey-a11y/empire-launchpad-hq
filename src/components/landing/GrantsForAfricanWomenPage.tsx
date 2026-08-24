@@ -82,15 +82,23 @@ export function GrantsForAfricanWomenPage() {
           >
             Her Empire <span className="text-gold">Era</span>
           </Link>
-          <Button variant="lux" size="sm" asChild>
+          <div className="flex items-center gap-3 sm:gap-5">
             <Link
-              to="/auth"
-              search={{ mode: "signup" }}
-              onClick={() => trackStartFreeClick("africa_grants_header")}
+              to="/membership"
+              className="text-gold hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80 sm:block"
             >
-              Start Free
+              Membership
             </Link>
-          </Button>
+            <Button variant="lux" size="sm" asChild>
+              <Link
+                to="/auth"
+                search={{ mode: "signup" }}
+                onClick={() => trackStartFreeClick("africa_grants_header")}
+              >
+                Start Free
+              </Link>
+            </Button>
+          </div>
         </div>
       </header>
 
