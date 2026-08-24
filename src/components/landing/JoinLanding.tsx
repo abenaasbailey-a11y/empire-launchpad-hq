@@ -95,7 +95,7 @@ const testimonials = [
   },
   {
     quote:
-      "The grant narrative she drafted got me to the final round. I would have quit on page two.",
+      "The funding application draft she wrote got me to the final round. I would have quit on page two.",
     name: "Jordan P.",
     role: "Nonprofit founder",
     result: "Finalist for $25K grant",

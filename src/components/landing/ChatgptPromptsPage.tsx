@@ -184,7 +184,7 @@ export function ChatgptPromptsPage() {
           </h2>
           <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
             A free Her Empire Era membership opens the Empire Prompt Vault &mdash; 56 prompts across
-            marketing, social media, grants, planning, emails, r&eacute;sum&eacute;s and productivity
+            marketing, social media, funding research, planning, emails, brand bios and productivity
             &mdash; plus Victoria, who runs them with you and remembers your details.
           </p>
           <Button variant="gold" size="xl" className="mt-7 w-full sm:w-auto" asChild>
