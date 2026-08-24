@@ -14,7 +14,7 @@ export async function runPromptWithEmpireBuilder(filledPrompt: string): Promise<
   if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured.");
 
   const provider = createLovableAiGatewayProvider(apiKey);
-  const model = provider("gemini-2.5-flash");
+  const model = provider("google/gemini-3.6-flash");
 
   const { text } = await generateText({
     model,

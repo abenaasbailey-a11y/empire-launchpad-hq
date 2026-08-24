@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 const VALID_SERVICES = [
   "Business Plan",
-  "Résumé & Cover Letter Makeover",
+  "Brand Bio & Positioning",
   "Social Media Content Package",
   "Email Marketing Sequence",
   "Custom / Not Sure",

@@ -33,7 +33,11 @@ export const PROMPT_CATEGORIES: CategoryDef[] = [
   { slug: "Grants & Funding", name: "Grants & Funding", tagline: "Research and drafting tools (educational)" },
   { slug: "Business Planning", name: "Business Planning", tagline: "Plans, models, and growth roadmaps" },
   { slug: "Emails", name: "Emails", tagline: "Outreach, proposals, follow-ups, and newsletters" },
-  { slug: "Résumés", name: "Résumés", tagline: "Résumés, cover letters, and interviews" },
+  {
+    slug: "Personal Brand",
+    name: "Personal Brand",
+    tagline: "Professional profiles, intros, and interview prep",
+  },
   { slug: "Productivity", name: "Productivity", tagline: "Priorities, systems, and focus" },
 ];
 
