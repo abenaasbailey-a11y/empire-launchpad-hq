@@ -157,8 +157,8 @@ export function FreePromptsPage() {
             10 prompts that do your business&rsquo;s hardest writing for you.
           </h1>
           <p className="text-muted-foreground mx-auto mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
-            Pricing, offers, captions, hooks, website copy, emails, r&eacute;sum&eacute;s and grant
-            narratives &mdash; written the way a strategist would ask for them. Copy, paste, and get
+            Pricing, offers, captions, hooks, website copy, emails and brand bios &mdash; written
+            the way a strategist would ask for them. Copy, paste, and get
             professional work back in minutes.
           </p>
           <div className="mt-8 flex justify-center">
