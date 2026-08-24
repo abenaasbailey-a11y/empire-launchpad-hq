@@ -5,7 +5,7 @@ import { StartFreeForm } from "@/components/landing/StartFreeForm";
 
 const TITLE = "Free Business Toolkit — Her Empire Era";
 const DESCRIPTION =
-  "Professional tools for women founders: planning, pricing, branding, content, websites, résumés and grants. Powered by Victoria. Start free.";
+  "Professional AI tools for women founders: planning, pricing, branding, content and website copy. Powered by Victoria. Start free.";
 const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 const CANONICAL = "https://herempireera.com/toolkit";
 
@@ -31,8 +31,8 @@ const tools = [
     body: "Home, about and sales page copy built around your offer and your visitor's transformation — not generic templates.",
   },
   {
-    title: "Résumé & grant writer",
-    body: "Professional bios, résumés and grant narratives that position your experience and mission with clarity.",
+    title: "Brand bio & story writer",
+    body: "Professional brand bios and founder stories that position your experience and mission with clarity.",
   },
 ];
 
@@ -128,7 +128,7 @@ function ToolkitPage() {
           </h1>
           <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
             Every tool inside Her Empire Era is designed for women building businesses: planning,
-            pricing, branding, content, websites, résumés and grants. Victoria, your AI concierge,
+            pricing, branding, content and website copy. Victoria, your AI concierge,
             personalizes each one to your voice and goals.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">

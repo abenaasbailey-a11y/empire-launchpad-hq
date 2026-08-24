@@ -3,7 +3,7 @@ import { JoinLanding, membershipFaqs } from "@/components/landing/JoinLanding";
 
 const TITLE = "Join Free — Her Empire Era Membership";
 const DESCRIPTION =
-  "Create your free Her Empire Era membership in under a minute and unlock Victoria, your 24/7 AI concierge for pricing, content, résumés and grants.";
+  "Create your free Her Empire Era membership in under a minute and unlock Victoria, your 24/7 AI concierge for pricing, content and marketing.";
 const OG_DESCRIPTION =
   "Join free in under a minute: enter your email, confirm your account, and start working with Victoria on your next business move.";
 const OG_IMAGE = "https://herempireera.com/og-image.jpg";

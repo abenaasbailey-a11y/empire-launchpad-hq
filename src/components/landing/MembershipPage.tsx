@@ -56,7 +56,7 @@ const included = [
   {
     icon: Library,
     title: "The Empire Prompt Vault",
-    body: "56+ premium, tested prompts across marketing, social, business planning, email, résumés and productivity — organized and ready to run.",
+    body: "56+ premium, tested prompts across marketing, social, business planning, email and productivity — organized and ready to run.",
   },
   {
     icon: Compass,

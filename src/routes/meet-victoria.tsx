@@ -27,12 +27,12 @@ const capabilities = [
     body: "Define the tone, story and visuals that make your brand unmistakably yours, then keep every message consistent.",
   },
   {
-    title: "Websites & résumés",
-    body: "From home page copy to professional bios and grant-ready résumés, Victoria builds work that looks as polished as you are.",
+    title: "Websites & brand copy",
+    body: "From home page copy to about pages and brand bios, Victoria drafts words that look as polished as you are.",
   },
   {
     title: "Daily decisions",
-    body: "Ask anything. Grants, government-contract guidance, client emails, launch timing — Victoria is the calm second opinion in your pocket.",
+    body: "Ask anything. Client emails, offer ideas, launch timing — Victoria is the calm second opinion in your pocket.",
   },
 ];
 
@@ -138,7 +138,7 @@ function MeetVictoriaPage() {
           </h1>
           <p className="text-muted-foreground mt-5 max-w-xl text-[0.95rem] leading-relaxed md:mt-6 md:text-lg">
             Victoria is a 24/7 AI business assistant built for women founders. She helps with
-            pricing, planning, branding, marketing, content, websites, résumés, grants and the daily
+            pricing, planning, branding, marketing, content and website copy, and the daily
             decisions that slow you down.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">

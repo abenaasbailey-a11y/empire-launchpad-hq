@@ -18,14 +18,7 @@ const sections: LegalSection[] = [
     heading: "Our 30-day refund period",
     body: [
       "You may request a refund within 30 days of your purchase date. Approved refunds are returned to the original payment method.",
-      "This 30-day period applies to one-time service purchases and to the most recent payment on a subscription.",
-    ],
-  },
-  {
-    heading: "Custom done-for-you services",
-    body: [
-      "For custom deliverables such as business plans, résumés, content packages and other written services, you may request a full refund at any point within 30 days before we have delivered the completed draft to you.",
-      "Once the completed draft has been delivered, we will review refund requests within the 30-day window on a case-by-case basis and will offer a revision, a partial refund, or a full refund where the work did not match what was ordered.",
+      "This 30-day period applies to the most recent payment on a subscription.",
     ],
   },
   {

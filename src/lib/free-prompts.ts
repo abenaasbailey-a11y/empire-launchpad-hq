@@ -65,9 +65,9 @@ export const FREE_PROMPTS: FreePrompt[] = [
   },
   {
     n: "09",
-    title: "The Résumé That Opens Doors",
-    use: "Rewritten for the role you actually want.",
-    body: "Act as an executive résumé writer. Here is my experience: [paste your current résumé or role history]. The role I want is [paste the job title or job description]. Rewrite my summary and six achievement bullets using strong verbs and measurable results, and list the keywords I am missing for applicant tracking systems.",
+    title: "The Brand Bio That Opens Doors",
+    use: "One bio, three lengths, ready to paste anywhere.",
+    body: "Act as a brand writer. Here is my background and what my business does: [describe it]. My audience is [describe them] and the tone I want is [describe it]. Write my founder bio in three lengths — a one-line intro, a short 50-word version, and a 150-word about-page version — each ending with a clear reason to work with me.",
   },
   {
     n: "10",

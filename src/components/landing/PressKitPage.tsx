@@ -56,7 +56,7 @@ const OFFERINGS: { title: string; body: string }[] = [
   },
   {
     title: "The Empire Prompt Vault",
-    body: "A curated library of ready-to-use AI prompts across marketing, social media, funding, planning, email, résumés and productivity.",
+    body: "A curated library of ready-to-use AI prompts across marketing, social media, planning, email and productivity.",
   },
   {
     title: "The Opportunity Center",
