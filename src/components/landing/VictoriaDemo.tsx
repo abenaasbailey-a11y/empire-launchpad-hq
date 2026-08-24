@@ -45,7 +45,7 @@ const scenarios = [
   {
     id: "grant",
     label: "Grant",
-    prompt: "Grant narrative overnight",
+    prompt: "Funding application draft",
     script: [
       {
         from: "her" as const,
