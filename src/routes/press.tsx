@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PressKitPage } from "@/components/landing/PressKitPage";
 import headshot from "@/assets/press/headshot.png.asset.json";
 
-const URL = "https://yourempireconcierge.com/press";
-const IMAGE = `https://yourempireconcierge.com${headshot.url}`;
+const URL = "https://herempireera.com/press";
+const IMAGE = `https://herempireera.com${headshot.url}`;
 const TITLE = "Press & Media Kit — Her Empire Era | Abenaa Bailey";
 const DESCRIPTION =
   "Media kit for Her Empire Era: founder bio for Abenaa Bailey, M.Ed., brand story, key facts, quotes and high-resolution press photos cleared for editorial use.";
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/press")({
           worksFor: {
             "@type": "Organization",
             name: "Her Empire Era",
-            url: "https://yourempireconcierge.com",
+            url: "https://herempireera.com",
           },
         }),
       },

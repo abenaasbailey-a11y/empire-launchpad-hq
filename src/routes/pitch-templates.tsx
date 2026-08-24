@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PitchTemplatesPage } from "@/components/landing/PitchTemplatesPage";
 
-const URL = "https://yourempireconcierge.com/pitch-templates";
+const URL = "https://herempireera.com/pitch-templates";
 const TITLE = "Press Pitch Templates — Her Empire Era";
 const DESCRIPTION =
   "Ready-to-send pitch email templates for editors, producers, and podcast hosts featuring Her Empire Era and founder Abenaa Bailey.";

@@ -6,7 +6,7 @@ const DESCRIPTION =
   "Download 10 free AI prompts for pricing, offers, captions, hooks, website copy, emails, résumés and grant narratives — from Her Empire Era.";
 const OG_DESCRIPTION =
   "Free prompt pack: price your offer, fill 30 days of content, write your website and emails. Copy, paste, done.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 export const Route = createFileRoute("/free-prompts")({
   component: FreePromptsPage,
@@ -17,11 +17,11 @@ export const Route = createFileRoute("/free-prompts")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: OG_DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://yourempireconcierge.com/free-prompts" },
+      { property: "og:url", content: "https://herempireera.com/free-prompts" },
       { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/free-prompts" }],
+    links: [{ rel: "canonical", href: "https://herempireera.com/free-prompts" }],
   }),
 });

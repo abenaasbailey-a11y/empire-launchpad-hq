@@ -266,7 +266,7 @@ export function ChatgptPromptsPage() {
               Refunds
             </Link>
           </nav>
-          <p>yourempireconcierge.com</p>
+          <p>herempireera.com</p>
         </div>
       </footer>
     </main>

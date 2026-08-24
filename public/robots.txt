@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://yourempireconcierge.com/sitemap.xml
+Sitemap: https://herempireera.com/sitemap.xml

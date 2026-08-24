@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GrantsForAfricanWomenPage } from "@/components/landing/GrantsForAfricanWomenPage";
 import { AFRICA_GRANTS_FAQ } from "@/lib/grants-africa";
 
-const URL = "https://yourempireconcierge.com/grants-african-women";
+const URL = "https://herempireera.com/grants-african-women";
 const TITLE =
   "Grants for Women Entrepreneurs in Africa — 16 Funding Programmes to Apply For Now";
 const DESCRIPTION =
@@ -10,7 +10,7 @@ const DESCRIPTION =
 const OG_TITLE = "Grants for Women Entrepreneurs in Africa (2025)";
 const OG_DESCRIPTION =
   "16 grants and funding programmes women in Africa can apply for right now — from $5,000 to $150,000. Browse by country, check eligibility, and apply on each provider's site.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 export const Route = createFileRoute("/grants-african-women")({
   component: GrantsForAfricanWomenPage,
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/grants-african-women")({
               "@type": "ListItem",
               position: 1,
               name: "Her Empire Era",
-              item: "https://yourempireconcierge.com/join",
+              item: "https://herempireera.com/join",
             },
             {
               "@type": "ListItem",

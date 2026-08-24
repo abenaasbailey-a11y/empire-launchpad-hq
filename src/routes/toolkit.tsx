@@ -6,8 +6,8 @@ import { StartFreeForm } from "@/components/landing/StartFreeForm";
 const TITLE = "Free Business Toolkit — Her Empire Era";
 const DESCRIPTION =
   "Professional tools for women founders: planning, pricing, branding, content, websites, résumés and grants. Powered by Victoria. Start free.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
-const CANONICAL = "https://yourempireconcierge.com/toolkit";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
+const CANONICAL = "https://herempireera.com/toolkit";
 
 const tools = [
   {
@@ -79,7 +79,7 @@ export const Route = createFileRoute("/toolkit")({
           isPartOf: {
             "@type": "WebSite",
             name: "Her Empire Era",
-            url: "https://yourempireconcierge.com",
+            url: "https://herempireera.com",
           },
         }),
       },
@@ -209,7 +209,7 @@ function ToolkitPage() {
               Refunds
             </Link>
           </nav>
-          <p>yourempireconcierge.com</p>
+          <p>herempireera.com</p>
         </div>
       </footer>
     </main>

@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 const TITLE = "Empire Opportunity Center — 200+ AI Side Hustles";
 const DESCRIPTION =
   "Browse a searchable library of AI-powered business ideas for women entrepreneurs: filter by level and category, save favourites and track your progress.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 const PICK_DATE_FORMAT = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -66,12 +66,12 @@ export const Route = createFileRoute("/opportunity-center")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://yourempireconcierge.com/opportunity-center" },
+      { property: "og:url", content: "https://herempireera.com/opportunity-center" },
       { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/opportunity-center" }],
+    links: [{ rel: "canonical", href: "https://herempireera.com/opportunity-center" }],
   }),
 });
 
@@ -363,7 +363,7 @@ function OpportunityCenter() {
               Refunds
             </Link>
           </nav>
-          <p>yourempireconcierge.com</p>
+          <p>herempireera.com</p>
         </div>
       </footer>
     </main>

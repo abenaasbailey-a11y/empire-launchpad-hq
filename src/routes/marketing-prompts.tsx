@@ -2,14 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MarketingPromptsPage } from "@/components/landing/MarketingPromptsPage";
 import { MARKETING_PROMPT_FAQ } from "@/lib/marketing-prompts";
 
-const URL = "https://yourempireconcierge.com/marketing-prompts";
+const URL = "https://herempireera.com/marketing-prompts";
 const TITLE = "Marketing Prompts for ChatGPT — 16 Free Prompts";
 const DESCRIPTION =
   "16 free marketing prompts for ChatGPT: positioning, website copy, social captions, email sequences, launches and ads. Copy, paste and use — no email required.";
 const OG_TITLE = "16 Free Marketing Prompts for ChatGPT";
 const OG_DESCRIPTION =
   "Strategist-grade marketing prompts for positioning, copy, social, email, launches and ads. Copy any of them free.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 export const Route = createFileRoute("/marketing-prompts")({
   component: MarketingPromptsPage,
@@ -49,13 +49,13 @@ export const Route = createFileRoute("/marketing-prompts")({
               "@type": "ListItem",
               position: 1,
               name: "Her Empire Era",
-              item: "https://yourempireconcierge.com/join",
+              item: "https://herempireera.com/join",
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Free ChatGPT Prompts",
-              item: "https://yourempireconcierge.com/chatgpt-prompts",
+              item: "https://herempireera.com/chatgpt-prompts",
             },
             { "@type": "ListItem", position: 3, name: "Marketing Prompts", item: URL },
           ],

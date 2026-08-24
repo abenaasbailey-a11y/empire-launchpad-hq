@@ -15,11 +15,11 @@ export const Route = createFileRoute("/services")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: OG_DESCRIPTION },
-      { property: "og:url", content: "https://yourempireconcierge.com/services" },
+      { property: "og:url", content: "https://herempireera.com/services" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/services" }],
+    links: [{ rel: "canonical", href: "https://herempireera.com/services" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/services")({
           provider: {
             "@type": "Organization",
             name: "Her Empire Era",
-            url: "https://yourempireconcierge.com",
+            url: "https://herempireera.com",
           },
           description: DESCRIPTION,
           areaServed: "Worldwide",

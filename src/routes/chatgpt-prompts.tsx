@@ -2,14 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatgptPromptsPage } from "@/components/landing/ChatgptPromptsPage";
 import { PROMPT_FAQ } from "@/lib/chatgpt-prompts";
 
-const URL = "https://yourempireconcierge.com/chatgpt-prompts";
+const URL = "https://herempireera.com/chatgpt-prompts";
 const TITLE = "Free ChatGPT Prompts for Business Owners";
 const DESCRIPTION =
   "14 free ChatGPT prompts for pricing, offers, social content, emails, business planning, grants and productivity. Copy, paste and use — no email required.";
 const OG_TITLE = "Free ChatGPT Prompts for Business";
 const OG_DESCRIPTION =
   "Strategist-grade prompts for pricing, content, emails, planning and grants. Copy any of them free.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 export const Route = createFileRoute("/chatgpt-prompts")({
   component: ChatgptPromptsPage,
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/chatgpt-prompts")({
               "@type": "ListItem",
               position: 1,
               name: "Her Empire Era",
-              item: "https://yourempireconcierge.com/join",
+              item: "https://herempireera.com/join",
             },
             { "@type": "ListItem", position: 2, name: "Free ChatGPT Prompts", item: URL },
           ],
