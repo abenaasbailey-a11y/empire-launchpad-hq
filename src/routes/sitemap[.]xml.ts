@@ -22,7 +22,6 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/grants-for-women", changefreq: "weekly", priority: "0.9" },
           { path: "/grants-african-women", changefreq: "weekly", priority: "0.9" },
           { path: "/membership", changefreq: "weekly", priority: "1.0" },
-          { path: "/services", changefreq: "weekly", priority: "0.9" },
 
           { path: "/opportunity-center", changefreq: "weekly", priority: "0.9" },
           { path: "/toolkit", changefreq: "weekly", priority: "0.8" },
