@@ -85,7 +85,7 @@ export function GrantsForAfricanWomenPage() {
           <div className="flex items-center gap-3 sm:gap-5">
             <Link
               to="/membership"
-              className="text-gold hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80 sm:block"
+              className="text-gold text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80"
             >
               Membership
             </Link>
