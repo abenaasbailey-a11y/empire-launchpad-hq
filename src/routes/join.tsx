@@ -6,7 +6,7 @@ const DESCRIPTION =
   "Create your free Her Empire Era membership in under a minute and unlock Victoria, your 24/7 AI concierge for pricing, content, résumés and grants.";
 const OG_DESCRIPTION =
   "Join free in under a minute: enter your email, confirm your account, and start working with Victoria on your next business move.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 export const Route = createFileRoute("/join")({
   component: JoinPage,
@@ -16,11 +16,11 @@ export const Route = createFileRoute("/join")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: OG_DESCRIPTION },
-      { property: "og:url", content: "https://yourempireconcierge.com/join" },
+      { property: "og:url", content: "https://herempireera.com/join" },
       { property: "og:image", content: OG_IMAGE },
       { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/join" }],
+    links: [{ rel: "canonical", href: "https://herempireera.com/join" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/join")({
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Her Empire Era",
-          url: "https://yourempireconcierge.com",
+          url: "https://herempireera.com",
           description: DESCRIPTION,
         }),
       },

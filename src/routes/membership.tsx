@@ -15,11 +15,11 @@ export const Route = createFileRoute("/membership")({
       { name: "description", content: DESCRIPTION },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: OG_DESCRIPTION },
-      { property: "og:url", content: "https://yourempireconcierge.com/membership" },
+      { property: "og:url", content: "https://herempireera.com/membership" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://yourempireconcierge.com/membership" }],
+    links: [{ rel: "canonical", href: "https://herempireera.com/membership" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/membership")({
           name: "Her Empire Era Membership",
           applicationCategory: "BusinessApplication",
           operatingSystem: "Web",
-          url: "https://yourempireconcierge.com/membership",
+          url: "https://herempireera.com/membership",
           description: DESCRIPTION,
           offers: [
             {

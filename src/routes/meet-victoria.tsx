@@ -6,8 +6,8 @@ import { StartFreeForm } from "@/components/landing/StartFreeForm";
 const TITLE = "Meet Victoria — AI Business Assistant for Women Founders";
 const DESCRIPTION =
   "Victoria is your private AI business assistant for pricing, planning, branding, content and daily decisions. Built for women founders. Start free.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
-const CANONICAL = "https://yourempireconcierge.com/meet-victoria";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
+const CANONICAL = "https://herempireera.com/meet-victoria";
 
 const capabilities = [
   {
@@ -79,7 +79,7 @@ export const Route = createFileRoute("/meet-victoria")({
           isPartOf: {
             "@type": "WebSite",
             name: "Her Empire Era",
-            url: "https://yourempireconcierge.com",
+            url: "https://herempireera.com",
           },
           about: {
             "@type": "SoftwareApplication",
@@ -219,7 +219,7 @@ function MeetVictoriaPage() {
               Refunds
             </Link>
           </nav>
-          <p>yourempireconcierge.com</p>
+          <p>herempireera.com</p>
         </div>
       </footer>
     </main>

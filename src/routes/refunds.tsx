@@ -4,13 +4,13 @@ import { LegalPage, type LegalSection } from "@/components/landing/LegalPage";
 const TITLE = "Refund Policy — Her Empire Era";
 const DESCRIPTION =
   "Our 30-day refund policy for Her Empire Era services and memberships, including how to request a refund through Paddle, our Merchant of Record.";
-const CANONICAL = "https://yourempireconcierge.com/refunds";
+const CANONICAL = "https://herempireera.com/refunds";
 
 const sections: LegalSection[] = [
   {
     heading: "Who you are buying from",
     body: [
-      "All products and services on yourempireconcierge.com are sold by HER EMPIRE ERA LLC (\"Her Empire Era\", \"we\", \"us\").",
+      "All products and services on herempireera.com are sold by HER EMPIRE ERA LLC (\"Her Empire Era\", \"we\", \"us\").",
       "Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders and handles all customer service enquiries related to payments, invoices and refunds.",
     ],
   },
@@ -81,7 +81,7 @@ function RefundsPage() {
       lead="Thirty days to change your mind. Clear, fair terms on refunds for every service and membership we sell."
       updated="August 2026"
       sections={sections}
-      footnote="This refund policy applies to yourempireconcierge.com and all products and services sold by HER EMPIRE ERA LLC. Paddle.com is the Merchant of Record for all orders."
+      footnote="This refund policy applies to herempireera.com and all products and services sold by HER EMPIRE ERA LLC. Paddle.com is the Merchant of Record for all orders."
     />
   );
 }

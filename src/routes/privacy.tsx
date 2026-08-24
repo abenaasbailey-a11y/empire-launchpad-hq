@@ -4,13 +4,13 @@ import { LegalPage, type LegalSection } from "@/components/landing/LegalPage";
 const TITLE = "Privacy Policy — Her Empire Era";
 const DESCRIPTION =
   "How Her Empire Era collects, uses and protects your information when you create a free membership and work with Victoria, your AI concierge.";
-const CANONICAL = "https://yourempireconcierge.com/privacy";
+const CANONICAL = "https://herempireera.com/privacy";
 
 const sections: LegalSection[] = [
   {
     heading: "Who is responsible for your data",
     body: [
-      "HER EMPIRE ERA LLC, a limited liability company registered in the United States, is the data controller for the personal information collected through yourempireconcierge.com and the Her Empire Era membership.",
+      "HER EMPIRE ERA LLC, a limited liability company registered in the United States, is the data controller for the personal information collected through herempireera.com and the Her Empire Era membership.",
       "Our order process is conducted by our online reseller Paddle.com, which is the Merchant of Record for all our orders. Paddle acts as an independent data controller for the payment and billing information you provide at checkout.",
     ],
   },
@@ -128,7 +128,7 @@ function PrivacyPage() {
       lead="Your trust is part of the membership. This policy explains what we collect, why we collect it, and the control you keep over your information."
       updated="August 2026"
       sections={sections}
-      footnote="This policy describes our practices for yourempireconcierge.com and the Her Empire Era membership. It is provided for general information and is not legal advice."
+      footnote="This policy describes our practices for herempireera.com and the Her Empire Era membership. It is provided for general information and is not legal advice."
     />
   );
 }

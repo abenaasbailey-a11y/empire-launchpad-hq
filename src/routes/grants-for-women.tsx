@@ -2,14 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GrantsForWomenPage } from "@/components/landing/GrantsForWomenPage";
 import { GRANTS_FAQ } from "@/lib/grants-for-women";
 
-const URL = "https://yourempireconcierge.com/grants-for-women";
+const URL = "https://herempireera.com/grants-for-women";
 const TITLE = "Grants for Women Business Owners — 16 Grants to Apply For Now";
 const DESCRIPTION =
   "16 real grants for women entrepreneurs: the Amber Grant, IFundWomen, Hello Alice, Cartier Women's Initiative, SoGal, and more. Check eligibility and apply directly — free, no email required.";
 const OG_TITLE = "Grants for Women Business Owners (2025)";
 const OG_DESCRIPTION =
   "16 grants women can apply for right now — from $2,000 to $100,000. Browse by category, check eligibility, and apply on each provider's site.";
-const OG_IMAGE = "https://yourempireconcierge.com/og-image.jpg";
+const OG_IMAGE = "https://herempireera.com/og-image.jpg";
 
 export const Route = createFileRoute("/grants-for-women")({
   component: GrantsForWomenPage,
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/grants-for-women")({
               "@type": "ListItem",
               position: 1,
               name: "Her Empire Era",
-              item: "https://yourempireconcierge.com/join",
+              item: "https://herempireera.com/join",
             },
             {
               "@type": "ListItem",

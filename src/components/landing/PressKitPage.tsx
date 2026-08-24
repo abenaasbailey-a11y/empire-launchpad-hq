@@ -46,7 +46,7 @@ const FACTS: { label: string; value: string }[] = [
   { label: "Based in", value: "Houston, Texas" },
   { label: "Category", value: "AI-powered business platform for women" },
   { label: "Membership", value: "Starts free" },
-  { label: "Website", value: "yourempireconcierge.com" },
+  { label: "Website", value: "herempireera.com" },
 ];
 
 const OFFERINGS: { title: string; body: string }[] = [
