@@ -39,8 +39,6 @@ const inputClass =
   "border-input bg-card/60 text-foreground placeholder:text-muted-foreground focus:ring-ring mt-2 h-12 w-full rounded-xl border px-4 text-sm outline-none focus:ring-1";
 
 const SERVICE_BY_PRICE: Record<string, string> = {
-  business_plan_onetime: "Business Plan",
-  resume_makeover_onetime: "Résumé & Cover Letter Makeover",
   social_content_monthly: "Social Media Content Package",
   email_sequence_onetime: "Email Marketing Sequence",
 };
