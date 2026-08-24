@@ -306,6 +306,9 @@ export function GrantsForAfricanWomenPage() {
             <Link to="/terms" className="hover:text-blush transition-colors">
               Terms
             </Link>
+            <Link to="/refunds" className="hover:text-blush transition-colors">
+              Refunds
+            </Link>
           </nav>
           <p>yourempireconcierge.com</p>
         </div>
