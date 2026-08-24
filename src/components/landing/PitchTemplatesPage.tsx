@@ -200,9 +200,17 @@ export function PitchTemplatesPage() {
           >
             Her Empire <span className="text-gold">Era</span>
           </Link>
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/press">View Press Kit</Link>
-          </Button>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <Link
+              to="/membership"
+              className="text-gold hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80 sm:block"
+            >
+              Membership
+            </Link>
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/press">View Press Kit</Link>
+            </Button>
+          </div>
         </div>
       </header>
 

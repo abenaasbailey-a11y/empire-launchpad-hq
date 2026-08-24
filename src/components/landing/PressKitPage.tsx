@@ -91,9 +91,17 @@ export function PressKitPage() {
           >
             Her Empire <span className="text-gold">Era</span>
           </Link>
-          <Button variant="lux" size="sm" asChild>
-            <a href="mailto:press@yourempireconcierge.com">Press Contact</a>
-          </Button>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <Link
+              to="/membership"
+              className="text-gold hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80 sm:block"
+            >
+              Membership
+            </Link>
+            <Button variant="lux" size="sm" asChild>
+              <a href="mailto:press@yourempireconcierge.com">Press Contact</a>
+            </Button>
+          </div>
         </div>
       </header>
 

@@ -160,6 +160,12 @@ export function JoinLanding() {
           </a>
           <div className="flex items-center gap-3 sm:gap-5">
             <Link
+              to="/membership"
+              className="text-gold hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80 sm:block"
+            >
+              Membership
+            </Link>
+            <Link
               to="/free-prompts"
               className="text-muted-foreground hover:text-blush hidden text-[0.65rem] tracking-[0.2em] uppercase transition-colors sm:block"
             >
