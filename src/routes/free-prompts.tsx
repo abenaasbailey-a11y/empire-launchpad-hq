@@ -3,7 +3,7 @@ import { FreePromptsPage } from "@/components/landing/FreePromptsPage";
 
 const TITLE = "10 Free AI Business Prompts for Women Founders";
 const DESCRIPTION =
-  "Download 10 free AI prompts for pricing, offers, captions, hooks, website copy, emails, résumés and grant narratives — from Her Empire Era.";
+  "Download 10 free AI prompts for pricing, offers, captions, hooks, website copy and emails — from Her Empire Era.";
 const OG_DESCRIPTION =
   "Free prompt pack: price your offer, fill 30 days of content, write your website and emails. Copy, paste, done.";
 const OG_IMAGE = "https://herempireera.com/og-image.jpg";

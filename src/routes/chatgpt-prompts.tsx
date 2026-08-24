@@ -5,7 +5,7 @@ import { PROMPT_FAQ } from "@/lib/chatgpt-prompts";
 const URL = "https://herempireera.com/chatgpt-prompts";
 const TITLE = "Free ChatGPT Prompts for Business Owners";
 const DESCRIPTION =
-  "14 free ChatGPT prompts for pricing, offers, social content, emails, business planning, grants and productivity. Copy, paste and use — no email required.";
+  "14 free ChatGPT prompts for pricing, offers, social content, emails, business planning and productivity. Copy, paste and use — no email required.";
 const OG_TITLE = "Free ChatGPT Prompts for Business";
 const OG_DESCRIPTION =
   "Strategist-grade prompts for pricing, content, emails, planning and grants. Copy any of them free.";

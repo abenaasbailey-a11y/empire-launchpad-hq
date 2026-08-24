@@ -23,7 +23,7 @@ const pillars = [
   },
   {
     title: "The Concierge",
-    body: "Victoria helps with the work that slows you down, including business planning, marketing, content creation, pricing, branding, emails, résumés, grants, websites, and daily business decisions.",
+    body: "Victoria helps with the work that slows you down, including business planning, marketing, content creation, pricing, branding, emails, website copy, and daily business decisions.",
   },
   {
     title: "The Standard",
@@ -59,8 +59,8 @@ const benefits = [
   {
     icon: FileText,
     label: "05",
-    title: "Get taken seriously the first time",
-    body: "Résumés, bios, grant narratives and applications written to open doors — whether it's funding or a new opportunity.",
+    title: "Show up polished everywhere",
+    body: "Brand bios, about pages and outreach copy written to open doors and make the right first impression.",
   },
   {
     icon: Clock,
@@ -109,7 +109,7 @@ export const membershipFaqs = [
   },
   {
     q: "What exactly is Victoria?",
-    a: "Victoria is your private AI business concierge. She helps with business planning, pricing, branding, marketing, content, websites, résumés, grants and the daily decisions in between.",
+    a: "Victoria is your private AI business concierge. She helps with business planning, pricing, branding, marketing, content, website copy and the daily decisions in between.",
   },
   {
     q: "Do I need a business already?",
