@@ -43,8 +43,16 @@ const SERVICE_BY_PRICE: Record<string, string> = {
   email_sequence_onetime: "Email Marketing Sequence",
 };
 
-/** Membership purchases are self-serve software — no project brief needed. */
-const MEMBERSHIP_PRICES = ["empire_membership_monthly", "empire_membership_annual"];
+/**
+ * Membership purchases are self-serve software — no project brief needed.
+ * Retired price IDs stay listed so members who bought on the old plans keep
+ * the correct post-checkout experience.
+ */
+const MEMBERSHIP_PRICES = [
+  "empire_member_monthly",
+  "empire_membership_monthly",
+  "empire_membership_annual",
+];
 
 function CheckoutSuccess() {
   const search = Route.useSearch();
