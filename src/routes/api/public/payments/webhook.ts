@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
-import { verifyWebhook, type PaddleEnv } from "@/lib/paddle.server";
+import { verifyWebhook, type StripeEnv } from "@/lib/stripe.server";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let _supabase: any = null;
@@ -15,46 +15,53 @@ function getSupabase() {
 }
 
 /**
- * Transaction webhooks do not include the buyer's email, so look it up from the
- * Paddle customer record. Falls back to null rather than failing the webhook.
+ * Human-readable price ID. `lookup_key` is stable across test and live; the
+ * metadata fallback covers prices created before lookup keys were set.
  */
-async function lookupCustomerEmail(
-  customerId: string | null | undefined,
-  env: PaddleEnv,
-): Promise<string | null> {
-  if (!customerId) return null;
-  try {
-    const { paddleFetch } = await import("@/lib/paddle.server");
-    const response = await paddleFetch(env, `/customers/${customerId}`);
-    const result = (await response.json()) as { data?: { email?: string } };
-    return result.data?.email ?? null;
-  } catch (e) {
-    console.error("Paddle webhook: customer email lookup failed", e);
-    return null;
-  }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function externalPriceId(price: any): string | null {
+  return price?.lookup_key ?? price?.metadata?.lovable_external_id ?? price?.id ?? null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleTransactionCompleted(data: any, env: PaddleEnv) {
-  const item = data.items?.[0];
-  const externalPriceId: string | undefined = item?.price?.import_meta?.external_id;
-  const customData = data.custom_data ?? null;
-  const email =
-    data.customer?.email ??
-    customData?.email ??
-    (await lookupCustomerEmail(data.customer_id, env));
+function isoFromUnix(seconds: number | null | undefined): string | null {
+  return seconds ? new Date(seconds * 1000).toISOString() : null;
+}
 
-  // Renewal transactions carry no custom_data, so attribute them to the member
-  // that owns the subscription instead of leaving an orphaned order row.
-  let userId: string | null = customData?.userId ?? null;
-  if (!userId && data.subscription_id) {
+/** Records a paid checkout. Renewals are attributed via the subscription row. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function handleCheckoutCompleted(session: any, env: StripeEnv) {
+  if (session.payment_status === "unpaid") return;
+
+  const metadata = session.metadata ?? null;
+  let userId: string | null = metadata?.userId ?? null;
+
+  if (!userId && session.subscription) {
     const { data: sub } = await getSupabase()
       .from("subscriptions")
       .select("user_id")
-      .eq("paddle_subscription_id", data.subscription_id)
+      .eq("paddle_subscription_id", session.subscription)
       .eq("environment", env)
       .maybeSingle();
     userId = sub?.user_id ?? null;
+  }
+
+  let priceId: string | null = null;
+  let productId: string | null = null;
+  let quantity = 1;
+  try {
+    const { createStripeClient } = await import("@/lib/stripe.server");
+    const stripe = createStripeClient(env);
+    const items = await stripe.checkout.sessions.listLineItems(session.id, {
+      limit: 1,
+      expand: ["data.price"],
+    });
+    const line = items.data[0];
+    priceId = externalPriceId(line?.price);
+    const product = line?.price?.product;
+    productId = typeof product === "string" ? product : (product?.id ?? null);
+    quantity = line?.quantity ?? 1;
+  } catch (e) {
+    console.error("Payments webhook: line item lookup failed", e);
   }
 
   await getSupabase()
@@ -62,17 +69,18 @@ async function handleTransactionCompleted(data: any, env: PaddleEnv) {
     .upsert(
       {
         user_id: userId,
-        email,
-        paddle_transaction_id: data.id,
-        paddle_customer_id: data.customer_id ?? null,
-        product_id: item?.price?.product_id ?? null,
-        price_id: externalPriceId ?? item?.price?.id ?? null,
-        quantity: item?.quantity ?? 1,
-        amount_cents: data.details?.totals?.total ? Number(data.details.totals.total) : null,
-        currency: data.currency_code ?? "USD",
+        email: session.customer_details?.email ?? session.customer_email ?? null,
+        paddle_transaction_id: session.id,
+        paddle_customer_id:
+          typeof session.customer === "string" ? session.customer : (session.customer?.id ?? null),
+        product_id: productId,
+        price_id: priceId,
+        quantity,
+        amount_cents: typeof session.amount_total === "number" ? session.amount_total : null,
+        currency: (session.currency ?? "usd").toUpperCase(),
         status: "paid",
         environment: env,
-        custom_data: customData,
+        custom_data: metadata,
         updated_at: new Date().toISOString(),
       },
       { onConflict: "paddle_transaction_id" },
@@ -80,32 +88,35 @@ async function handleTransactionCompleted(data: any, env: PaddleEnv) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleSubscriptionCreated(data: any, env: PaddleEnv) {
-  const userId = data.custom_data?.userId;
+async function upsertSubscription(subscription: any, env: StripeEnv) {
+  const userId = subscription.metadata?.userId;
   if (!userId) {
-    console.error("Paddle webhook: no userId in custom_data, skipping subscription");
+    console.error("Payments webhook: no userId in subscription metadata");
     return;
   }
-  const item = data.items?.[0];
-  const priceId = item?.price?.import_meta?.external_id;
-  const productId = item?.product?.import_meta?.external_id;
-  if (!priceId || !productId) {
-    console.warn("Paddle webhook: missing importMeta.externalId, skipping subscription");
-    return;
-  }
+  const item = subscription.items?.data?.[0];
+  const priceId = externalPriceId(item?.price);
+  const product = item?.price?.product;
+  const productId = typeof product === "string" ? product : (product?.id ?? null);
+  const periodStart = item?.current_period_start ?? subscription.current_period_start;
+  const periodEnd = item?.current_period_end ?? subscription.current_period_end;
 
   await getSupabase()
     .from("subscriptions")
     .upsert(
       {
         user_id: userId,
-        paddle_subscription_id: data.id,
-        paddle_customer_id: data.customer_id,
+        paddle_subscription_id: subscription.id,
+        paddle_customer_id:
+          typeof subscription.customer === "string"
+            ? subscription.customer
+            : (subscription.customer?.id ?? null),
         product_id: productId,
         price_id: priceId,
-        status: data.status,
-        current_period_start: data.current_billing_period?.starts_at ?? null,
-        current_period_end: data.current_billing_period?.ends_at ?? null,
+        status: subscription.status,
+        current_period_start: isoFromUnix(periodStart),
+        current_period_end: isoFromUnix(periodEnd),
+        cancel_at_period_end: subscription.cancel_at_period_end ?? false,
         environment: env,
         updated_at: new Date().toISOString(),
       },
@@ -113,25 +124,10 @@ async function handleSubscriptionCreated(data: any, env: PaddleEnv) {
     );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleSubscriptionUpdated(data: any, env: PaddleEnv) {
-  await getSupabase()
-    .from("subscriptions")
-    .update({
-      status: data.status,
-      current_period_start: data.current_billing_period?.starts_at ?? null,
-      current_period_end: data.current_billing_period?.ends_at ?? null,
-      cancel_at_period_end: data.scheduled_change?.action === "cancel",
-      updated_at: new Date().toISOString(),
-    })
-    .eq("paddle_subscription_id", data.id)
-    .eq("environment", env);
-}
-
 // Business rule: access is cut off immediately on cancel, so we clear the
 // period end instead of leaving a future date that would keep access alive.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleSubscriptionCanceled(data: any, env: PaddleEnv) {
+async function handleSubscriptionDeleted(subscription: any, env: StripeEnv) {
   await getSupabase()
     .from("subscriptions")
     .update({
@@ -140,17 +136,19 @@ async function handleSubscriptionCanceled(data: any, env: PaddleEnv) {
       cancel_at_period_end: false,
       updated_at: new Date().toISOString(),
     })
-    .eq("paddle_subscription_id", data.id)
+    .eq("paddle_subscription_id", subscription.id)
     .eq("environment", env);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handlePaymentFailed(data: any, env: PaddleEnv) {
-  if (!data.subscription_id) return;
+async function handleInvoicePaymentFailed(invoice: any, env: StripeEnv) {
+  const subscriptionId =
+    typeof invoice.subscription === "string" ? invoice.subscription : invoice.subscription?.id;
+  if (!subscriptionId) return;
   await getSupabase()
     .from("subscriptions")
     .update({ status: "past_due", updated_at: new Date().toISOString() })
-    .eq("paddle_subscription_id", data.subscription_id)
+    .eq("paddle_subscription_id", subscriptionId)
     .eq("environment", env);
 }
 
@@ -158,32 +156,35 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const url = new URL(request.url);
-        const env = (url.searchParams.get("env") || "sandbox") as PaddleEnv;
+        const rawEnv = new URL(request.url).searchParams.get("env");
+        if (rawEnv !== "sandbox" && rawEnv !== "live") {
+          console.error("Payments webhook: invalid env query parameter", rawEnv);
+          return Response.json({ received: true, ignored: "invalid env" });
+        }
+        const env: StripeEnv = rawEnv;
         try {
           const event = await verifyWebhook(request, env);
-          switch (event.event_type) {
-            case "transaction.completed":
-              await handleTransactionCompleted(event.data, env);
+          switch (event.type) {
+            case "checkout.session.completed":
+            case "checkout.session.async_payment_succeeded":
+              await handleCheckoutCompleted(event.data.object, env);
               break;
-            case "subscription.created":
-              await handleSubscriptionCreated(event.data, env);
+            case "customer.subscription.created":
+            case "customer.subscription.updated":
+              await upsertSubscription(event.data.object, env);
               break;
-            case "subscription.updated":
-              await handleSubscriptionUpdated(event.data, env);
+            case "customer.subscription.deleted":
+              await handleSubscriptionDeleted(event.data.object, env);
               break;
-            case "subscription.canceled":
-              await handleSubscriptionCanceled(event.data, env);
-              break;
-            case "transaction.payment_failed":
-              await handlePaymentFailed(event.data, env);
+            case "invoice.payment_failed":
+              await handleInvoicePaymentFailed(event.data.object, env);
               break;
             default:
-              console.log("Unhandled Paddle event:", event.event_type);
+              console.log("Unhandled payments event:", event.type);
           }
           return Response.json({ received: true });
         } catch (e) {
-          console.error("Paddle webhook error:", e);
+          console.error("Payments webhook error:", e);
           return new Response("Webhook error", { status: 400 });
         }
       },

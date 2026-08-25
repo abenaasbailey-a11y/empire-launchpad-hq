@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
-import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { useCheckout } from "@/hooks/useCheckout";
 import { useEntitlement } from "@/hooks/useEntitlement";
 
 type Plan = {
@@ -28,7 +28,7 @@ type Plan = {
 
 /**
  * Single monthly plan. Annual and free-trial options are intentionally absent.
- * `priceId` must match the human-readable Paddle price ID on the live account.
+ * `priceId` must match the human-readable price ID in the payments catalog.
  */
 const plans: Plan[] = [
   {
@@ -85,7 +85,7 @@ const faqs = [
   },
   {
     q: "How is payment handled?",
-    a: "Securely by card, Apple Pay, Google Pay or PayPal. Our order process is conducted by our online reseller Paddle.com, the Merchant of Record for all our orders — so taxes and invoices are handled for you.",
+    a: "Securely by card, Apple Pay or Google Pay through our payment processor. Your card details never touch our servers, and your receipt and invoice are emailed to you automatically.",
   },
   {
     q: "Do I need to be technical?",
@@ -94,7 +94,9 @@ const faqs = [
 ];
 
 function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
-  const { openCheckout, loading, error, needsAuth } = usePaddleCheckout();
+  const { openCheckout, closeCheckout, loading, error, needsAuth, isOpen, checkoutElement } =
+    useCheckout();
+
 
   return (
     <article
@@ -127,16 +129,28 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
         <Button variant="lux" className="mt-7 w-full" asChild>
           <Link to="/prompt-vault">You're a member — open the vault</Link>
         </Button>
-      ) : (
+      ) : isOpen ? null : (
       <Button
         variant={plan.featured ? "gold" : "lux"}
         className="mt-7 w-full"
         disabled={loading}
-        onClick={() => openCheckout({ priceId: plan.priceId, serviceTitle: `Membership — ${plan.label}` })}
+        onClick={() => void openCheckout({ priceId: plan.priceId, serviceTitle: `Membership — ${plan.label}` })}
       >
         {loading ? "Opening checkout…" : `Become a member — ${plan.price}`}
       </Button>
       )}
+      {isOpen ? (
+        <div className="mt-7">
+          {checkoutElement}
+          <button
+            type="button"
+            onClick={closeCheckout}
+            className="text-muted-foreground hover:text-foreground mt-4 w-full text-xs underline"
+          >
+            Cancel and go back
+          </button>
+        </div>
+      ) : null}
       {needsAuth ? (
         <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
           Create your free account first so we can attach the membership to you.{" "}
@@ -152,6 +166,7 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
       ) : null}
       {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
     </article>
+
   );
 }
 

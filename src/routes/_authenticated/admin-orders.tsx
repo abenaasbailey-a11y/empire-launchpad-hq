@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/landing/Section";
 import { useIsAdmin } from "@/hooks/use-admin";
-import { getPaddleEnvironment } from "@/lib/paddle";
+import { getStripeEnvironmentSafe } from "@/lib/stripe";
 import { getAllBilling } from "@/lib/billing.functions";
 
 export const Route = createFileRoute("/_authenticated/admin-orders")({
@@ -37,7 +37,7 @@ function formatMoney(cents: number | null, currency: string): string {
 
 function AdminOrders() {
   const { isAdmin, isLoading: adminLoading } = useIsAdmin();
-  const environment = getPaddleEnvironment();
+  const environment = getStripeEnvironmentSafe();
   const fetchAll = useServerFn(getAllBilling);
 
   const { data, isLoading } = useQuery({
