@@ -1,30 +1,29 @@
-import { paddleFetch, type PaddleEnv } from "@/lib/paddle.server";
+import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib/stripe.server";
 
 type AnySupabase = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   from: (table: string) => any;
 };
 
 /**
- * Creates a Paddle-hosted customer portal session for the member's most recent
+ * Creates a hosted billing portal session for the member's most recent
  * subscription (or, failing that, their most recent one-time order's customer).
+ * The `paddle_customer_id` columns now hold the Stripe customer ID.
  */
 export async function openBillingPortal(
   supabase: AnySupabase,
   userId: string,
-  environment: PaddleEnv,
+  environment: StripeEnv,
 ): Promise<{ url: string }> {
   const { data: subs } = await supabase
     .from("subscriptions")
-    .select("paddle_customer_id, paddle_subscription_id, created_at")
+    .select("paddle_customer_id, created_at")
     .eq("user_id", userId)
     .eq("environment", environment)
     .order("created_at", { ascending: false })
     .limit(5);
 
   let customerId: string | null = subs?.[0]?.paddle_customer_id ?? null;
-  const subscriptionIds: string[] = (subs ?? [])
-    .map((s: { paddle_subscription_id: string }) => s.paddle_subscription_id)
-    .filter(Boolean);
 
   if (!customerId) {
     const { data: orders } = await supabase
@@ -42,15 +41,11 @@ export async function openBillingPortal(
     throw new Error("We could not find a billing profile for your account yet.");
   }
 
-  const response = await paddleFetch(environment, `/customers/${customerId}/portal-sessions`, {
-    method: "POST",
-    body: JSON.stringify(subscriptionIds.length ? { subscription_ids: subscriptionIds } : {}),
-  });
-
-  const result = (await response.json()) as {
-    data?: { urls?: { general?: { overview?: string } } };
-  };
-  const url = result.data?.urls?.general?.overview;
-  if (!url) throw new Error("We could not open your billing portal just now. Please try again.");
-  return { url };
+  try {
+    const stripe = createStripeClient(environment);
+    const portal = await stripe.billingPortal.sessions.create({ customer: customerId });
+    return { url: portal.url };
+  } catch (error) {
+    throw new Error(getStripeErrorMessage(error));
+  }
 }
