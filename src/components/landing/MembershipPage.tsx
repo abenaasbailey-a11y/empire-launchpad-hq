@@ -73,7 +73,7 @@ const included = [
 const faqs = [
   {
     q: "What exactly am I paying for?",
-    a: "Software access. The membership unlocks Victoria AI, the Empire Prompt Vault, the Opportunity Center and the Empire Academy inside this platform. It is a digital product you use yourself — nothing is shipped to you.",
+    a: "Software access. The membership unlocks Victoria AI, the Empire Prompt Vault and the Opportunity Center inside this platform. It is a digital product you use yourself — nothing is shipped to you.",
   },
   {
     q: "Can I cancel?",
