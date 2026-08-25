@@ -85,7 +85,7 @@ export function BillingPanel() {
         </p>
         <div className="mt-6">
           <Button variant="gold" asChild>
-            <Link to="/membership">See membership — $19/mo</Link>
+            <Link to="/membership">See membership — $19.99/mo</Link>
           </Button>
         </div>
       </div>
