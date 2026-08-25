@@ -39,7 +39,7 @@ export function MembershipGate({
           ) : null}
         </div>
         <Button variant="gold" asChild>
-          <Link to="/membership">Become a member — $19/mo</Link>
+          <Link to="/membership">Become a member — $19.99/mo</Link>
         </Button>
       </div>
     </div>

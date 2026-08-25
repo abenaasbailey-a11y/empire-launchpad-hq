@@ -7,6 +7,9 @@ import { createBillingPortalLink } from "@/lib/billing.functions";
 import { Link } from "@tanstack/react-router";
 
 const PLAN_NAMES: Record<string, string> = {
+  // Current plan.
+  empire_member_monthly: "Empire Member — Monthly",
+  // Retired plans, kept so existing subscription and order rows still label correctly.
   empire_membership_monthly: "Her Empire Era Membership — Monthly",
   empire_membership_annual: "Her Empire Era Membership — Annual",
 };
@@ -82,7 +85,7 @@ export function BillingPanel() {
         </p>
         <div className="mt-6">
           <Button variant="gold" asChild>
-            <Link to="/membership">See membership — $19/mo</Link>
+            <Link to="/membership">See membership — $19.99/mo</Link>
           </Button>
         </div>
       </div>

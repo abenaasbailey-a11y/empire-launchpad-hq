@@ -26,54 +26,54 @@ type Plan = {
   featured: boolean;
 };
 
+/**
+ * Single monthly plan. Annual and free-trial options are intentionally absent.
+ * `priceId` must match the human-readable Paddle price ID on the live account.
+ */
 const plans: Plan[] = [
   {
     id: "monthly",
-    priceId: "empire_membership_monthly",
-    label: "Monthly",
-    price: "$19",
+    priceId: "empire_member_monthly",
+    label: "Empire Member",
+    price: "$19.99",
     cadence: "per month",
     note: "Cancel anytime from your billing panel.",
     featured: true,
   },
-  {
-    id: "annual",
-    priceId: "empire_membership_annual",
-    label: "Annual",
-    price: "$190",
-    cadence: "per year",
-    note: "Two months free compared to monthly.",
-    featured: false,
-  },
 ];
 
+/**
+ * Only features that are live in the product today. Nothing is listed here
+ * that a member cannot use the moment they join.
+ */
 const included = [
   {
     icon: Sparkles,
-    title: "Victoria AI, unlimited",
-    body: "Your always-on business assistant. Draft plans, offers, captions, emails, applications and pitches in your own voice.",
+    title: "Victoria AI Concierge, unlimited",
+    body: "Your always-on business assistant. Draft plans, offers, captions, emails and pitches in your own voice.",
   },
   {
     icon: Library,
     title: "The Empire Prompt Vault",
-    body: "56+ premium, tested prompts across marketing, social, business planning, email and productivity — organized and ready to run.",
+    body: "56+ premium, tested prompts across marketing, social media, business planning, email and productivity — organized and ready to run.",
   },
   {
     icon: Compass,
     title: "The Opportunity Center",
-    body: "AI-matched income ideas and opportunities based on your skills, time and goals — with saved picks and notes.",
+    body: "AI-matched income ideas based on your skills, time and goals — with saved picks and your own notes.",
   },
   {
     icon: BookOpen,
-    title: "The Empire Academy",
-    body: "Short, practical lessons that turn the tools into revenue instead of another tab you never open.",
+    title: "Social, email & planning assistance",
+    body: "Caption and content help, business email drafting, and business-planning prompts built for founders, not classrooms.",
   },
 ];
+
 
 const faqs = [
   {
     q: "What exactly am I paying for?",
-    a: "Software access. The membership unlocks Victoria AI, the Empire Prompt Vault, the Opportunity Center and the Empire Academy inside this platform. It is a digital product you use yourself — nothing is shipped to you.",
+    a: "Software access. The membership unlocks Victoria AI, the Empire Prompt Vault and the Opportunity Center inside this platform. It is a digital product you use yourself — nothing is shipped to you.",
   },
   {
     q: "Can I cancel?",
@@ -175,9 +175,8 @@ export function MembershipPage() {
           Every AI tool your empire needs, in one place.
         </h1>
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-[0.95rem] leading-relaxed md:text-base">
-          Victoria AI, the Empire Prompt Vault, the Opportunity Center and the Empire Academy —
-          full access for less than a dinner out. Built for women who are done waiting for
-          permission.
+          Victoria AI, the Empire Prompt Vault and the Opportunity Center — full access for less
+          than a dinner out. Built for women who are done waiting for permission.
         </p>
         <div className="mt-8 flex items-center justify-center gap-3">
           <GoldRule />
@@ -187,7 +186,7 @@ export function MembershipPage() {
 
       {/* Plans */}
       <Section id="pricing">
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 md:gap-8">
+        <div className="mx-auto grid max-w-md gap-6">
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} isMember={isMember} />
           ))}
