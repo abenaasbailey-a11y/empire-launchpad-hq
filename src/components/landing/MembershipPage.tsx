@@ -175,9 +175,8 @@ export function MembershipPage() {
           Every AI tool your empire needs, in one place.
         </h1>
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-[0.95rem] leading-relaxed md:text-base">
-          Victoria AI, the Empire Prompt Vault, the Opportunity Center and the Empire Academy —
-          full access for less than a dinner out. Built for women who are done waiting for
-          permission.
+          Victoria AI, the Empire Prompt Vault and the Opportunity Center — full access for less
+          than a dinner out. Built for women who are done waiting for permission.
         </p>
         <div className="mt-8 flex items-center justify-center gap-3">
           <GoldRule />
@@ -187,7 +186,7 @@ export function MembershipPage() {
 
       {/* Plans */}
       <Section id="pricing">
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 md:gap-8">
+        <div className="mx-auto grid max-w-md gap-6">
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} isMember={isMember} />
           ))}
