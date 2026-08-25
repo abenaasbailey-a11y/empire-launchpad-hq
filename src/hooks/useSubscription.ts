@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { getPaddleEnvironment } from "@/lib/paddle";
+import { getStripeEnvironmentSafe } from "@/lib/stripe";
 import { getMyBilling } from "@/lib/billing.functions";
 
 export type BillingSubscription = {
@@ -40,7 +40,7 @@ function isLive(sub: BillingSubscription | undefined): boolean {
  * payment environment (test in preview, live in production).
  */
 export function useSubscription() {
-  const environment = getPaddleEnvironment();
+  const environment = getStripeEnvironmentSafe();
   const fetchBilling = useServerFn(getMyBilling);
 
   const query = useQuery({

@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
-import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { useCheckout } from "@/hooks/useCheckout";
 import { useEntitlement } from "@/hooks/useEntitlement";
 
 type Plan = {
@@ -28,7 +28,7 @@ type Plan = {
 
 /**
  * Single monthly plan. Annual and free-trial options are intentionally absent.
- * `priceId` must match the human-readable Paddle price ID on the live account.
+ * `priceId` must match the human-readable price ID in the payments catalog.
  */
 const plans: Plan[] = [
   {
@@ -94,7 +94,7 @@ const faqs = [
 ];
 
 function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
-  const { openCheckout, loading, error, needsAuth } = usePaddleCheckout();
+  const { openCheckout, loading, error, needsAuth } = useCheckout();
 
   return (
     <article
