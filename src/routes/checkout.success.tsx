@@ -14,6 +14,7 @@ const DESCRIPTION =
   "Your payment is confirmed. Tell us about your project so we can start right away.";
 
 const searchSchema = z.object({
+  session_id: z.string().optional(),
   _ptxn: z.string().optional(),
 });
 
@@ -56,7 +57,7 @@ const MEMBERSHIP_PRICES = [
 
 function CheckoutSuccess() {
   const search = Route.useSearch();
-  const transactionId = search._ptxn ?? "";
+  const transactionId = search.session_id ?? search._ptxn ?? "";
   const lookupOrder = useServerFn(getOrderByTransaction);
   const submitRequest = useServerFn(captureServiceRequest);
 
