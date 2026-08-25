@@ -4,10 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type CheckoutOptions = {
   priceId: string;
-  quantity?: number;
-  customerEmail?: string;
-  serviceTitle?: string;
-  successUrl?: string;
+  quantity?: number | undefined;
+  customerEmail?: string | undefined;
+  serviceTitle?: string | undefined;
+  successUrl?: string | undefined;
 };
 
 type OpenOptions = CheckoutOptions & { userId: string; returnUrl: string };

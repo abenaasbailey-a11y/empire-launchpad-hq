@@ -4,11 +4,11 @@ import { createCheckoutSession } from "@/utils/payments.functions";
 
 interface StripeEmbeddedCheckoutProps {
   priceId: string;
-  quantity?: number;
-  customerEmail?: string;
-  userId?: string;
-  serviceTitle?: string;
-  returnUrl?: string;
+  quantity?: number | undefined;
+  customerEmail?: string | undefined;
+  userId?: string | undefined;
+  serviceTitle?: string | undefined;
+  returnUrl?: string | undefined;
 }
 
 /** Renders Stripe's hosted payment form inline, in our own page shell. */
