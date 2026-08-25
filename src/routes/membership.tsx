@@ -3,9 +3,9 @@ import { MembershipPage } from "@/components/landing/MembershipPage";
 
 const TITLE = "Membership — AI Tools for Women Founders | Her Empire Era";
 const DESCRIPTION =
-  "Unlock Victoria AI, the Empire Prompt Vault, the Opportunity Center and the Empire Academy for $19/month. Cancel anytime, 30-day money-back guarantee.";
+  "Unlock Victoria AI, the Empire Prompt Vault and the Opportunity Center for $19.99/month. Cancel anytime, 30-day money-back guarantee.";
 const OG_DESCRIPTION =
-  "Full access to Victoria AI and the Empire Prompt Vault for $19/month — the AI toolkit for women building their empire.";
+  "Full access to Victoria AI and the Empire Prompt Vault for $19.99/month — the AI toolkit for women building their empire.";
 
 export const Route = createFileRoute("/membership")({
   component: MembershipPage,
