@@ -26,49 +26,49 @@ type Plan = {
   featured: boolean;
 };
 
+/**
+ * Single monthly plan. Annual and free-trial options are intentionally absent.
+ * `priceId` must match the human-readable Paddle price ID on the live account.
+ */
 const plans: Plan[] = [
   {
     id: "monthly",
-    priceId: "empire_membership_monthly",
-    label: "Monthly",
-    price: "$19",
+    priceId: "empire_member_monthly",
+    label: "Empire Member",
+    price: "$19.99",
     cadence: "per month",
     note: "Cancel anytime from your billing panel.",
     featured: true,
   },
-  {
-    id: "annual",
-    priceId: "empire_membership_annual",
-    label: "Annual",
-    price: "$190",
-    cadence: "per year",
-    note: "Two months free compared to monthly.",
-    featured: false,
-  },
 ];
 
+/**
+ * Only features that are live in the product today. Nothing is listed here
+ * that a member cannot use the moment they join.
+ */
 const included = [
   {
     icon: Sparkles,
-    title: "Victoria AI, unlimited",
-    body: "Your always-on business assistant. Draft plans, offers, captions, emails, applications and pitches in your own voice.",
+    title: "Victoria AI Concierge, unlimited",
+    body: "Your always-on business assistant. Draft plans, offers, captions, emails and pitches in your own voice.",
   },
   {
     icon: Library,
     title: "The Empire Prompt Vault",
-    body: "56+ premium, tested prompts across marketing, social, business planning, email and productivity — organized and ready to run.",
+    body: "56+ premium, tested prompts across marketing, social media, business planning, email and productivity — organized and ready to run.",
   },
   {
     icon: Compass,
     title: "The Opportunity Center",
-    body: "AI-matched income ideas and opportunities based on your skills, time and goals — with saved picks and notes.",
+    body: "AI-matched income ideas based on your skills, time and goals — with saved picks and your own notes.",
   },
   {
     icon: BookOpen,
-    title: "The Empire Academy",
-    body: "Short, practical lessons that turn the tools into revenue instead of another tab you never open.",
+    title: "Social, email & planning assistance",
+    body: "Caption and content help, business email drafting, and business-planning prompts built for founders, not classrooms.",
   },
 ];
+
 
 const faqs = [
   {
