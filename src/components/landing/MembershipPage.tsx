@@ -127,16 +127,28 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
         <Button variant="lux" className="mt-7 w-full" asChild>
           <Link to="/prompt-vault">You're a member — open the vault</Link>
         </Button>
-      ) : (
+      ) : isOpen ? null : (
       <Button
         variant={plan.featured ? "gold" : "lux"}
         className="mt-7 w-full"
         disabled={loading}
-        onClick={() => openCheckout({ priceId: plan.priceId, serviceTitle: `Membership — ${plan.label}` })}
+        onClick={() => void openCheckout({ priceId: plan.priceId, serviceTitle: `Membership — ${plan.label}` })}
       >
         {loading ? "Opening checkout…" : `Become a member — ${plan.price}`}
       </Button>
       )}
+      {isOpen ? (
+        <div className="mt-7">
+          {checkoutElement}
+          <button
+            type="button"
+            onClick={closeCheckout}
+            className="text-muted-foreground hover:text-foreground mt-4 w-full text-xs underline"
+          >
+            Cancel and go back
+          </button>
+        </div>
+      ) : null}
       {needsAuth ? (
         <p className="text-muted-foreground mt-2 text-xs leading-relaxed">
           Create your free account first so we can attach the membership to you.{" "}
@@ -152,6 +164,7 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
       ) : null}
       {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
     </article>
+
   );
 }
 
