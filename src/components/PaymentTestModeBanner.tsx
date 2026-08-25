@@ -1,7 +1,15 @@
-import { getPaddleEnvironment } from "@/lib/paddle";
+import { getStripeEnvironmentSafe, isPaymentsConfigured } from "@/lib/stripe";
 
 export function PaymentTestModeBanner() {
-  if (getPaddleEnvironment() !== "sandbox") return null;
+  if (!isPaymentsConfigured()) {
+    return (
+      <div className="border-destructive/40 bg-destructive/10 text-destructive w-full border-b px-4 py-2 text-center text-xs tracking-wide">
+        Checkout is not configured yet. Complete payment go-live to accept real payments.
+      </div>
+    );
+  }
+
+  if (getStripeEnvironmentSafe() !== "sandbox") return null;
 
   return (
     <div className="border-gold/30 bg-gold/10 text-gold w-full border-b px-4 py-2 text-center text-xs tracking-wide">
