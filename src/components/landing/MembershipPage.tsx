@@ -85,7 +85,7 @@ const faqs = [
   },
   {
     q: "How is payment handled?",
-    a: "Securely by card, Apple Pay, Google Pay or PayPal. Our order process is conducted by our online reseller Paddle.com, the Merchant of Record for all our orders — so taxes and invoices are handled for you.",
+    a: "Securely by card, Apple Pay or Google Pay through our payment processor. Your card details never touch our servers, and your receipt and invoice are emailed to you automatically.",
   },
   {
     q: "Do I need to be technical?",
@@ -94,7 +94,9 @@ const faqs = [
 ];
 
 function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
-  const { openCheckout, loading, error, needsAuth } = useCheckout();
+  const { openCheckout, closeCheckout, loading, error, needsAuth, isOpen, checkoutElement } =
+    useCheckout();
+
 
   return (
     <article
