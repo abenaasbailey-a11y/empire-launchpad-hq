@@ -5,7 +5,12 @@ import {
   getStripeErrorMessage,
 } from "@/lib/stripe.server";
 
-type CheckoutSessionResult = { clientSecret: string } | { error: string };
+type CheckoutSessionResult =
+  | { clientSecret: string }
+  | { error: string; existingSubscription?: boolean };
+
+/** Subscription states that mean the member is already being billed. */
+const LIVE_SUB_STATUSES = new Set(["active", "trialing", "past_due", "unpaid", "paused"]);
 
 /**
  * Resolves (or creates) the Stripe Customer for a member so later reads —
