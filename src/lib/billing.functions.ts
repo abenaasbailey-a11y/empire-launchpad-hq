@@ -35,12 +35,21 @@ export const getMyBilling = createServerFn({ method: "GET" })
 /** Creates a hosted billing portal link so the member can cancel or update their card. */
 export const createBillingPortalLink = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { environment: "sandbox" | "live" }) => ({
+  .inputValidator((input: { environment: "sandbox" | "live"; returnUrl?: string }) => ({
     environment: input?.environment === "live" ? ("live" as const) : ("sandbox" as const),
+    returnUrl:
+      typeof input?.returnUrl === "string" && /^https?:\/\//.test(input.returnUrl)
+        ? input.returnUrl.slice(0, 500)
+        : undefined,
   }))
   .handler(async ({ data, context }): Promise<{ url: string }> => {
     const { openBillingPortal } = await import("@/lib/billing.server");
-    return openBillingPortal(context.supabase, context.userId, data.environment);
+    return openBillingPortal(
+      context.supabase,
+      context.userId,
+      data.environment,
+      data.returnUrl,
+    );
   });
 
 /** Looks up a just-completed order by its payment reference so the success page can prefill intake. */

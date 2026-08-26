@@ -57,7 +57,11 @@ export function BillingPanel() {
     setOpening(true);
     setError(null);
     try {
-      const { url } = await createPortal({ data: { environment } });
+      const returnUrl =
+        typeof window === "undefined" ? undefined : `${window.location.origin}/dashboard`;
+      const { url } = await createPortal({
+        data: { environment, ...(returnUrl ? { returnUrl } : {}) },
+      });
       window.open(url, "_blank", "noopener,noreferrer");
     } catch (err) {
       setError(
