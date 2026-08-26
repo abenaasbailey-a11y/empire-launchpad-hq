@@ -1,6 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
 import { verifyWebhook, type StripeEnv } from "@/lib/stripe.server";
+import {
+  formatDate,
+  formatMoney,
+  planNameFromPriceId,
+  resolveRecipient,
+  sendCancellationScheduled,
+  sendMembershipEnded,
+  sendMembershipReceipt,
+  sendPaymentFailed,
+} from "@/lib/membership-emails.server";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let _supabase: any = null;
@@ -88,7 +98,7 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function upsertSubscription(subscription: any, env: StripeEnv) {
+async function upsertSubscription(subscription: any, env: StripeEnv, eventId: string) {
   const userId = subscription.metadata?.userId;
   if (!userId) {
     console.error("Payments webhook: no userId in subscription metadata");
@@ -100,6 +110,13 @@ async function upsertSubscription(subscription: any, env: StripeEnv) {
   const productId = typeof product === "string" ? product : (product?.id ?? null);
   const periodStart = item?.current_period_start ?? subscription.current_period_start;
   const periodEnd = item?.current_period_end ?? subscription.current_period_end;
+
+  const { data: previous } = await getSupabase()
+    .from("subscriptions")
+    .select("cancel_at_period_end, status")
+    .eq("paddle_subscription_id", subscription.id)
+    .eq("environment", env)
+    .maybeSingle();
 
   await getSupabase()
     .from("subscriptions")
@@ -122,13 +139,27 @@ async function upsertSubscription(subscription: any, env: StripeEnv) {
       },
       { onConflict: "paddle_subscription_id" },
     );
+
+  // Notify once, on the transition into "cancels at period end".
+  if (previous && !previous.cancel_at_period_end && subscription.cancel_at_period_end) {
+    const recipient = await resolveRecipient({ userId });
+    if (recipient) {
+      await sendCancellationScheduled({
+        recipient,
+        env,
+        eventId,
+        planName: planNameFromPriceId(priceId),
+        accessUntil: formatDate(periodEnd),
+      });
+    }
+  }
 }
 
 // Business rule: a cancelled member keeps access until the end of the period
 // they already paid for, so we preserve `current_period_end` and only mark the
 // subscription canceled. Entitlement checks treat a future period end as live.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleSubscriptionDeleted(subscription: any, env: StripeEnv) {
+async function handleSubscriptionDeleted(subscription: any, env: StripeEnv, eventId: string) {
   const item = subscription.items?.data?.[0];
   const periodEnd =
     item?.current_period_end ?? subscription.current_period_end ?? subscription.ended_at;
@@ -142,17 +173,61 @@ async function handleSubscriptionDeleted(subscription: any, env: StripeEnv) {
     })
     .eq("paddle_subscription_id", subscription.id)
     .eq("environment", env);
+
+  const userId = subscription.metadata?.userId ?? null;
+  const recipient = await resolveRecipient({ userId });
+  if (!recipient) return;
+
+  const planName = planNameFromPriceId(externalPriceId(item?.price));
+  const stillPaidFor = periodEnd ? periodEnd * 1000 > Date.now() : false;
+
+  // Access runs to the end of the paid period, so tell the member which of the
+  // two situations they are in rather than announcing an end that has not come.
+  if (stillPaidFor) {
+    await sendCancellationScheduled({
+      recipient,
+      env,
+      eventId,
+      planName,
+      accessUntil: formatDate(periodEnd),
+    });
+  } else {
+    await sendMembershipEnded({ recipient, env, eventId, planName });
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleInvoicePaymentFailed(invoice: any, env: StripeEnv) {
+async function handleInvoicePaymentFailed(invoice: any, env: StripeEnv, eventId: string) {
   const subscriptionId = invoiceSubscriptionId(invoice);
   if (!subscriptionId) return;
+  const { data: sub } = await getSupabase()
+    .from("subscriptions")
+    .select("user_id, price_id")
+    .eq("paddle_subscription_id", subscriptionId)
+    .eq("environment", env)
+    .maybeSingle();
+
   await getSupabase()
     .from("subscriptions")
     .update({ status: "past_due", updated_at: new Date().toISOString() })
     .eq("paddle_subscription_id", subscriptionId)
     .eq("environment", env);
+
+  const recipient = await resolveRecipient({
+    email: invoice.customer_email ?? null,
+    userId: sub?.user_id ?? null,
+  });
+  if (!recipient) return;
+
+  await sendPaymentFailed({
+    recipient,
+    env,
+    eventId,
+    planName: planNameFromPriceId(sub?.price_id ?? null),
+    amount: formatMoney(invoice.amount_due ?? null, invoice.currency ?? "usd"),
+    retryOn: formatDate(invoice.next_payment_attempt ?? null),
+    invoiceUrl: invoice.hosted_invoice_url ?? null,
+  });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -174,7 +249,7 @@ function invoiceSubscriptionId(invoice: any): string | null {
  * moved back to active with its new period after a successful retry.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleInvoicePaid(invoice: any, env: StripeEnv) {
+async function handleInvoicePaid(invoice: any, env: StripeEnv, eventId: string) {
   const subscriptionId = invoiceSubscriptionId(invoice);
   if (!subscriptionId) return;
 
@@ -201,6 +276,25 @@ async function handleInvoicePaid(invoice: any, env: StripeEnv) {
 
   const amount = typeof invoice.amount_paid === "number" ? invoice.amount_paid : null;
   if (!amount) return; // $0 invoices (trials, full credit) are not purchases.
+
+  const priceIdForEmail = sub?.price_id ?? externalPriceId(line?.price) ?? null;
+  const recipient = await resolveRecipient({
+    email: invoice.customer_email ?? null,
+    userId: sub?.user_id ?? null,
+  });
+  if (recipient) {
+    await sendMembershipReceipt({
+      recipient,
+      env,
+      eventId,
+      planName: planNameFromPriceId(priceIdForEmail),
+      amount: formatMoney(amount, invoice.currency ?? "usd"),
+      paidOn: formatDate(invoice.status_transitions?.paid_at ?? invoice.created ?? null),
+      renewsOn: formatDate(period?.end ?? null),
+      invoiceUrl: invoice.hosted_invoice_url ?? null,
+      isRenewal: invoice.billing_reason !== "subscription_create",
+    });
+  }
 
   await getSupabase()
     .from("orders")
@@ -237,7 +331,13 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
         }
         const env: StripeEnv = rawEnv;
         try {
-          const event = await verifyWebhook(request, env);
+          const event = (await verifyWebhook(request, env)) as {
+            id?: string;
+            type: string;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            data: { object: any };
+          };
+          const eventId = event.id ?? crypto.randomUUID();
           switch (event.type) {
             case "checkout.session.completed":
             case "checkout.session.async_payment_succeeded":
@@ -245,17 +345,17 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
               break;
             case "customer.subscription.created":
             case "customer.subscription.updated":
-              await upsertSubscription(event.data.object, env);
+              await upsertSubscription(event.data.object, env, eventId);
               break;
             case "customer.subscription.deleted":
-              await handleSubscriptionDeleted(event.data.object, env);
+              await handleSubscriptionDeleted(event.data.object, env, eventId);
               break;
             case "invoice.paid":
             case "invoice.payment_succeeded":
-              await handleInvoicePaid(event.data.object, env);
+              await handleInvoicePaid(event.data.object, env, eventId);
               break;
             case "invoice.payment_failed":
-              await handleInvoicePaymentFailed(event.data.object, env);
+              await handleInvoicePaymentFailed(event.data.object, env, eventId);
               break;
             default:
               console.log("Unhandled payments event:", event.type);
