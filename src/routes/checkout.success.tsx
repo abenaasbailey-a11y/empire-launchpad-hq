@@ -51,6 +51,8 @@ const SERVICE_BY_PRICE: Record<string, string> = {
  */
 const MEMBERSHIP_PRICES = [
   "empire_member_monthly",
+  "empire_elite_monthly",
+  "empire_vip_monthly",
   "empire_membership_monthly",
   "empire_membership_annual",
 ];
