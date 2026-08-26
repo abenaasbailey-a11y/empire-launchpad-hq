@@ -1,13 +1,28 @@
 import { Link } from "@tanstack/react-router";
-import { Check, Mail, Sparkles, Compass, Vault, Crown } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { Check, Loader2, Mail, Sparkles, Compass, Vault, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section } from "@/components/landing/Section";
+import {
+  getMyOnboarding,
+  setMyOnboardingStep,
+  type OnboardingStepKey,
+} from "@/lib/onboarding.functions";
 
 const headerLink =
   "text-[0.65rem] tracking-[0.2em] uppercase transition-colors hover:text-gold/80";
 
-const steps = [
+const steps: {
+  key: OnboardingStepKey;
+  icon: typeof Compass;
+  title: string;
+  body: string;
+  cta: string;
+  to: string;
+}[] = [
   {
+    key: "victoria",
     icon: Compass,
     title: "Meet Victoria",
     body: "Tell Victoria your offer, your audience and your goals. She drafts content, pricing and plans in your voice — 24/7.",
@@ -15,6 +30,7 @@ const steps = [
     to: "/meet-victoria",
   },
   {
+    key: "prompt-vault",
     icon: Vault,
     title: "Browse the Prompt Vault",
     body: "56 ready-to-run prompts for marketing, grants, résumés and content. Copy, paste and let the AI do the heavy lifting.",
@@ -22,6 +38,7 @@ const steps = [
     to: "/prompt-vault",
   },
   {
+    key: "opportunities",
     icon: Sparkles,
     title: "Find your next move",
     body: "The Opportunity Center matches side hustles to your skills and goals — with a Gemini-powered recommendation engine.",
