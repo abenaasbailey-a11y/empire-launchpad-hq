@@ -1,12 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
+import { SERVICE_NAMES } from "@/lib/services-catalog";
 
-const VALID_SERVICES = [
-  "Business Plan",
-  "Brand Bio & Positioning",
-  "Social Media Content Package",
-  "Email Marketing Sequence",
-  "Custom / Not Sure",
-] as const;
 
 /**
  * Captures a service request from the public Services page.
@@ -35,7 +29,7 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
       }
 
       const service_type = String(input?.service_type ?? "").trim();
-      if (!VALID_SERVICES.includes(service_type as (typeof VALID_SERVICES)[number])) {
+      if (!(SERVICE_NAMES as readonly string[]).includes(service_type)) {
         throw new Error("Please choose a service.");
       }
 
@@ -91,4 +85,4 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const servicesList = VALID_SERVICES;
+export { SERVICE_NAMES as servicesList } from "@/lib/services-catalog";
