@@ -5,6 +5,7 @@ import { template as membershipCancelScheduled } from './membership-cancel-sched
 import { template as membershipEnded } from './membership-ended'
 import { template as membershipPaymentFailed } from './membership-payment-failed'
 import { template as serviceRequestConfirmation } from './service-request-confirmation'
+import { template as onboardingReminder } from './onboarding-reminder'
 
 export interface TemplateEntry {
   component: ComponentType<any>
