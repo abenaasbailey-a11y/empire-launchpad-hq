@@ -9,7 +9,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Section } from "@/components/landing/Section";
 import { useIsAdmin } from "@/hooks/use-admin";
-import { PROMPT_CATEGORIES, categoryName, type VaultPrompt } from "@/lib/prompt-vault";
+import {
+  MIN_TIER_OPTIONS,
+  PROMPT_CATEGORIES,
+  categoryName,
+  minTierLabel,
+  type VaultPrompt,
+} from "@/lib/prompt-vault";
 
 export const Route = createFileRoute("/_authenticated/prompt-vault-admin")({
   component: PromptVaultAdminPage,
@@ -27,6 +33,7 @@ const emptyDraft = {
   category: PROMPT_CATEGORIES[0]!.slug,
   description: "",
   body: "",
+  min_tier: "member",
 };
 
 function slugify(value: string) {
@@ -49,7 +56,7 @@ function PromptVaultAdminPage() {
       const { data, error } = await supabase
         .from("prompts")
         .select(
-          "id, slug, title, category, description, body, is_featured, is_published, sort_order, save_count, copy_count",
+          "id, slug, title, category, description, body, is_featured, is_published, sort_order, save_count, copy_count, min_tier",
         )
         .order("category", { ascending: true })
         .order("sort_order", { ascending: true });
@@ -70,6 +77,7 @@ function PromptVaultAdminPage() {
         category: draft.category,
         description: draft.description.trim(),
         body: draft.body.trim(),
+        min_tier: draft.min_tier,
       };
       if (!payload.title || !payload.description || !payload.body) {
         throw new Error("Title, description and prompt text are all required.");
@@ -190,6 +198,23 @@ function PromptVaultAdminPage() {
                 ))}
               </select>
             </div>
+          </div>
+          <div className="mt-4 grid gap-1.5 md:max-w-xs">
+            <Label htmlFor="p-tier" className="text-xs">
+              Who can open it
+            </Label>
+            <select
+              id="p-tier"
+              value={draft.min_tier}
+              onChange={(e) => setDraft({ ...draft, min_tier: e.target.value })}
+              className="border-input bg-background h-9 rounded-md border px-3 text-sm"
+            >
+              {MIN_TIER_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mt-4 grid gap-1.5">
             <Label htmlFor="p-desc" className="text-xs">

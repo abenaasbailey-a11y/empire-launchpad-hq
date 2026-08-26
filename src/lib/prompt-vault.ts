@@ -11,10 +11,22 @@ export interface VaultPrompt {
   description: string;
   body: string;
   is_featured: boolean;
+  /** Lowest membership tier that may open this prompt. */
+  min_tier?: string;
   is_published: boolean;
   sort_order: number;
   copy_count: number;
   save_count: number;
+}
+
+export const MIN_TIER_OPTIONS = [
+  { value: "member", label: "All members" },
+  { value: "elite", label: "Elite and VIP only" },
+  { value: "vip", label: "VIP only" },
+] as const;
+
+export function minTierLabel(value: string | null | undefined): string {
+  return MIN_TIER_OPTIONS.find((o) => o.value === (value ?? "member"))?.label ?? "All members";
 }
 
 export interface CategoryDef {
