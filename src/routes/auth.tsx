@@ -71,12 +71,14 @@ function AuthPage() {
     };
   }, [navigate, next]);
 
-  function goAfterAuth() {
+  function goAfterAuth(signup = false) {
     if (next) {
       window.location.replace(next);
       return;
     }
-    void navigate({ to: "/dashboard", replace: true });
+    // New signups land on the branded welcome page; returning sign-ins go
+    // straight to the dashboard.
+    void navigate({ to: signup ? "/welcome" : "/dashboard", replace: true });
   }
 
   async function handleSubmit(event: React.FormEvent) {
