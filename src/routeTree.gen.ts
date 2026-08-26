@@ -30,6 +30,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolkitRouteImport } from './routes/toolkit'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRouteImport } from './routes/[.well-known]/apple-developer-merchantid-domain-association'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -151,6 +152,11 @@ const ToolkitRoute = ToolkitRouteImport.update({
   path: '/toolkit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char91DotmcpChar93ListToolsRoute =
   Char91DotmcpChar93ListToolsRouteImport.update({
     id: '/.mcp/list-tools',
@@ -264,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
+  '/welcome': typeof WelcomeRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/apple-developer-merchantid-domain-association': typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -301,6 +308,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
+  '/welcome': typeof WelcomeRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/apple-developer-merchantid-domain-association': typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -341,6 +349,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
+  '/welcome': typeof WelcomeRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/apple-developer-merchantid-domain-association': typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -381,6 +390,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
+    | '/welcome'
     | '/.mcp/list-tools'
     | '/.well-known/apple-developer-merchantid-domain-association'
     | '/.well-known/oauth-protected-resource'
@@ -418,6 +428,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
+    | '/welcome'
     | '/.mcp/list-tools'
     | '/.well-known/apple-developer-merchantid-domain-association'
     | '/.well-known/oauth-protected-resource'
@@ -457,6 +468,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
+    | '/welcome'
     | '/.mcp/list-tools'
     | '/.well-known/apple-developer-merchantid-domain-association'
     | '/.well-known/oauth-protected-resource'
@@ -497,6 +509,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ToolkitRoute: typeof ToolkitRoute
+  WelcomeRoute: typeof WelcomeRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute: typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
@@ -656,6 +669,13 @@ declare module '@tanstack/react-router' {
       path: '/toolkit'
       fullPath: '/toolkit'
       preLoaderRoute: typeof ToolkitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.mcp/list-tools': {
@@ -826,6 +846,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ToolkitRoute: ToolkitRoute,
+  WelcomeRoute: WelcomeRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute:
     Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute,

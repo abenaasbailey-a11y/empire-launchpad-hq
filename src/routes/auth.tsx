@@ -71,12 +71,14 @@ function AuthPage() {
     };
   }, [navigate, next]);
 
-  function goAfterAuth() {
+  function goAfterAuth(signup = false) {
     if (next) {
       window.location.replace(next);
       return;
     }
-    void navigate({ to: "/dashboard", replace: true });
+    // New signups land on the branded welcome page; returning sign-ins go
+    // straight to the dashboard.
+    void navigate({ to: signup ? "/welcome" : "/dashboard", replace: true });
   }
 
   async function handleSubmit(event: React.FormEvent) {
@@ -113,7 +115,7 @@ function AuthPage() {
         }
         if (data.session) {
           trackSignup("email");
-          goAfterAuth();
+          goAfterAuth(true);
           return;
         }
         // Signups are auto-confirmed, so sign the new member straight in.
@@ -128,7 +130,7 @@ function AuthPage() {
           return;
         }
         trackSignup("email");
-        goAfterAuth();
+        goAfterAuth(true);
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email: parsed.data.email,
@@ -160,7 +162,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    goAfterAuth();
+    goAfterAuth(mode === "signup");
   }
 
   return (
