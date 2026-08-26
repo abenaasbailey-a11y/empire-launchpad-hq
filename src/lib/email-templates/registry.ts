@@ -26,4 +26,5 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'membership-ended': membershipEnded,
   'membership-payment-failed': membershipPaymentFailed,
   'service-request-confirmation': serviceRequestConfirmation,
+  'onboarding-reminder': onboardingReminder,
 }
