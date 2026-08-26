@@ -130,36 +130,112 @@ export function WelcomePage() {
           </div>
         </div>
 
-        {/* Next steps */}
+        {/* Next steps checklist */}
         <div className="mx-auto mt-10 max-w-3xl">
           <p className="eyebrow eyebrow-blush text-center">Your first three moves</p>
+
+          {tracked ? (
+            <div className="border-gold/25 bg-card/40 mt-6 rounded-2xl border p-5 md:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-muted-foreground text-[0.65rem] tracking-[0.24em] uppercase">
+                  {doneCount === steps.length
+                    ? "Onboarding complete"
+                    : `Step ${Math.min(doneCount + 1, steps.length)} of ${steps.length}`}
+                </span>
+                <span className="text-gold text-sm">{percent}% complete</span>
+              </div>
+              <div
+                className="bg-muted mt-3 h-1.5 w-full overflow-hidden rounded-full"
+                role="progressbar"
+                aria-valuenow={percent}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Onboarding progress"
+              >
+                <div
+                  className="bg-gold h-full rounded-full transition-all duration-500"
+                  style={{ width: `${percent}%` }}
+                />
+              </div>
+              <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+                {nextStep
+                  ? `Your progress is saved — pick back up with “${nextStep.title}”.`
+                  : "You've finished all three moves. Your dashboard is where the building continues."}
+              </p>
+            </div>
+          ) : null}
+
           <div className="mt-6 grid gap-4">
             {steps.map((step, i) => {
               const Icon = step.icon;
+              const isDone = completed.includes(step.key);
+              const isNext = tracked && nextStep?.key === step.key;
+              const isSaving =
+                toggleStep.isPending && toggleStep.variables?.step === step.key;
               return (
                 <div
-                  key={step.title}
-                  className="border-border/60 bg-card/40 hover:border-gold/40 group rounded-2xl border p-6 transition-colors"
+                  key={step.key}
+                  className={`bg-card/40 hover:border-gold/40 group rounded-2xl border p-6 transition-colors ${
+                    isDone ? "border-gold/40" : isNext ? "border-gold/30" : "border-border/60"
+                  }`}
                 >
                   <div className="flex items-start gap-4">
-                    <div className="bg-gold/10 text-gold flex h-11 w-11 shrink-0 items-center justify-center rounded-full">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    <div
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
+                        isDone ? "bg-gold text-background" : "bg-gold/10 text-gold"
+                      }`}
+                    >
+                      {isDone ? (
+                        <Check className="h-5 w-5" aria-hidden="true" />
+                      ) : (
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      )}
                     </div>
                     <div className="flex-1 text-left">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="text-muted-foreground text-[0.65rem] tracking-[0.24em] uppercase">
                           Step {i + 1}
                         </span>
+                        {isDone ? (
+                          <span className="text-gold text-[0.65rem] tracking-[0.24em] uppercase">
+                            Done
+                          </span>
+                        ) : isNext ? (
+                          <span className="text-blush text-[0.65rem] tracking-[0.24em] uppercase">
+                            Continue here
+                          </span>
+                        ) : null}
                       </div>
-                      <h2 className="font-display mt-1 text-xl font-light md:text-2xl">
+                      <h2
+                        className={`font-display mt-1 text-xl font-light md:text-2xl ${
+                          isDone ? "text-muted-foreground line-through decoration-gold/50" : ""
+                        }`}
+                      >
                         {step.title}
                       </h2>
                       <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                         {step.body}
                       </p>
-                      <Button variant="gold" size="sm" asChild className="mt-4">
-                        <Link to={step.to}>{step.cta}</Link>
-                      </Button>
+                      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+                        <Button variant="gold" size="sm" asChild>
+                          <Link to={step.to}>{step.cta}</Link>
+                        </Button>
+                        {tracked ? (
+                          <Button
+                            variant="lux"
+                            size="sm"
+                            disabled={isSaving}
+                            onClick={() =>
+                              toggleStep.mutate({ step: step.key, done: !isDone })
+                            }
+                          >
+                            {isSaving ? (
+                              <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+                            ) : null}
+                            {isDone ? "Mark as not done" : "Mark complete"}
+                          </Button>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>
