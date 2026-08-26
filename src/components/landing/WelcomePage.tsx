@@ -162,6 +162,31 @@ export function WelcomePage() {
                   ? `Your progress is saved — pick back up with “${nextStep.title}”.`
                   : "You've finished all three moves. Your dashboard is where the building continues."}
               </p>
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+                {nextStep ? (
+                  <Button variant="gold" size="sm" asChild>
+                    <Link to={nextStep.to}>
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      Resume where I left off
+                    </Link>
+                  </Button>
+                ) : null}
+                {doneCount > 0 ? (
+                  <Button
+                    variant="lux"
+                    size="sm"
+                    disabled={resetProgress.isPending}
+                    onClick={() => resetProgress.mutate()}
+                  >
+                    {resetProgress.isPending ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+                    ) : (
+                      <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+                    )}
+                    Reset onboarding
+                  </Button>
+                ) : null}
+              </div>
             </div>
           ) : null}
 
