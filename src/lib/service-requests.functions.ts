@@ -1,12 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
+import { SERVICE_NAMES } from "@/lib/services-catalog";
 
-const VALID_SERVICES = [
-  "Business Plan",
-  "Brand Bio & Positioning",
-  "Social Media Content Package",
-  "Email Marketing Sequence",
-  "Custom / Not Sure",
-] as const;
+const VALID_SERVICES: readonly string[] = SERVICE_NAMES;
+
 
 /**
  * Captures a service request from the public Services page.
