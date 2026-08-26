@@ -115,7 +115,7 @@ function AuthPage() {
         }
         if (data.session) {
           trackSignup("email");
-          goAfterAuth();
+          goAfterAuth(true);
           return;
         }
         // Signups are auto-confirmed, so sign the new member straight in.
@@ -130,7 +130,7 @@ function AuthPage() {
           return;
         }
         trackSignup("email");
-        goAfterAuth();
+        goAfterAuth(true);
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email: parsed.data.email,
