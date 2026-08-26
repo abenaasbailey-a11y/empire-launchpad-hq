@@ -202,117 +202,101 @@ export function ServicesPage() {
             Start your project
           </h2>
 
-          {status === "sent" ? (
-            <div className="mt-6">
-              <p className="text-foreground text-sm leading-relaxed">
-                Your request is in. We&apos;ll email you a fixed quote and a
-                secure invoice within one business day. Check your inbox (and
-                spam folder) for a message from{" "}
-                <span className="text-gold">support@yourempireconcierge.com</span>.
-              </p>
-              <div className="mt-6">
-                <Button variant="lux" asChild>
-                  <Link to="/grants-for-women">Browse grants while you wait</Link>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={onSubmit} className="mt-6 space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="svc-name" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                    Your name
-                  </label>
-                  <input id="svc-name" name="name" required className={`${inputClass} mt-2`} placeholder="Abenaa Bailey" />
-                </div>
-                <div>
-                  <label htmlFor="svc-email" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                    Email
-                  </label>
-                  <input
-                    id="svc-email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    className={`${inputClass} mt-2`}
-                    placeholder="you@email.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="svc-phone" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                    Phone (optional)
-                  </label>
-                  <input id="svc-phone" name="phone" className={`${inputClass} mt-2`} placeholder="(555) 555-5555" />
-                </div>
-                <div>
-                  <label htmlFor="svc-business" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                    Business name (optional)
-                  </label>
-                  <input id="svc-business" name="business_name" className={`${inputClass} mt-2`} placeholder="Her Empire Era LLC" />
-                </div>
-              </div>
-
+          <form onSubmit={onSubmit} className="mt-6 space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="svc-type" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                  Service
+                <label htmlFor="svc-name" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                  Your name
                 </label>
-                <select
-                  id="svc-type"
-                  name="service_type"
-                  value={service}
-                  onChange={(e) => setService(e.target.value)}
-                  className={`${inputClass} mt-2`}
-                >
-                  {SERVICE_NAMES.map((name) => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+                <input id="svc-name" name="name" required className={`${inputClass} mt-2`} placeholder="Abenaa Bailey" />
               </div>
-
               <div>
-                <label htmlFor="svc-budget" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                  Budget (optional)
+                <label htmlFor="svc-email" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                  Email
                 </label>
-                <input id="svc-budget" name="budget" className={`${inputClass} mt-2`} placeholder="$350" />
-              </div>
-
-              <div>
-                <label htmlFor="svc-details" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-                  Project details
-                </label>
-                <textarea
-                  id="svc-details"
-                  name="details"
+                <input
+                  id="svc-email"
+                  name="email"
+                  type="email"
                   required
-                  rows={5}
-                  className={`${inputClass} mt-2 resize-y`}
-                  placeholder="Tell us about your business, the grant or document you need, and any deadline."
+                  autoComplete="email"
+                  className={`${inputClass} mt-2`}
+                  placeholder="you@email.com"
                 />
               </div>
+            </div>
 
-              {error ? <p className="text-destructive text-sm">{error}</p> : null}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="svc-phone" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                  Phone (optional)
+                </label>
+                <input id="svc-phone" name="phone" className={`${inputClass} mt-2`} placeholder="(555) 555-5555" />
+              </div>
+              <div>
+                <label htmlFor="svc-business" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                  Business name (optional)
+                </label>
+                <input id="svc-business" name="business_name" className={`${inputClass} mt-2`} placeholder="Her Empire Era LLC" />
+              </div>
+            </div>
 
-              <Button type="submit" variant="gold" size="xl" className="w-full" disabled={status === "sending"}>
-                {status === "sending" ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending
-                  </>
-                ) : (
-                  "Send my request"
-                )}
-              </Button>
-              <p className="text-muted-foreground text-center text-xs leading-relaxed">
-                No payment is taken on this page. You&apos;ll receive a fixed
-                quote and a secure invoice by email first.
-              </p>
-            </form>
-          )}
+            <div>
+              <label htmlFor="svc-type" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                Service
+              </label>
+              <select
+                id="svc-type"
+                name="service_type"
+                value={service}
+                onChange={(e) => setService(e.target.value)}
+                className={`${inputClass} mt-2`}
+              >
+                {SERVICE_NAMES.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="svc-budget" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                Budget (optional)
+              </label>
+              <input id="svc-budget" name="budget" className={`${inputClass} mt-2`} placeholder="$350" />
+            </div>
+
+            <div>
+              <label htmlFor="svc-details" className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                Project details
+              </label>
+              <textarea
+                id="svc-details"
+                name="details"
+                required
+                rows={5}
+                className={`${inputClass} mt-2 resize-y`}
+                placeholder="Tell us about your business, the grant or document you need, and any deadline."
+              />
+            </div>
+
+            {error ? <p className="text-destructive text-sm">{error}</p> : null}
+
+            <Button type="submit" variant="gold" size="xl" className="w-full" disabled={status === "sending"}>
+              {status === "sending" ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending
+                </>
+              ) : (
+                "Send my request"
+              )}
+            </Button>
+            <p className="text-muted-foreground text-center text-xs leading-relaxed">
+              No payment is taken on this page. You'll receive a fixed
+              quote and a secure invoice by email first.
+            </p>
+          </form>
         </div>
       </Section>
 
