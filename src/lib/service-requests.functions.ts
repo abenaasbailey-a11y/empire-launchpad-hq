@@ -31,7 +31,7 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
       }
 
       const service_type = String(input?.service_type ?? "").trim();
-      if (!VALID_SERVICES.includes(service_type as (typeof VALID_SERVICES)[number])) {
+      if (!VALID_SERVICES.includes(service_type)) {
         throw new Error("Please choose a service.");
       }
 
