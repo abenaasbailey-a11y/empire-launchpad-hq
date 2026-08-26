@@ -82,6 +82,24 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
             })
           : undefined;
 
+      // Guard against double billing: an existing member must change plans in
+      // the billing portal (pro-rated) instead of buying a second subscription.
+      if (isRecurring && customerId) {
+        const existing = await stripe.subscriptions.list({
+          customer: customerId,
+          status: "all",
+          limit: 10,
+        });
+        const live = existing.data.find((sub) => LIVE_SUB_STATUSES.has(sub.status));
+        if (live) {
+          return {
+            error:
+              "You already have an active membership. Open Billing & account on your dashboard to change or cancel your plan — that way you are never charged twice.",
+            existingSubscription: true,
+          };
+        }
+      }
+
       let productDescription: string | undefined;
       if (!isRecurring) {
         const productId =
