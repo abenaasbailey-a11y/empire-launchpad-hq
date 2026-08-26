@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ExternalLink, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section, SectionHeading } from "@/components/landing/Section";
+import { GrantAssistantPanel } from "@/components/landing/GrantAssistantPanel";
 import {
   GRANTS,
   GRANT_CATEGORIES,
