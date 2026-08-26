@@ -212,7 +212,7 @@ async function handleInvoicePaid(invoice: any, env: StripeEnv) {
         paddle_customer_id:
           typeof invoice.customer === "string" ? invoice.customer : (invoice.customer?.id ?? null),
         product_id: sub?.product_id ?? null,
-        price_id: externalPriceId(line?.pricing?.price_details ?? line?.price) ?? sub?.price_id ?? null,
+        price_id: sub?.price_id ?? externalPriceId(line?.price) ?? null,
         quantity: line?.quantity ?? 1,
         amount_cents: amount,
         currency: (invoice.currency ?? "usd").toUpperCase(),
@@ -249,6 +249,10 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
               break;
             case "customer.subscription.deleted":
               await handleSubscriptionDeleted(event.data.object, env);
+              break;
+            case "invoice.paid":
+            case "invoice.payment_succeeded":
+              await handleInvoicePaid(event.data.object, env);
               break;
             case "invoice.payment_failed":
               await handleInvoicePaymentFailed(event.data.object, env);
