@@ -78,6 +78,13 @@ export function WelcomePage() {
     },
   });
 
+  const resetProgress = useMutation({
+    mutationFn: () => clearProgress(),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["onboarding-progress"], result);
+    },
+  });
+
   const tracked = !progress.isError;
   const completed = progress.data?.completed ?? [];
   const doneCount = completed.length;
