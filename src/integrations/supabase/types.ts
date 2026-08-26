@@ -259,6 +259,7 @@ export type Database = {
           is_featured: boolean
           is_free: boolean
           is_published: boolean
+          min_tier: string
           save_count: number
           slug: string
           sort_order: number
@@ -275,6 +276,7 @@ export type Database = {
           is_featured?: boolean
           is_free?: boolean
           is_published?: boolean
+          min_tier?: string
           save_count?: number
           slug: string
           sort_order?: number
@@ -291,6 +293,7 @@ export type Database = {
           is_featured?: boolean
           is_free?: boolean
           is_published?: boolean
+          min_tier?: string
           save_count?: number
           slug?: string
           sort_order?: number
@@ -515,13 +518,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      consume_ai_run: { Args: { free_limit?: number }; Returns: Json }
+      consume_ai_run:
+        | { Args: { free_limit?: number }; Returns: Json }
+        | { Args: { check_env?: string; free_limit?: number }; Returns: Json }
       has_active_subscription: {
         Args: { check_env?: string; user_uuid: string }
         Returns: boolean
       }
       has_any_active_subscription: {
         Args: { user_uuid: string }
+        Returns: boolean
+      }
+      has_env_membership: {
+        Args: { check_env: string; user_uuid: string }
         Returns: boolean
       }
       has_role: {
@@ -531,7 +540,15 @@ export type Database = {
         }
         Returns: boolean
       }
-      my_entitlement: { Args: { free_limit?: number }; Returns: Json }
+      membership_rank: {
+        Args: { check_env: string; user_uuid: string }
+        Returns: number
+      }
+      my_entitlement:
+        | { Args: { free_limit?: number }; Returns: Json }
+        | { Args: { check_env?: string; free_limit?: number }; Returns: Json }
+      plan_tier_rank: { Args: { _price_id: string }; Returns: number }
+      tier_name: { Args: { _rank: number }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "member"
