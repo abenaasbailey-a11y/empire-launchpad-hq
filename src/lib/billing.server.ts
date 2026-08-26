@@ -14,6 +14,7 @@ export async function openBillingPortal(
   supabase: AnySupabase,
   userId: string,
   environment: StripeEnv,
+  returnUrl?: string,
 ): Promise<{ url: string }> {
   const { data: subs } = await supabase
     .from("subscriptions")
@@ -43,7 +44,10 @@ export async function openBillingPortal(
 
   try {
     const stripe = createStripeClient(environment);
-    const portal = await stripe.billingPortal.sessions.create({ customer: customerId });
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      ...(returnUrl ? { return_url: returnUrl } : {}),
+    });
     return { url: portal.url };
   } catch (error) {
     throw new Error(getStripeErrorMessage(error));
