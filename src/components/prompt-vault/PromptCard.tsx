@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { GoldRule } from "@/components/landing/Section";
 import { runVaultPrompt } from "@/lib/prompt-vault.functions";
+import { getStripeEnvironmentSafe } from "@/lib/stripe";
 import {
   categoryName,
   extractFields,
@@ -59,7 +60,9 @@ export function PromptCard({
     setRunning(true);
     setAiText("");
     try {
-      const result = await runPrompt({ data: { prompt: filled } });
+      const result = await runPrompt({
+        data: { prompt: filled, environment: getStripeEnvironmentSafe() },
+      });
       if (result.error) toast.error(result.error);
       else {
         setAiText(result.text);
