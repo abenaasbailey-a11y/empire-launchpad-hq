@@ -60,6 +60,7 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }): Promise<{ ok: boolean }> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
 
     // When the request follows a paid checkout, attach it to that order (and the
     // buyer's account) so admins see payment and project details together.
@@ -75,13 +76,42 @@ export const captureServiceRequest = createServerFn({ method: "POST" })
       user_id = order?.user_id ?? null;
     }
 
-    const { error } = await supabaseAdmin
+    const insertResult = await supabaseAdmin
       .from("service_requests")
-      .insert({ ...data, order_id, user_id });
-    if (error) {
-      console.error("[services] capture failed", error.message);
+      .insert({ ...data, order_id, user_id })
+      .select("id")
+      .single();
+    if (insertResult.error) {
+      console.error("[services] capture failed", insertResult.error.message);
       throw new Error("We could not submit your request just now. Please try again.");
     }
+
+    const requestRef = `SR-${new Date().getFullYear()}-${String(
+      insertResult.data.id,
+    ).slice(0, 8).toUpperCase()}`;
+
+    // Send a confirmation email to the requester. A suppressed recipient is
+    // an expected outcome — the request is still captured.
+    try {
+      await sendTemplateEmail("service-request-confirmation", data.email, {
+        templateData: {
+          name: data.name,
+          serviceType: data.service_type,
+          businessName: data.business_name ?? undefined,
+          budget: data.budget ?? undefined,
+          requestRef,
+        },
+        idempotencyKey: `service-request-${insertResult.data.id}`,
+        replyTo: "support@yourempireconcierge.com",
+      });
+    } catch (emailErr) {
+      // Don't fail the whole submission if the email can't go out — the row is saved.
+      console.error(
+        "[services] confirmation email failed",
+        emailErr instanceof Error ? emailErr.message : String(emailErr),
+      );
+    }
+
     return { ok: true };
   });
 
