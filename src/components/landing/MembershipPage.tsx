@@ -15,6 +15,7 @@ import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { BlushRule, GoldRule, Section, SectionHeading } from "@/components/landing/Section";
 import { useCheckout } from "@/hooks/useCheckout";
 import { useEntitlement } from "@/hooks/useEntitlement";
+import { useBillingPortal } from "@/hooks/useBillingPortal";
 
 type Plan = {
   id: string;
@@ -118,9 +119,19 @@ const faqs = [
   },
 ];
 
-function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
+function PlanCard({
+  plan,
+  isMember,
+  currentTier,
+}: {
+  plan: Plan;
+  isMember: boolean;
+  currentTier: string;
+}) {
   const { openCheckout, closeCheckout, loading, error, needsAuth, isOpen, checkoutElement } =
     useCheckout();
+  const { openPortal, opening, error: portalError } = useBillingPortal();
+  const isCurrentPlan = isMember && currentTier === plan.id;
 
 
   return (
@@ -156,10 +167,30 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
           </li>
         ))}
       </ul>
-      {isMember ? (
-        <Button variant="lux" className="mt-7 w-full" asChild>
-          <Link to="/prompt-vault">You're a member — open the vault</Link>
-        </Button>
+      {isCurrentPlan ? (
+        <div className="mt-7 space-y-2">
+          <p className="border-gold/40 text-gold rounded-xl border px-4 py-3 text-center text-xs tracking-[0.14em] uppercase">
+            Your current plan
+          </p>
+          <Button variant="gold" className="w-full" asChild>
+            <Link to="/prompt-vault">Open the vault</Link>
+          </Button>
+        </div>
+      ) : isMember ? (
+        <div className="mt-7 space-y-2">
+          <Button
+            variant="lux"
+            className="w-full"
+            disabled={opening}
+            onClick={() => void openPortal()}
+          >
+            {opening ? "Opening billing…" : `Switch to ${plan.label}`}
+          </Button>
+          <p className="text-muted-foreground text-center text-[0.7rem] leading-relaxed">
+            Plan changes happen in your secure billing portal, pro-rated — you are never charged
+            twice.
+          </p>
+        </div>
       ) : isOpen ? null : (
       <Button
         variant={plan.featured ? "gold" : "lux"}
@@ -196,6 +227,7 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
         </p>
       ) : null}
       {error ? <p className="text-destructive mt-2 text-xs">{error}</p> : null}
+      {portalError ? <p className="text-destructive mt-2 text-xs">{portalError}</p> : null}
     </article>
 
   );
@@ -204,7 +236,7 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
 /** Public pricing page for the Her Empire Era digital membership. */
 export function MembershipPage() {
   const [showAll, setShowAll] = useState(false);
-  const { isMember } = useEntitlement();
+  const { isMember, tier } = useEntitlement();
   const visibleFaqs = showAll ? faqs : faqs.slice(0, 3);
 
   return (
@@ -234,7 +266,7 @@ export function MembershipPage() {
       <Section id="pricing">
         <div className="mx-auto grid max-w-md gap-6 md:max-w-none md:grid-cols-3 md:gap-7">
           {plans.map((plan) => (
-            <PlanCard key={plan.id} plan={plan} isMember={isMember} />
+            <PlanCard key={plan.id} plan={plan} isMember={isMember} currentTier={tier} />
           ))}
         </div>
         <p className="text-muted-foreground mx-auto mt-8 flex max-w-xl items-center justify-center gap-2 text-center text-xs leading-relaxed">
