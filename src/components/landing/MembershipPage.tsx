@@ -149,6 +149,12 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
             <span className="text-card-foreground/80">{i.title}</span>
           </li>
         ))}
+        {plan.bonus?.map((extra) => (
+          <li key={extra} className="flex items-start gap-2 text-sm">
+            <Check className="text-gold mt-1 h-3.5 w-3.5 shrink-0" />
+            <span className="text-card-foreground/80">{extra}</span>
+          </li>
+        ))}
       </ul>
       {isMember ? (
         <Button variant="lux" className="mt-7 w-full" asChild>
