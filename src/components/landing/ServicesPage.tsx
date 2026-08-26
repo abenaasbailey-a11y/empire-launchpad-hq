@@ -68,8 +68,9 @@ function ServiceCard({
 }
 
 export function ServicesPage() {
+  const navigate = useNavigate();
   const [service, setService] = useState<string>(SERVICES[0]!.name);
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending">("idle");
   const [error, setError] = useState<string | null>(null);
 
   const selectService = (name: string) => {
@@ -94,7 +95,7 @@ export function ServicesPage() {
           budget: String(form.get("budget") ?? "") || undefined,
         },
       });
-      setStatus("sent");
+      await navigate({ to: "/services/thank-you" });
     } catch (err) {
       setStatus("idle");
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
