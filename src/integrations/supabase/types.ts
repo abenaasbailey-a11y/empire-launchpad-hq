@@ -110,18 +110,24 @@ export type Database = {
         Row: {
           completed_steps: string[]
           created_at: string
+          reminder_count: number
+          reminder_sent_at: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
           completed_steps?: string[]
           created_at?: string
+          reminder_count?: number
+          reminder_sent_at?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
           completed_steps?: string[]
           created_at?: string
+          reminder_count?: number
+          reminder_sent_at?: string | null
           updated_at?: string
           user_id?: string
         }
