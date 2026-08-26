@@ -108,3 +108,25 @@ export const getAllBilling = createServerFn({ method: "GET" })
       requests: requests.data ?? [],
     };
   });
+
+/** Full service-request rows (including contact details) for the admin CSV export. */
+export const getServiceRequestsForExport = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabase, userId } = context;
+    const { data: isAdmin } = await supabase.rpc("has_role", {
+      _user_id: userId,
+      _role: "admin",
+    });
+    if (!isAdmin) throw new Error("Forbidden");
+
+    const { data: rows } = await supabase
+      .from("service_requests")
+      .select(
+        "id, created_at, name, email, phone, business_name, service_type, budget, status, details, order_id, paddle_transaction_id",
+      )
+      .order("created_at", { ascending: false })
+      .limit(5000);
+
+    return { rows: rows ?? [] };
+  });
