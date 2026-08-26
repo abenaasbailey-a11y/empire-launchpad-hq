@@ -4,6 +4,7 @@ import { template as membershipReceipt } from './membership-receipt'
 import { template as membershipCancelScheduled } from './membership-cancel-scheduled'
 import { template as membershipEnded } from './membership-ended'
 import { template as membershipPaymentFailed } from './membership-payment-failed'
+import { template as serviceRequestConfirmation } from './service-request-confirmation'
 
 export interface TemplateEntry {
   component: ComponentType<any>
@@ -23,4 +24,5 @@ export const TEMPLATES: Record<string, TemplateEntry> = {
   'membership-cancel-scheduled': membershipCancelScheduled,
   'membership-ended': membershipEnded,
   'membership-payment-failed': membershipPaymentFailed,
+  'service-request-confirmation': serviceRequestConfirmation,
 }
