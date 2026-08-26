@@ -138,7 +138,7 @@ export const EmpireLayout = ({ preview, title, testMode, children }: LayoutProps
       <Container style={container}>
         <Section style={header}>
           <Img
-            src={`${SITE_URL}/pwa-192.png`}
+            src={`${SITE_URL}/icon-192x192.png`}
             width="52"
             height="52"
             alt="Her Empire Era"
