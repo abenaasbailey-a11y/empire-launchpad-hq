@@ -55,3 +55,17 @@ export const setMyOnboardingStep = createServerFn({ method: "POST" })
 
     return { completed: next };
   });
+
+/** Clears the signed-in member's onboarding progress so they can start over. */
+export const resetMyOnboarding = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<{ completed: OnboardingStepKey[] }> => {
+    const { error } = await context.supabase
+      .from("onboarding_progress")
+      .upsert(
+        { user_id: context.userId, completed_steps: [], updated_at: new Date().toISOString() },
+        { onConflict: "user_id" },
+      );
+    if (error) throw new Error(error.message);
+    return { completed: [] };
+  });
