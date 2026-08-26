@@ -162,7 +162,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    goAfterAuth();
+    goAfterAuth(mode === "signup");
   }
 
   return (
