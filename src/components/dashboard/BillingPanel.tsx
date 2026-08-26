@@ -7,8 +7,10 @@ import { createBillingPortalLink } from "@/lib/billing.functions";
 import { Link } from "@tanstack/react-router";
 
 const PLAN_NAMES: Record<string, string> = {
-  // Current plan.
+  // Current plans.
   empire_member_monthly: "Empire Member — Monthly",
+  empire_elite_monthly: "Empire Elite — Monthly",
+  empire_vip_monthly: "Empire VIP — Monthly",
   // Retired plans, kept so existing subscription and order rows still label correctly.
   empire_membership_monthly: "Her Empire Era Membership — Monthly",
   empire_membership_annual: "Her Empire Era Membership — Annual",

@@ -24,21 +24,46 @@ type Plan = {
   cadence: string;
   note: string;
   featured: boolean;
+  bonus?: string[];
 };
 
 /**
- * Single monthly plan. Annual and free-trial options are intentionally absent.
+ * Three monthly tiers. Annual and free-trial options are intentionally absent.
  * `priceId` must match the human-readable price ID in the payments catalog.
  */
 const plans: Plan[] = [
   {
-    id: "monthly",
+    id: "member",
     priceId: "empire_member_monthly",
     label: "Empire Member",
     price: "$19.99",
     cadence: "per month",
-    note: "Cancel anytime from your billing panel.",
+    note: "Everything you need to start. Cancel anytime from your billing panel.",
     featured: true,
+  },
+  {
+    id: "elite",
+    priceId: "empire_elite_monthly",
+    label: "Empire Elite",
+    price: "$49.99",
+    cadence: "per month",
+    note: "For founders moving fast and building daily.",
+    featured: false,
+    bonus: ["Priority Victoria AI responses", "Early access to new tools and prompt drops"],
+  },
+  {
+    id: "vip",
+    priceId: "empire_vip_monthly",
+    label: "Empire VIP",
+    price: "$99.00",
+    cadence: "per month",
+    note: "The highest tier of access to every tool in the platform.",
+    featured: false,
+    bonus: [
+      "Everything in Elite",
+      "Top-priority Victoria AI access",
+      "First look at every new Empire feature",
+    ],
   },
 ];
 
@@ -124,6 +149,12 @@ function PlanCard({ plan, isMember }: { plan: Plan; isMember: boolean }) {
             <span className="text-card-foreground/80">{i.title}</span>
           </li>
         ))}
+        {plan.bonus?.map((extra) => (
+          <li key={extra} className="flex items-start gap-2 text-sm">
+            <Check className="text-gold mt-1 h-3.5 w-3.5 shrink-0" />
+            <span className="text-card-foreground/80">{extra}</span>
+          </li>
+        ))}
       </ul>
       {isMember ? (
         <Button variant="lux" className="mt-7 w-full" asChild>
@@ -201,7 +232,7 @@ export function MembershipPage() {
 
       {/* Plans */}
       <Section id="pricing">
-        <div className="mx-auto grid max-w-md gap-6">
+        <div className="mx-auto grid max-w-md gap-6 md:max-w-none md:grid-cols-3 md:gap-7">
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} isMember={isMember} />
           ))}
