@@ -38,6 +38,8 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
 import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesThankYouRouteImport } from './routes/services.thank-you'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -197,6 +199,16 @@ const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   path: '/checkout/success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesThankYouRoute = ServicesThankYouRouteImport.update({
+  id: '/thank-you',
+  path: '/thank-you',
+  getParentRoute: () => ServicesRoute,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -248,7 +260,7 @@ export interface FileRoutesByFullPath {
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
-  '/services': typeof ServicesRoute
+  '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
@@ -260,6 +272,8 @@ export interface FileRoutesByFullPath {
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/services/thank-you': typeof ServicesThankYouRoute
+  '/services/': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -284,7 +298,6 @@ export interface FileRoutesByTo {
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
-  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
@@ -296,6 +309,8 @@ export interface FileRoutesByTo {
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/services/thank-you': typeof ServicesThankYouRoute
+  '/services': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -322,7 +337,7 @@ export interface FileRoutesById {
   '/press': typeof PressRoute
   '/privacy': typeof PrivacyRoute
   '/refunds': typeof RefundsRoute
-  '/services': typeof ServicesRoute
+  '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/toolkit': typeof ToolkitRoute
@@ -334,6 +349,8 @@ export interface FileRoutesById {
   '/_authenticated/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/services/thank-you': typeof ServicesThankYouRoute
+  '/services/': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -372,6 +389,8 @@ export interface FileRouteTypes {
     | '/prompt-vault'
     | '/prompt-vault-admin'
     | '/checkout/success'
+    | '/services/thank-you'
+    | '/services/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/payments/webhook'
@@ -396,7 +415,6 @@ export interface FileRouteTypes {
     | '/press'
     | '/privacy'
     | '/refunds'
-    | '/services'
     | '/sitemap.xml'
     | '/terms'
     | '/toolkit'
@@ -408,6 +426,8 @@ export interface FileRouteTypes {
     | '/prompt-vault'
     | '/prompt-vault-admin'
     | '/checkout/success'
+    | '/services/thank-you'
+    | '/services'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/payments/webhook'
@@ -445,6 +465,8 @@ export interface FileRouteTypes {
     | '/_authenticated/prompt-vault'
     | '/_authenticated/prompt-vault-admin'
     | '/checkout/success'
+    | '/services/thank-you'
+    | '/services/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/payments/webhook'
@@ -471,7 +493,7 @@ export interface RootRouteChildren {
   PressRoute: typeof PressRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundsRoute: typeof RefundsRoute
-  ServicesRoute: typeof ServicesRoute
+  ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ToolkitRoute: typeof ToolkitRoute
@@ -692,6 +714,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/': {
+      id: '/services/'
+      path: '/'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/thank-you': {
+      id: '/services/thank-you'
+      path: '/thank-you'
+      fullPath: '/services/thank-you'
+      preLoaderRoute: typeof ServicesThankYouRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -754,6 +790,20 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ServicesRouteChildren {
+  ServicesThankYouRoute: typeof ServicesThankYouRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
+}
+
+const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesThankYouRoute: ServicesThankYouRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
+}
+
+const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
+  ServicesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -772,7 +822,7 @@ const rootRouteChildren: RootRouteChildren = {
   PressRoute: PressRoute,
   PrivacyRoute: PrivacyRoute,
   RefundsRoute: RefundsRoute,
-  ServicesRoute: ServicesRoute,
+  ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ToolkitRoute: ToolkitRoute,
