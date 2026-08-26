@@ -36,6 +36,7 @@ import { Route as Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociat
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin-orders'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedMarketingPlaybookRouteImport } from './routes/_authenticated/marketing-playbook'
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
 import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
@@ -189,6 +190,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMarketingPlaybookRoute =
+  AuthenticatedMarketingPlaybookRouteImport.update({
+    id: '/marketing-playbook',
+    path: '/marketing-playbook',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPromptVaultRoute =
   AuthenticatedPromptVaultRouteImport.update({
     id: '/prompt-vault',
@@ -283,6 +290,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin-orders': typeof AuthenticatedAdminOrdersRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
@@ -322,6 +330,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin-orders': typeof AuthenticatedAdminOrdersRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
@@ -364,6 +373,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/admin-orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/_authenticated/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
@@ -406,6 +416,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin-orders'
     | '/dashboard'
+    | '/marketing-playbook'
     | '/prompt-vault'
     | '/prompt-vault-admin'
     | '/checkout/success'
@@ -445,6 +456,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin-orders'
     | '/dashboard'
+    | '/marketing-playbook'
     | '/prompt-vault'
     | '/prompt-vault-admin'
     | '/checkout/success'
@@ -486,6 +498,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/admin-orders'
     | '/_authenticated/dashboard'
+    | '/_authenticated/marketing-playbook'
     | '/_authenticated/prompt-vault'
     | '/_authenticated/prompt-vault-admin'
     | '/checkout/success'
@@ -727,6 +740,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/marketing-playbook': {
+      id: '/_authenticated/marketing-playbook'
+      path: '/marketing-playbook'
+      fullPath: '/marketing-playbook'
+      preLoaderRoute: typeof AuthenticatedMarketingPlaybookRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/prompt-vault': {
       id: '/_authenticated/prompt-vault'
       path: '/prompt-vault'
@@ -817,6 +837,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedMarketingPlaybookRoute: typeof AuthenticatedMarketingPlaybookRoute
   AuthenticatedPromptVaultRoute: typeof AuthenticatedPromptVaultRoute
   AuthenticatedPromptVaultAdminRoute: typeof AuthenticatedPromptVaultAdminRoute
 }
@@ -824,6 +845,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedMarketingPlaybookRoute: AuthenticatedMarketingPlaybookRoute,
   AuthenticatedPromptVaultRoute: AuthenticatedPromptVaultRoute,
   AuthenticatedPromptVaultAdminRoute: AuthenticatedPromptVaultAdminRoute,
 }
