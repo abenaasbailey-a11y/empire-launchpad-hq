@@ -232,7 +232,7 @@ export function MembershipPage() {
 
       {/* Plans */}
       <Section id="pricing">
-        <div className="mx-auto grid max-w-md gap-6">
+        <div className="mx-auto grid max-w-md gap-6 md:max-w-none md:grid-cols-3 md:gap-7">
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} isMember={isMember} />
           ))}
