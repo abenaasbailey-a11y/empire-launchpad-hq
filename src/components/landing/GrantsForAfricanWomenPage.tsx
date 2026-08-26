@@ -225,6 +225,11 @@ export function GrantsForAfricanWomenPage() {
         </div>
       </Section>
 
+      {/* Victoria AI Grant Assistant (Elite feature) */}
+      <Section className="pt-0 md:pt-0">
+        <GrantAssistantPanel />
+      </Section>
+
       {/* CTA */}
       <Section className="pt-0 md:pt-0">
         <div className="border-gold/30 bg-card/50 mx-auto max-w-2xl rounded-3xl border p-8 text-center md:p-12">
