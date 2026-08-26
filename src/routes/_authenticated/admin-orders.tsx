@@ -1,11 +1,29 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/landing/Section";
 import { useIsAdmin } from "@/hooks/use-admin";
 import { getStripeEnvironmentSafe } from "@/lib/stripe";
-import { getAllBilling } from "@/lib/billing.functions";
+import { getAllBilling, getServiceRequestsForExport } from "@/lib/billing.functions";
+import { downloadCsv, toCsv } from "@/lib/csv";
+
+const REQUEST_CSV_COLUMNS = [
+  { key: "created_at", label: "Submitted" },
+  { key: "name", label: "Name" },
+  { key: "email", label: "Email" },
+  { key: "phone", label: "Phone" },
+  { key: "business_name", label: "Business" },
+  { key: "service_type", label: "Service" },
+  { key: "budget", label: "Budget" },
+  { key: "status", label: "Status" },
+  { key: "details", label: "Details" },
+  { key: "order_id", label: "Order ID" },
+  { key: "paddle_transaction_id", label: "Transaction ID" },
+  { key: "id", label: "Request ID" },
+];
 
 export const Route = createFileRoute("/_authenticated/admin-orders")({
   component: AdminOrders,
@@ -39,6 +57,27 @@ function AdminOrders() {
   const { isAdmin, isLoading: adminLoading } = useIsAdmin();
   const environment = getStripeEnvironmentSafe();
   const fetchAll = useServerFn(getAllBilling);
+  const fetchRequestExport = useServerFn(getServiceRequestsForExport);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportRequests = async () => {
+    setExporting(true);
+    try {
+      const result = await fetchRequestExport();
+      if (result.rows.length === 0) {
+        toast.info("No service requests to export yet.");
+        return;
+      }
+      const csv = toCsv(REQUEST_CSV_COLUMNS, result.rows as unknown as Record<string, unknown>[]);
+      const stamp = new Date().toISOString().slice(0, 10);
+      downloadCsv(`her-empire-era-service-requests-${stamp}.csv`, csv);
+      toast.success(`Exported ${result.rows.length} leads.`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not export the leads.");
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-billing", environment],
@@ -165,7 +204,17 @@ function AdminOrders() {
               </ul>
             )}
 
-            <h2 className="font-display mt-14 text-2xl font-light">Project intake requests</h2>
+            <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
+              <h2 className="font-display text-2xl font-light">Project intake requests</h2>
+              <Button
+                variant="lux"
+                size="sm"
+                onClick={handleExportRequests}
+                disabled={exporting}
+              >
+                {exporting ? "Preparing CSV…" : "Export leads (CSV)"}
+              </Button>
+            </div>
             {requests.length === 0 ? (
               <p className="text-muted-foreground mt-3 text-sm">No requests yet.</p>
             ) : (
