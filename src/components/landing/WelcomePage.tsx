@@ -48,6 +48,30 @@ const steps: {
 ];
 
 export function WelcomePage() {
+  const queryClient = useQueryClient();
+  const fetchOnboarding = useServerFn(getMyOnboarding);
+  const saveStep = useServerFn(setMyOnboardingStep);
+
+  const progress = useQuery({
+    queryKey: ["onboarding-progress"],
+    queryFn: () => fetchOnboarding(),
+    retry: false,
+    staleTime: 30_000,
+  });
+
+  const toggleStep = useMutation({
+    mutationFn: (vars: { step: OnboardingStepKey; done: boolean }) => saveStep({ data: vars }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["onboarding-progress"], result);
+    },
+  });
+
+  const tracked = !progress.isError;
+  const completed = progress.data?.completed ?? [];
+  const doneCount = completed.length;
+  const percent = Math.round((doneCount / steps.length) * 100);
+  const nextStep = steps.find((step) => !completed.includes(step.key));
+
   return (
     <main>
       <header className="border-border/60 bg-background/85 fixed top-0 z-50 w-full border-b backdrop-blur-md">
