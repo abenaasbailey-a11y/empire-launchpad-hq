@@ -32,6 +32,10 @@ function isLive(sub: BillingSubscription | undefined): boolean {
   if (sub.status === "active" || sub.status === "trialing" || sub.status === "past_due") {
     return ends === null || ends > Date.now();
   }
+  // Cancelled members keep access until the end of the period they paid for.
+  if (sub.status === "canceled" || sub.status === "paused") {
+    return ends !== null && ends > Date.now();
+  }
   return false;
 }
 

@@ -5,7 +5,12 @@ import {
   getStripeErrorMessage,
 } from "@/lib/stripe.server";
 
-type CheckoutSessionResult = { clientSecret: string } | { error: string };
+type CheckoutSessionResult =
+  | { clientSecret: string }
+  | { error: string; existingSubscription?: boolean };
+
+/** Subscription states that mean the member is already being billed. */
+const LIVE_SUB_STATUSES = new Set(["active", "trialing", "past_due", "unpaid", "paused"]);
 
 /**
  * Resolves (or creates) the Stripe Customer for a member so later reads —
@@ -76,6 +81,24 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
               userId: data.userId,
             })
           : undefined;
+
+      // Guard against double billing: an existing member must change plans in
+      // the billing portal (pro-rated) instead of buying a second subscription.
+      if (isRecurring && customerId) {
+        const existing = await stripe.subscriptions.list({
+          customer: customerId,
+          status: "all",
+          limit: 10,
+        });
+        const live = existing.data.find((sub) => LIVE_SUB_STATUSES.has(sub.status));
+        if (live) {
+          return {
+            error:
+              "You already have an active membership. Open Billing & account on your dashboard to change or cancel your plan — that way you are never charged twice.",
+            existingSubscription: true,
+          };
+        }
+      }
 
       let productDescription: string | undefined;
       if (!isRecurring) {

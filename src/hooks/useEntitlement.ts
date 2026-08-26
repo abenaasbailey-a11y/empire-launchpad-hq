@@ -2,7 +2,21 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { getMyEntitlement, type Entitlement } from "@/lib/entitlement.functions";
+import { getStripeEnvironmentSafe } from "@/lib/stripe";
+import {
+  getMyEntitlement,
+  type Entitlement,
+  type MemberTier,
+} from "@/lib/entitlement.functions";
+
+export const ENTITLEMENT_QUERY_KEY = ["entitlement"] as const;
+
+const TIER_LABEL: Record<MemberTier, string> = {
+  free: "Free account",
+  member: "Empire Member",
+  elite: "Empire Elite",
+  vip: "Empire VIP",
+};
 
 /**
  * Client-side view of the signed-in account's membership entitlement.
@@ -12,6 +26,7 @@ import { getMyEntitlement, type Entitlement } from "@/lib/entitlement.functions"
  */
 export function useEntitlement() {
   const fetchEntitlement = useServerFn(getMyEntitlement);
+  const environment = getStripeEnvironmentSafe();
   const [signedIn, setSignedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -29,19 +44,27 @@ export function useEntitlement() {
   }, []);
 
   const query = useQuery<Entitlement>({
-    queryKey: ["entitlement"],
-    queryFn: () => fetchEntitlement(),
+    queryKey: [...ENTITLEMENT_QUERY_KEY, environment],
+    queryFn: () => fetchEntitlement({ data: { environment } }),
     enabled: signedIn === true,
     staleTime: 30_000,
     retry: false,
   });
 
   const data = query.data;
+  const tier = data?.tier ?? "free";
+  const rank = data?.rank ?? 0;
   return {
     isLoading: signedIn === null || (signedIn === true && query.isLoading),
     signedIn: signedIn === true,
     refetch: query.refetch,
+    environment,
     isMember: Boolean(data?.member),
+    tier,
+    tierLabel: TIER_LABEL[tier],
+    rank,
+    isElite: rank >= 2,
+    isVip: rank >= 3,
     used: data?.used ?? 0,
     limit: data?.limit ?? null,
     remaining: data?.remaining ?? null,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { Check, Clock, Mail } from "lucide-react";
@@ -61,6 +61,7 @@ function CheckoutSuccess() {
   const search = Route.useSearch();
   const transactionId = search.session_id ?? search._ptxn ?? "";
   const lookupOrder = useServerFn(getOrderByTransaction);
+  const queryClient = useQueryClient();
   const submitRequest = useServerFn(captureServiceRequest);
 
   const [submitting, setSubmitting] = useState(false);
@@ -83,6 +84,14 @@ function CheckoutSuccess() {
     refetchInterval: (query) => (query.state.data ? false : 2000),
     retry: 3,
   });
+
+  // The membership only feels instant if the cached entitlement is refreshed
+  // as soon as the webhook has written the purchase.
+  useEffect(() => {
+    if (!order) return;
+    void queryClient.invalidateQueries({ queryKey: ["entitlement"] });
+    void queryClient.invalidateQueries({ queryKey: ["billing"] });
+  }, [order, queryClient]);
 
   useEffect(() => {
     let cancelled = false;

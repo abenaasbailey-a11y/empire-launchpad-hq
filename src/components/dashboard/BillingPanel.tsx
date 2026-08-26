@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { AlertTriangle, CreditCard, ExternalLink, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSubscription } from "@/hooks/useSubscription";
-import { createBillingPortalLink } from "@/lib/billing.functions";
+import { useBillingPortal } from "@/hooks/useBillingPortal";
 import { Link } from "@tanstack/react-router";
 
 const PLAN_NAMES: Record<string, string> = {
@@ -47,30 +45,9 @@ const STATUS_LABEL: Record<string, string> = {
 export function BillingPanel() {
   const { subscription, orders, isLoading, isActive, isPastDue, isCanceling, environment } =
     useSubscription();
-  const createPortal = useServerFn(createBillingPortalLink);
-  const [opening, setOpening] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { openPortal, opening, error } = useBillingPortal();
 
   const hasBilling = Boolean(subscription) || orders.length > 0;
-
-  const openPortal = async () => {
-    setOpening(true);
-    setError(null);
-    try {
-      const returnUrl =
-        typeof window === "undefined" ? undefined : `${window.location.origin}/dashboard`;
-      const { url } = await createPortal({
-        data: { environment, ...(returnUrl ? { returnUrl } : {}) },
-      });
-      window.open(url, "_blank", "noopener,noreferrer");
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "We could not open your billing portal just now.",
-      );
-    } finally {
-      setOpening(false);
-    }
-  };
 
   if (isLoading) {
     return (

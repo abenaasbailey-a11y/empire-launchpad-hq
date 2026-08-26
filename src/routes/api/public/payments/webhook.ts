@@ -124,16 +124,20 @@ async function upsertSubscription(subscription: any, env: StripeEnv) {
     );
 }
 
-// Business rule: access is cut off immediately on cancel, so we clear the
-// period end instead of leaving a future date that would keep access alive.
+// Business rule: a cancelled member keeps access until the end of the period
+// they already paid for, so we preserve `current_period_end` and only mark the
+// subscription canceled. Entitlement checks treat a future period end as live.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleSubscriptionDeleted(subscription: any, env: StripeEnv) {
+  const item = subscription.items?.data?.[0];
+  const periodEnd =
+    item?.current_period_end ?? subscription.current_period_end ?? subscription.ended_at;
   await getSupabase()
     .from("subscriptions")
     .update({
       status: "canceled",
-      current_period_end: new Date().toISOString(),
       cancel_at_period_end: false,
+      ...(periodEnd ? { current_period_end: isoFromUnix(periodEnd) } : {}),
       updated_at: new Date().toISOString(),
     })
     .eq("paddle_subscription_id", subscription.id)
@@ -142,8 +146,7 @@ async function handleSubscriptionDeleted(subscription: any, env: StripeEnv) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleInvoicePaymentFailed(invoice: any, env: StripeEnv) {
-  const subscriptionId =
-    typeof invoice.subscription === "string" ? invoice.subscription : invoice.subscription?.id;
+  const subscriptionId = invoiceSubscriptionId(invoice);
   if (!subscriptionId) return;
   await getSupabase()
     .from("subscriptions")
@@ -151,6 +154,77 @@ async function handleInvoicePaymentFailed(invoice: any, env: StripeEnv) {
     .eq("paddle_subscription_id", subscriptionId)
     .eq("environment", env);
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function invoiceSubscriptionId(invoice: any): string | null {
+  if (typeof invoice.subscription === "string") return invoice.subscription;
+  if (invoice.subscription?.id) return invoice.subscription.id;
+  const line = invoice.lines?.data?.find(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (l: any) => l.subscription || l.parent?.subscription_item_details?.subscription,
+  );
+  const fromLine =
+    line?.subscription ?? line?.parent?.subscription_item_details?.subscription ?? null;
+  return typeof fromLine === "string" ? fromLine : (fromLine?.id ?? null);
+}
+
+/**
+ * Renewals and recovered payments. Every paid subscription invoice is recorded
+ * as an order so billing history shows month 2 onward, and the subscription is
+ * moved back to active with its new period after a successful retry.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function handleInvoicePaid(invoice: any, env: StripeEnv) {
+  const subscriptionId = invoiceSubscriptionId(invoice);
+  if (!subscriptionId) return;
+
+  const { data: sub } = await getSupabase()
+    .from("subscriptions")
+    .select("user_id, price_id, product_id")
+    .eq("paddle_subscription_id", subscriptionId)
+    .eq("environment", env)
+    .maybeSingle();
+
+  const line = invoice.lines?.data?.[0];
+  const period = line?.period ?? null;
+
+  await getSupabase()
+    .from("subscriptions")
+    .update({
+      status: "active",
+      ...(period?.start ? { current_period_start: isoFromUnix(period.start) } : {}),
+      ...(period?.end ? { current_period_end: isoFromUnix(period.end) } : {}),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("paddle_subscription_id", subscriptionId)
+    .eq("environment", env);
+
+  const amount = typeof invoice.amount_paid === "number" ? invoice.amount_paid : null;
+  if (!amount) return; // $0 invoices (trials, full credit) are not purchases.
+
+  await getSupabase()
+    .from("orders")
+    .upsert(
+      {
+        user_id: sub?.user_id ?? null,
+        email: invoice.customer_email ?? null,
+        paddle_transaction_id: invoice.id,
+        paddle_customer_id:
+          typeof invoice.customer === "string" ? invoice.customer : (invoice.customer?.id ?? null),
+        product_id: sub?.product_id ?? null,
+        price_id: sub?.price_id ?? externalPriceId(line?.price) ?? null,
+        quantity: line?.quantity ?? 1,
+        amount_cents: amount,
+        currency: (invoice.currency ?? "usd").toUpperCase(),
+        status: "paid",
+        environment: env,
+        custom_data: { billing_reason: invoice.billing_reason ?? null, renewal: true },
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "paddle_transaction_id" },
+    );
+}
+
 
 export const Route = createFileRoute("/api/public/payments/webhook")({
   server: {
@@ -175,6 +249,10 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
               break;
             case "customer.subscription.deleted":
               await handleSubscriptionDeleted(event.data.object, env);
+              break;
+            case "invoice.paid":
+            case "invoice.payment_succeeded":
+              await handleInvoicePaid(event.data.object, env);
               break;
             case "invoice.payment_failed":
               await handleInvoicePaymentFailed(event.data.object, env);
