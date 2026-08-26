@@ -1,11 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Loader2, Mail, Sparkles, Compass, Vault, Crown } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Loader2,
+  Mail,
+  RotateCcw,
+  Sparkles,
+  Compass,
+  Vault,
+  Crown,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section } from "@/components/landing/Section";
 import {
   getMyOnboarding,
+  resetMyOnboarding,
   setMyOnboardingStep,
   type OnboardingStepKey,
 } from "@/lib/onboarding.functions";
@@ -51,6 +62,7 @@ export function WelcomePage() {
   const queryClient = useQueryClient();
   const fetchOnboarding = useServerFn(getMyOnboarding);
   const saveStep = useServerFn(setMyOnboardingStep);
+  const clearProgress = useServerFn(resetMyOnboarding);
 
   const progress = useQuery({
     queryKey: ["onboarding-progress"],
