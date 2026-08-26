@@ -126,7 +126,7 @@ export const detailValue = {
 interface LayoutProps {
   preview: string
   title: string
-  testMode?: boolean
+  testMode?: boolean | undefined
   children: React.ReactNode
 }
 
