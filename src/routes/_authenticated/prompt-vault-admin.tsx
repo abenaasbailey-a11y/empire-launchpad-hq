@@ -265,7 +265,7 @@ function PromptVaultAdminPage() {
               <div className="min-w-0">
                 <p className="text-muted-foreground text-[0.6rem] tracking-[0.22em] uppercase">
                   {categoryName(p.category)} · {p.save_count} saves · {p.copy_count} uses
-                  {p.is_published ? "" : " · hidden"}
+                  {p.is_published ? "" : " · hidden"} · {minTierLabel(p.min_tier)}
                 </p>
                 <h3 className="font-display mt-1 text-lg font-light">{p.title}</h3>
               </div>
@@ -280,6 +280,7 @@ function PromptVaultAdminPage() {
                       category: p.category,
                       description: p.description,
                       body: p.body,
+                      min_tier: p.min_tier ?? "member",
                     });
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
