@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ExternalLink, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section, SectionHeading } from "@/components/landing/Section";
+import { GrantAssistantPanel } from "@/components/landing/GrantAssistantPanel";
 import {
   GRANTS,
   GRANT_CATEGORIES,
@@ -222,6 +223,11 @@ export function GrantsForWomenPage() {
             <GrantCard key={g.name} grant={g} />
           ))}
         </div>
+      </Section>
+
+      {/* Victoria AI Grant Assistant (Elite feature) */}
+      <Section className="pt-0 md:pt-0">
+        <GrantAssistantPanel />
       </Section>
 
       {/* CTA */}

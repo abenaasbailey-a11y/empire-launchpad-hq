@@ -50,7 +50,11 @@ const plans: Plan[] = [
     cadence: "per month",
     note: "For founders moving fast and building daily.",
     featured: false,
-    bonus: ["Priority Victoria AI responses", "Early access to new tools and prompt drops"],
+    bonus: [
+      "Priority Victoria AI responses",
+      "Grant Finder & Application Assistant",
+      "Early access to new tools and prompt drops",
+    ],
   },
   {
     id: "vip",
