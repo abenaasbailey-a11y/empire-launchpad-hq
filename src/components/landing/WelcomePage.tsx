@@ -1,11 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Loader2, Mail, Sparkles, Compass, Vault, Crown } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Loader2,
+  Mail,
+  RotateCcw,
+  Sparkles,
+  Compass,
+  Vault,
+  Crown,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GoldRule, Section } from "@/components/landing/Section";
 import {
   getMyOnboarding,
+  resetMyOnboarding,
   setMyOnboardingStep,
   type OnboardingStepKey,
 } from "@/lib/onboarding.functions";
@@ -51,6 +62,7 @@ export function WelcomePage() {
   const queryClient = useQueryClient();
   const fetchOnboarding = useServerFn(getMyOnboarding);
   const saveStep = useServerFn(setMyOnboardingStep);
+  const clearProgress = useServerFn(resetMyOnboarding);
 
   const progress = useQuery({
     queryKey: ["onboarding-progress"],
@@ -61,6 +73,13 @@ export function WelcomePage() {
 
   const toggleStep = useMutation({
     mutationFn: (vars: { step: OnboardingStepKey; done: boolean }) => saveStep({ data: vars }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["onboarding-progress"], result);
+    },
+  });
+
+  const resetProgress = useMutation({
+    mutationFn: () => clearProgress(),
     onSuccess: (result) => {
       queryClient.setQueryData(["onboarding-progress"], result);
     },
@@ -162,6 +181,31 @@ export function WelcomePage() {
                   ? `Your progress is saved — pick back up with “${nextStep.title}”.`
                   : "You've finished all three moves. Your dashboard is where the building continues."}
               </p>
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+                {nextStep ? (
+                  <Button variant="gold" size="sm" asChild>
+                    <Link to={nextStep.to}>
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      Resume where I left off
+                    </Link>
+                  </Button>
+                ) : null}
+                {doneCount > 0 ? (
+                  <Button
+                    variant="lux"
+                    size="sm"
+                    disabled={resetProgress.isPending}
+                    onClick={() => resetProgress.mutate()}
+                  >
+                    {resetProgress.isPending ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+                    ) : (
+                      <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+                    )}
+                    Reset onboarding
+                  </Button>
+                ) : null}
+              </div>
             </div>
           ) : null}
 
