@@ -41,6 +41,10 @@ function isoFromUnix(seconds: number | null | undefined): string | null {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   if (session.payment_status === "unpaid") return;
+  // Subscription checkouts are recorded from the paid invoice instead, so the
+  // first payment doesn't appear twice (once for the session, once for the
+  // invoice). One-off purchases still land here.
+  if (session.subscription) return;
 
   const metadata = session.metadata ?? null;
   let userId: string | null = metadata?.userId ?? null;
