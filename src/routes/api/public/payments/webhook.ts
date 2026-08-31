@@ -41,6 +41,10 @@ function isoFromUnix(seconds: number | null | undefined): string | null {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   if (session.payment_status === "unpaid") return;
+  // Subscription checkouts are recorded from the paid invoice instead, so the
+  // first payment doesn't appear twice (once for the session, once for the
+  // invoice). One-off purchases still land here.
+  if (session.subscription) return;
 
   const metadata = session.metadata ?? null;
   let userId: string | null = metadata?.userId ?? null;
@@ -147,7 +151,7 @@ async function upsertSubscription(subscription: any, env: StripeEnv, eventId: st
       await sendCancellationScheduled({
         recipient,
         env,
-        eventId,
+        eventId: `sub-${subscription.id}-${periodEnd ?? ""}`,
         planName: planNameFromPriceId(priceId),
         accessUntil: formatDate(periodEnd),
       });
@@ -187,7 +191,7 @@ async function handleSubscriptionDeleted(subscription: any, env: StripeEnv, even
     await sendCancellationScheduled({
       recipient,
       env,
-      eventId,
+      eventId: `sub-${subscription.id}-${periodEnd ?? ""}`,
       planName,
       accessUntil: formatDate(periodEnd),
     });
@@ -286,7 +290,8 @@ async function handleInvoicePaid(invoice: any, env: StripeEnv, eventId: string) 
     await sendMembershipReceipt({
       recipient,
       env,
-      eventId,
+      // Stable per-invoice key so a retried/duplicated event can't send twice.
+      eventId: invoice.id ?? eventId,
       planName: planNameFromPriceId(priceIdForEmail),
       amount: formatMoney(amount, invoice.currency ?? "usd"),
       paidOn: formatDate(invoice.status_transitions?.paid_at ?? invoice.created ?? null),
@@ -351,7 +356,6 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
               await handleSubscriptionDeleted(event.data.object, env, eventId);
               break;
             case "invoice.paid":
-            case "invoice.payment_succeeded":
               await handleInvoicePaid(event.data.object, env, eventId);
               break;
             case "invoice.payment_failed":
