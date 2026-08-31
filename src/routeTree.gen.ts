@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AiToolsForWomenRouteImport } from './routes/ai-tools-for-women'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChatgptPromptsRouteImport } from './routes/chatgpt-prompts'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FreePromptsRouteImport } from './routes/free-prompts'
 import { Route as GrantsAfricanWomenRouteImport } from './routes/grants-african-women'
 import { Route as GrantsForWomenRouteImport } from './routes/grants-for-women'
@@ -73,6 +74,11 @@ const AuthRoute = AuthRouteImport.update({
 const ChatgptPromptsRoute = ChatgptPromptsRouteImport.update({
   id: '/chatgpt-prompts',
   path: '/chatgpt-prompts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FreePromptsRoute = FreePromptsRouteImport.update({
@@ -274,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
+  '/faq': typeof FaqRoute
   '/free-prompts': typeof FreePromptsRoute
   '/grants-african-women': typeof GrantsAfricanWomenRoute
   '/grants-for-women': typeof GrantsForWomenRoute
@@ -316,6 +323,7 @@ export interface FileRoutesByTo {
   '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
+  '/faq': typeof FaqRoute
   '/free-prompts': typeof FreePromptsRoute
   '/grants-african-women': typeof GrantsAfricanWomenRoute
   '/grants-for-women': typeof GrantsForWomenRoute
@@ -359,6 +367,7 @@ export interface FileRoutesById {
   '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
+  '/faq': typeof FaqRoute
   '/free-prompts': typeof FreePromptsRoute
   '/grants-african-women': typeof GrantsAfricanWomenRoute
   '/grants-for-women': typeof GrantsForWomenRoute
@@ -403,6 +412,7 @@ export interface FileRouteTypes {
     | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
+    | '/faq'
     | '/free-prompts'
     | '/grants-african-women'
     | '/grants-for-women'
@@ -445,6 +455,7 @@ export interface FileRouteTypes {
     | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
+    | '/faq'
     | '/free-prompts'
     | '/grants-african-women'
     | '/grants-for-women'
@@ -487,6 +498,7 @@ export interface FileRouteTypes {
     | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
+    | '/faq'
     | '/free-prompts'
     | '/grants-african-women'
     | '/grants-for-women'
@@ -531,6 +543,7 @@ export interface RootRouteChildren {
   AiToolsForWomenRoute: typeof AiToolsForWomenRoute
   AuthRoute: typeof AuthRoute
   ChatgptPromptsRoute: typeof ChatgptPromptsRoute
+  FaqRoute: typeof FaqRoute
   FreePromptsRoute: typeof FreePromptsRoute
   GrantsAfricanWomenRoute: typeof GrantsAfricanWomenRoute
   GrantsForWomenRoute: typeof GrantsForWomenRoute
@@ -597,6 +610,13 @@ declare module '@tanstack/react-router' {
       path: '/chatgpt-prompts'
       fullPath: '/chatgpt-prompts'
       preLoaderRoute: typeof ChatgptPromptsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/free-prompts': {
@@ -893,6 +913,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiToolsForWomenRoute: AiToolsForWomenRoute,
   AuthRoute: AuthRoute,
   ChatgptPromptsRoute: ChatgptPromptsRoute,
+  FaqRoute: FaqRoute,
   FreePromptsRoute: FreePromptsRoute,
   GrantsAfricanWomenRoute: GrantsAfricanWomenRoute,
   GrantsForWomenRoute: GrantsForWomenRoute,
