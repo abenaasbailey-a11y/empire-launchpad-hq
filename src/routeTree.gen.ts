@@ -41,6 +41,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedMarketingPlaybookRouteImport } from './routes/_authenticated/marketing-playbook'
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
 import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesThankYouRouteImport } from './routes/services.thank-you'
@@ -220,6 +221,11 @@ const AuthenticatedPromptVaultAdminRoute =
     path: '/prompt-vault-admin',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   id: '/checkout/success',
   path: '/checkout/success',
@@ -309,6 +315,7 @@ export interface FileRoutesByFullPath {
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
+  '/blog/': typeof BlogIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -351,6 +358,7 @@ export interface FileRoutesByTo {
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
+  '/blog': typeof BlogIndexRoute
   '/services': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -396,6 +404,7 @@ export interface FileRoutesById {
   '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
+  '/blog/': typeof BlogIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -441,6 +450,7 @@ export interface FileRouteTypes {
     | '/prompt-vault-admin'
     | '/checkout/success'
     | '/services/thank-you'
+    | '/blog/'
     | '/services/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -483,6 +493,7 @@ export interface FileRouteTypes {
     | '/prompt-vault-admin'
     | '/checkout/success'
     | '/services/thank-you'
+    | '/blog'
     | '/services'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -527,6 +538,7 @@ export interface FileRouteTypes {
     | '/_authenticated/prompt-vault-admin'
     | '/checkout/success'
     | '/services/thank-you'
+    | '/blog/'
     | '/services/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -566,6 +578,7 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute: typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicOnboardingRemindersRoute: typeof ApiPublicOnboardingRemindersRoute
@@ -801,6 +814,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPromptVaultAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/success': {
       id: '/checkout/success'
       path: '/checkout/success'
@@ -938,6 +958,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
+  BlogIndexRoute: BlogIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicOnboardingRemindersRoute: ApiPublicOnboardingRemindersRoute,
