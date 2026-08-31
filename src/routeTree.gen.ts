@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AiToolsForWomenRouteImport } from './routes/ai-tools-for-women'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChatgptPromptsRouteImport } from './routes/chatgpt-prompts'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FreePromptsRouteImport } from './routes/free-prompts'
 import { Route as GrantsAfricanWomenRouteImport } from './routes/grants-african-women'
 import { Route as GrantsForWomenRouteImport } from './routes/grants-for-women'
@@ -39,6 +41,8 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedMarketingPlaybookRouteImport } from './routes/_authenticated/marketing-playbook'
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
 import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesThankYouRouteImport } from './routes/services.thank-you'
@@ -59,6 +63,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiToolsForWomenRoute = AiToolsForWomenRouteImport.update({
+  id: '/ai-tools-for-women',
+  path: '/ai-tools-for-women',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -67,6 +76,11 @@ const AuthRoute = AuthRouteImport.update({
 const ChatgptPromptsRoute = ChatgptPromptsRouteImport.update({
   id: '/chatgpt-prompts',
   path: '/chatgpt-prompts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FreePromptsRoute = FreePromptsRouteImport.update({
@@ -208,6 +222,16 @@ const AuthenticatedPromptVaultAdminRoute =
     path: '/prompt-vault-admin',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   id: '/checkout/success',
   path: '/checkout/success',
@@ -265,8 +289,10 @@ const LovableEmailTransactionalPreviewRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
+  '/faq': typeof FaqRoute
   '/free-prompts': typeof FreePromptsRoute
   '/grants-african-women': typeof GrantsAfricanWomenRoute
   '/grants-for-women': typeof GrantsForWomenRoute
@@ -293,8 +319,10 @@ export interface FileRoutesByFullPath {
   '/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
+  '/blog/': typeof BlogIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -306,8 +334,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
+  '/faq': typeof FaqRoute
   '/free-prompts': typeof FreePromptsRoute
   '/grants-african-women': typeof GrantsAfricanWomenRoute
   '/grants-for-women': typeof GrantsForWomenRoute
@@ -333,8 +363,10 @@ export interface FileRoutesByTo {
   '/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
+  '/blog': typeof BlogIndexRoute
   '/services': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -348,8 +380,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
+  '/faq': typeof FaqRoute
   '/free-prompts': typeof FreePromptsRoute
   '/grants-african-women': typeof GrantsAfricanWomenRoute
   '/grants-for-women': typeof GrantsForWomenRoute
@@ -376,8 +410,10 @@ export interface FileRoutesById {
   '/_authenticated/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/_authenticated/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
+  '/blog/': typeof BlogIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -391,8 +427,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
+    | '/faq'
     | '/free-prompts'
     | '/grants-african-women'
     | '/grants-for-women'
@@ -419,8 +457,10 @@ export interface FileRouteTypes {
     | '/marketing-playbook'
     | '/prompt-vault'
     | '/prompt-vault-admin'
+    | '/blog/$slug'
     | '/checkout/success'
     | '/services/thank-you'
+    | '/blog/'
     | '/services/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -432,8 +472,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
+    | '/faq'
     | '/free-prompts'
     | '/grants-african-women'
     | '/grants-for-women'
@@ -459,8 +501,10 @@ export interface FileRouteTypes {
     | '/marketing-playbook'
     | '/prompt-vault'
     | '/prompt-vault-admin'
+    | '/blog/$slug'
     | '/checkout/success'
     | '/services/thank-you'
+    | '/blog'
     | '/services'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -473,8 +517,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
+    | '/faq'
     | '/free-prompts'
     | '/grants-african-women'
     | '/grants-for-women'
@@ -501,8 +547,10 @@ export interface FileRouteTypes {
     | '/_authenticated/marketing-playbook'
     | '/_authenticated/prompt-vault'
     | '/_authenticated/prompt-vault-admin'
+    | '/blog/$slug'
     | '/checkout/success'
     | '/services/thank-you'
+    | '/blog/'
     | '/services/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -516,8 +564,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AiToolsForWomenRoute: typeof AiToolsForWomenRoute
   AuthRoute: typeof AuthRoute
   ChatgptPromptsRoute: typeof ChatgptPromptsRoute
+  FaqRoute: typeof FaqRoute
   FreePromptsRoute: typeof FreePromptsRoute
   GrantsAfricanWomenRoute: typeof GrantsAfricanWomenRoute
   GrantsForWomenRoute: typeof GrantsForWomenRoute
@@ -539,7 +589,9 @@ export interface RootRouteChildren {
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute: typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicOnboardingRemindersRoute: typeof ApiPublicOnboardingRemindersRoute
@@ -565,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-tools-for-women': {
+      id: '/ai-tools-for-women'
+      path: '/ai-tools-for-women'
+      fullPath: '/ai-tools-for-women'
+      preLoaderRoute: typeof AiToolsForWomenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -577,6 +636,13 @@ declare module '@tanstack/react-router' {
       path: '/chatgpt-prompts'
       fullPath: '/chatgpt-prompts'
       preLoaderRoute: typeof ChatgptPromptsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/free-prompts': {
@@ -761,6 +827,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPromptVaultAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/success': {
       id: '/checkout/success'
       path: '/checkout/success'
@@ -870,8 +950,10 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AiToolsForWomenRoute: AiToolsForWomenRoute,
   AuthRoute: AuthRoute,
   ChatgptPromptsRoute: ChatgptPromptsRoute,
+  FaqRoute: FaqRoute,
   FreePromptsRoute: FreePromptsRoute,
   GrantsAfricanWomenRoute: GrantsAfricanWomenRoute,
   GrantsForWomenRoute: GrantsForWomenRoute,
@@ -895,7 +977,9 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
+  BlogIndexRoute: BlogIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicOnboardingRemindersRoute: ApiPublicOnboardingRemindersRoute,
