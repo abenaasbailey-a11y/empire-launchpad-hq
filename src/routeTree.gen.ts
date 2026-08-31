@@ -42,6 +42,7 @@ import { Route as AuthenticatedMarketingPlaybookRouteImport } from './routes/_au
 import { Route as AuthenticatedPromptVaultRouteImport } from './routes/_authenticated/prompt-vault'
 import { Route as AuthenticatedPromptVaultAdminRouteImport } from './routes/_authenticated/prompt-vault-admin'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesThankYouRouteImport } from './routes/services.thank-you'
@@ -226,6 +227,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   id: '/checkout/success',
   path: '/checkout/success',
@@ -313,6 +319,7 @@ export interface FileRoutesByFullPath {
   '/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
   '/blog/': typeof BlogIndexRoute
@@ -356,6 +363,7 @@ export interface FileRoutesByTo {
   '/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
   '/blog': typeof BlogIndexRoute
@@ -402,6 +410,7 @@ export interface FileRoutesById {
   '/_authenticated/marketing-playbook': typeof AuthenticatedMarketingPlaybookRoute
   '/_authenticated/prompt-vault': typeof AuthenticatedPromptVaultRoute
   '/_authenticated/prompt-vault-admin': typeof AuthenticatedPromptVaultAdminRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/services/thank-you': typeof ServicesThankYouRoute
   '/blog/': typeof BlogIndexRoute
@@ -448,6 +457,7 @@ export interface FileRouteTypes {
     | '/marketing-playbook'
     | '/prompt-vault'
     | '/prompt-vault-admin'
+    | '/blog/$slug'
     | '/checkout/success'
     | '/services/thank-you'
     | '/blog/'
@@ -491,6 +501,7 @@ export interface FileRouteTypes {
     | '/marketing-playbook'
     | '/prompt-vault'
     | '/prompt-vault-admin'
+    | '/blog/$slug'
     | '/checkout/success'
     | '/services/thank-you'
     | '/blog'
@@ -536,6 +547,7 @@ export interface FileRouteTypes {
     | '/_authenticated/marketing-playbook'
     | '/_authenticated/prompt-vault'
     | '/_authenticated/prompt-vault-admin'
+    | '/blog/$slug'
     | '/checkout/success'
     | '/services/thank-you'
     | '/blog/'
@@ -577,6 +589,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute: typeof Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   BlogIndexRoute: typeof BlogIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -821,6 +834,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/success': {
       id: '/checkout/success'
       path: '/checkout/success'
@@ -957,6 +977,7 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93AppleDeveloperMerchantidDomainAssociationRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
   BlogIndexRoute: BlogIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
