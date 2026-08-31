@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AiToolsForWomenRouteImport } from './routes/ai-tools-for-women'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChatgptPromptsRouteImport } from './routes/chatgpt-prompts'
 import { Route as FreePromptsRouteImport } from './routes/free-prompts'
@@ -57,6 +58,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiToolsForWomenRoute = AiToolsForWomenRouteImport.update({
+  id: '/ai-tools-for-women',
+  path: '/ai-tools-for-women',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -265,6 +271,7 @@ const LovableEmailTransactionalPreviewRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
@@ -306,6 +313,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
@@ -348,6 +356,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/ai-tools-for-women': typeof AiToolsForWomenRoute
   '/auth': typeof AuthRoute
   '/chatgpt-prompts': typeof ChatgptPromptsRoute
   '/free-prompts': typeof FreePromptsRoute
@@ -391,6 +400,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
     | '/free-prompts'
@@ -432,6 +442,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
     | '/free-prompts'
@@ -473,6 +484,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/ai-tools-for-women'
     | '/auth'
     | '/chatgpt-prompts'
     | '/free-prompts'
@@ -516,6 +528,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AiToolsForWomenRoute: typeof AiToolsForWomenRoute
   AuthRoute: typeof AuthRoute
   ChatgptPromptsRoute: typeof ChatgptPromptsRoute
   FreePromptsRoute: typeof FreePromptsRoute
@@ -563,6 +576,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-tools-for-women': {
+      id: '/ai-tools-for-women'
+      path: '/ai-tools-for-women'
+      fullPath: '/ai-tools-for-women'
+      preLoaderRoute: typeof AiToolsForWomenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -870,6 +890,7 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AiToolsForWomenRoute: AiToolsForWomenRoute,
   AuthRoute: AuthRoute,
   ChatgptPromptsRoute: ChatgptPromptsRoute,
   FreePromptsRoute: FreePromptsRoute,
